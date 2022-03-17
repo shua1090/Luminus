@@ -1,0 +1,6 @@
+.exe
+.o
+.idea
+.vs
+.vscode
+llvm-project

@@ -1,0 +1,8 @@
+# Generate Antlr C++
+antlr LuxLang.g4 -o src/antlr_generated/ -visitor -Dlanguage=Cpp
+# Generate Antlr Java for Grun
+antlr LuxLang.g4 -o src/for_grun/
+cd src/for_grun/
+javac *.java
+grun LuxLang start -gui
+
