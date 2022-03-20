@@ -4,3 +4,5 @@
 .vs
 .vscode
 llvm-project
+.env
+build
