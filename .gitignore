@@ -6,3 +6,7 @@
 llvm-project
 .env
 build
+.antlr
+antlr4
+cmake
+for_grun
