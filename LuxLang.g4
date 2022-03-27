@@ -14,15 +14,16 @@ EQUAL_TO: '==';
 TRUE_CONST: 'true';
 FALSE_CONST: 'false';
 
-TYPE: INT | BYTE | LONG | DOUBLE | STRING;
+TYPE: INT | BYTE | LONG | DOUBLE | STRING | VOID | BOOL;
 fragment INT: 'int';
 fragment BYTE: 'byte';
 fragment LONG: 'long';
 fragment DOUBLE: 'double';
 fragment STRING: 'string';
+fragment VOID: 'void';
+fragment BOOL: 'bool';
 
 IDENTIFIER: [A-Za-z]+;
-
 
 INTEGER_CONST: DIGIT | OCTAL_DIG | HEX_DIG;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
@@ -40,22 +41,24 @@ expression:
     | IDENTIFIER #IdentifierExpression
     | '-' inner=expression #Unary_Negate
     | '(' inner=expression ')' #Parantheses
+    | IDENTIFIER '(' (expression (',' expression)*)? ')' #FunctionCall
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
-    ;
-bool_expression:
-    left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
+    | left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
     ;
 
+argument: TYPE IDENTIFIER;
+function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=TYPE '{' statement+ '}' #FunctionDeclaration;
 
-conditional_if: 'if' '(' bool_expression ')' '{' statement+ '}';
+conditional_if: 'if' '(' expression ')' '{' statement+ '}';
 conditional_else: 'else' '{' statement+ '}';
+
 
 assignment: dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
     | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #BoolInitialization
     | dec_type=TYPE id=IDENTIFIER ';' #Declaration
     ;
 
-statement: assignment | conditional_if | conditional_else;
+statement: assignment | conditional_if | conditional_else | function;
 
 WHITESPACE: [ \r\n\t]+ -> skip;
