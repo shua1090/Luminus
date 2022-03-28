@@ -1,11 +1,12 @@
 project(luminus)
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.17)
 # A convenience variable:
 set (CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
+FILE(GLOB ANTLR_GENERATED "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.cpp" "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.hpp")
+add_executable(luminus Luminus_Compiler/main.cpp ${ANTLR_GENERATED} Luminus_Compiler/LumVisitor.h Luminus_Compiler/FunctionVisitor.cpp Luminus_Compiler/ErrorLogger.h Luminus_Compiler/Compiler_Error_Types.h)
 
-
-add_executable(luminus main.cpp)
+include_directories("${CMAKE_SOURCE_DIR}/src/Luminus_Generated")
 
 
 #################### ANTLR ####################
@@ -31,3 +32,7 @@ separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
 add_definitions(${LLVM_DEFINITIONS_LIST})
 llvm_map_components_to_libnames(llvm_libs support core irreader)
 target_link_libraries(luminus ${llvm_libs})
+
+##############################################
+
+

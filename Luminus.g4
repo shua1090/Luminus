@@ -1,4 +1,4 @@
-grammar LuxLang;
+grammar Luminus;
 
 MUL: '*';
 DIV: '/';
@@ -32,7 +32,7 @@ DIGIT: [0-9]+;
 OCTAL_DIG: '0o'[0-9]+;
 HEX_DIG: '0x'[0-9]+;
 
-start: statement+;
+start: function+;
 
 expression:
     BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const
@@ -55,10 +55,11 @@ conditional_else: 'else' '{' statement+ '}';
 
 
 assignment: dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
-    | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #BoolInitialization
     | dec_type=TYPE id=IDENTIFIER ';' #Declaration
     ;
 
-statement: assignment | conditional_if | conditional_else | function;
+return_statement: 'return' value=expression ';' #ReturnStatement ;
+
+statement: assignment | conditional_if | conditional_else | function | return_statement;
 
 WHITESPACE: [ \r\n\t]+ -> skip;
