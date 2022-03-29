@@ -75,11 +75,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *ctx) override {
+  virtual antlrcpp::Any visitDeclaration(LuminusParser::DeclarationContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitDeclaration(LuminusParser::DeclarationContext *ctx) override {
+  virtual antlrcpp::Any visitReinitialization(LuminusParser::ReinitializationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *ctx) override {
     return visitChildren(ctx);
   }
 

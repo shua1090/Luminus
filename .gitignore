@@ -10,3 +10,4 @@ build
 antlr4
 cmake
 for_grun
+cmake*

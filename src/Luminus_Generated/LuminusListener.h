@@ -59,11 +59,14 @@ public:
   virtual void enterConditional_else(LuminusParser::Conditional_elseContext *ctx) = 0;
   virtual void exitConditional_else(LuminusParser::Conditional_elseContext *ctx) = 0;
 
-  virtual void enterInitialization(LuminusParser::InitializationContext *ctx) = 0;
-  virtual void exitInitialization(LuminusParser::InitializationContext *ctx) = 0;
-
   virtual void enterDeclaration(LuminusParser::DeclarationContext *ctx) = 0;
   virtual void exitDeclaration(LuminusParser::DeclarationContext *ctx) = 0;
+
+  virtual void enterReinitialization(LuminusParser::ReinitializationContext *ctx) = 0;
+  virtual void exitReinitialization(LuminusParser::ReinitializationContext *ctx) = 0;
+
+  virtual void enterInitialization(LuminusParser::InitializationContext *ctx) = 0;
+  virtual void exitInitialization(LuminusParser::InitializationContext *ctx) = 0;
 
   virtual void enterReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
   virtual void exitReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;

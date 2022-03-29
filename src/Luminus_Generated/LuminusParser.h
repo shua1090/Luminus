@@ -186,6 +186,7 @@ public:
   public:
     IdentifierExpressionContext(ExpressionContext *ctx);
 
+    antlr4::Token *id = nullptr;
     antlr4::tree::TerminalNode *IDENTIFIER();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -217,6 +218,8 @@ public:
   ExpressionContext* expression(int precedence);
   class  ArgumentContext : public antlr4::ParserRuleContext {
   public:
+    antlr4::Token *dec_type = nullptr;
+    antlr4::Token *id = nullptr;
     ArgumentContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *TYPE();
@@ -268,6 +271,7 @@ public:
 
   class  Conditional_ifContext : public antlr4::ParserRuleContext {
   public:
+    LuminusParser::ExpressionContext *inner = nullptr;
     Conditional_ifContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     ExpressionContext *expression();
@@ -310,6 +314,20 @@ public:
     virtual size_t getRuleIndex() const override;
 
    
+  };
+
+  class  ReinitializationContext : public AssignmentContext {
+  public:
+    ReinitializationContext(AssignmentContext *ctx);
+
+    antlr4::Token *id = nullptr;
+    LuminusParser::ExpressionContext *value = nullptr;
+    antlr4::tree::TerminalNode *IDENTIFIER();
+    ExpressionContext *expression();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   class  InitializationContext : public AssignmentContext {

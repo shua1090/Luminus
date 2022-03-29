@@ -38,7 +38,7 @@ expression:
     BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const
     | INTEGER_CONST #IntegerExpression
     | FLOATING_CONST #FloatExpression
-    | IDENTIFIER #IdentifierExpression
+    | id=IDENTIFIER #IdentifierExpression
     | '-' inner=expression #Unary_Negate
     | '(' inner=expression ')' #Parantheses
     | IDENTIFIER '(' (expression (',' expression)*)? ')' #FunctionCall
@@ -47,15 +47,16 @@ expression:
     | left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
     ;
 
-argument: TYPE IDENTIFIER;
+argument: dec_type=TYPE id=IDENTIFIER;
 function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=TYPE '{' statement+ '}' #FunctionDeclaration;
 
-conditional_if: 'if' '(' expression ')' '{' statement+ '}';
+conditional_if: 'if' '(' inner=expression ')' '{' statement+ '}';
 conditional_else: 'else' '{' statement+ '}';
 
 
-assignment: dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
-    | dec_type=TYPE id=IDENTIFIER ';' #Declaration
+assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
+    | id=IDENTIFIER '=' value=expression ';' #Reinitialization
+    | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
 
 return_statement: 'return' value=expression ';' #ReturnStatement ;

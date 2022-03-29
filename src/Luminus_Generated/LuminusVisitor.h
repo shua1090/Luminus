@@ -49,9 +49,11 @@ public:
 
     virtual antlrcpp::Any visitConditional_else(LuminusParser::Conditional_elseContext *context) = 0;
 
-    virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *context) = 0;
-
     virtual antlrcpp::Any visitDeclaration(LuminusParser::DeclarationContext *context) = 0;
+
+    virtual antlrcpp::Any visitReinitialization(LuminusParser::ReinitializationContext *context) = 0;
+
+    virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *context) = 0;
 
     virtual antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) = 0;
 

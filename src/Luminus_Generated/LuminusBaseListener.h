@@ -61,11 +61,14 @@ public:
   virtual void enterConditional_else(LuminusParser::Conditional_elseContext * /*ctx*/) override { }
   virtual void exitConditional_else(LuminusParser::Conditional_elseContext * /*ctx*/) override { }
 
-  virtual void enterInitialization(LuminusParser::InitializationContext * /*ctx*/) override { }
-  virtual void exitInitialization(LuminusParser::InitializationContext * /*ctx*/) override { }
-
   virtual void enterDeclaration(LuminusParser::DeclarationContext * /*ctx*/) override { }
   virtual void exitDeclaration(LuminusParser::DeclarationContext * /*ctx*/) override { }
+
+  virtual void enterReinitialization(LuminusParser::ReinitializationContext * /*ctx*/) override { }
+  virtual void exitReinitialization(LuminusParser::ReinitializationContext * /*ctx*/) override { }
+
+  virtual void enterInitialization(LuminusParser::InitializationContext * /*ctx*/) override { }
+  virtual void exitInitialization(LuminusParser::InitializationContext * /*ctx*/) override { }
 
   virtual void enterReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override { }
   virtual void exitReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override { }
