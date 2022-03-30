@@ -12,12 +12,12 @@
 class  LuminusLexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, MUL = 13, DIV = 14, 
-    ADD = 15, SUB = 16, LESS_THAN = 17, GREATER_THAN = 18, LESS_THAN_EQUAL = 19, 
-    GREATER_THAN_EQUAL = 20, EQUAL_TO = 21, TRUE_CONST = 22, FALSE_CONST = 23, 
-    TYPE = 24, IDENTIFIER = 25, INTEGER_CONST = 26, FLOATING_CONST = 27, 
-    DIGIT = 28, OCTAL_DIG = 29, HEX_DIG = 30, WHITESPACE = 31
+      T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7,
+      T__7 = 8, T__8 = 9, T__9 = 10, MUL = 11, DIV = 12, ADD = 13, SUB = 14,
+      LESS_THAN = 15, GREATER_THAN = 16, LESS_THAN_EQUAL = 17, GREATER_THAN_EQUAL = 18,
+      EQUAL_TO = 19, TRUE_CONST = 20, FALSE_CONST = 21, VOID = 22, TYPE = 23,
+      IDENTIFIER = 24, INTEGER_CONST = 25, FLOATING_CONST = 26, DIGIT = 27,
+      OCTAL_DIG = 28, HEX_DIG = 29, WHITESPACE = 30
   };
 
   explicit LuminusLexer(antlr4::CharStream *input);

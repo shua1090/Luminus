@@ -14,13 +14,14 @@ EQUAL_TO: '==';
 TRUE_CONST: 'true';
 FALSE_CONST: 'false';
 
-TYPE: INT | BYTE | LONG | DOUBLE | STRING | VOID | BOOL;
+VOID: 'void';
+
+TYPE: INT | BYTE | LONG | DOUBLE | STRING | BOOL;
 fragment INT: 'int';
 fragment BYTE: 'byte';
 fragment LONG: 'long';
 fragment DOUBLE: 'double';
 fragment STRING: 'string';
-fragment VOID: 'void';
 fragment BOOL: 'bool';
 
 IDENTIFIER: [A-Za-z]+;
@@ -38,29 +39,28 @@ expression:
     BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const
     | INTEGER_CONST #IntegerExpression
     | FLOATING_CONST #FloatExpression
+    | call=func_call #Func_Call_Expression
     | id=IDENTIFIER #IdentifierExpression
     | '-' inner=expression #Unary_Negate
     | '(' inner=expression ')' #Parantheses
-    | IDENTIFIER '(' (expression (',' expression)*)? ')' #FunctionCall
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
     ;
 
 argument: dec_type=TYPE id=IDENTIFIER;
-function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=TYPE '{' statement+ '}' #FunctionDeclaration;
+function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
 
-conditional_if: 'if' '(' inner=expression ')' '{' statement+ '}';
-conditional_else: 'else' '{' statement+ '}';
-
+func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
+    ;
 
 assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
     | id=IDENTIFIER '=' value=expression ';' #Reinitialization
     | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
 
-return_statement: 'return' value=expression ';' #ReturnStatement ;
+return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
-statement: assignment | conditional_if | conditional_else | function | return_statement;
+statement: assignment | return_statement | func_call ';';
 
 WHITESPACE: [ \r\n\t]+ -> skip;

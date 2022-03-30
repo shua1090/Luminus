@@ -1,14 +1,12 @@
-function funca (int a, int b) returns int {
-    int k = 10;
+function funca (int a) returns int {
+    return a;
 }
 
-function funcb (int a, int b) returns int{
-    int k = 10;
-    int z = 12;
+function funcb (int a, int b) returns int {
+    funcb(a, b-1);
+    return 10;
 }
 
-
-function main () returns int {
-    int z = 10;
-    z = k;
+function main () returns void {
+    funcb(15, 12);
 }

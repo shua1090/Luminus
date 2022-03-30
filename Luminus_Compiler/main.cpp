@@ -5,7 +5,7 @@
 
 #include "antlr4-common.h"
 #include "antlr4-runtime.h"
-#include "LumVisitor.h"
+#include "Basic_Checker/LumVisitor.h"
 
 using namespace antlr4;
 
@@ -16,10 +16,12 @@ int main(){
     antlr4::ANTLRInputStream input(stream);
     LuminusLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
+
     LuminusParser parser(&tokens);
     auto tree = parser.start();
-    LumVisitor visitor;
+    LuminusGenerator visitor;
     auto scene = visitor.visitStart(tree);
     visitor.logger.printErrors();
+
     return 0;
 }
