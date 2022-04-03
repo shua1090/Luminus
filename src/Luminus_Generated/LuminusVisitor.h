@@ -19,13 +19,15 @@ public:
   /**
    * Visit parse trees produced by LuminusParser.
    */
-    virtual antlrcpp::Any visitStart(LuminusParser::StartContext *context) = 0;
+  virtual antlrcpp::Any visitStart(LuminusParser::StartContext *context) = 0;
 
     virtual antlrcpp::Any visitBool_Const(LuminusParser::Bool_ConstContext *context) = 0;
 
     virtual antlrcpp::Any visitParantheses(LuminusParser::ParanthesesContext *context) = 0;
 
     virtual antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *context) = 0;
+
+    virtual antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *context) = 0;
 
@@ -35,8 +37,6 @@ public:
 
     virtual antlrcpp::Any visitIntegerExpression(LuminusParser::IntegerExpressionContext *context) = 0;
 
-    virtual antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) = 0;
-
     virtual antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *context) = 0;
@@ -45,9 +45,7 @@ public:
 
     virtual antlrcpp::Any visitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *context) = 0;
 
-    virtual antlrcpp::Any visitConditional_if(LuminusParser::Conditional_ifContext *context) = 0;
-
-    virtual antlrcpp::Any visitConditional_else(LuminusParser::Conditional_elseContext *context) = 0;
+    virtual antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) = 0;
 
     virtual antlrcpp::Any visitDeclaration(LuminusParser::DeclarationContext *context) = 0;
 

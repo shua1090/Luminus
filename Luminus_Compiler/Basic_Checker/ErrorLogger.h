@@ -9,18 +9,20 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "Compiler_Error_Types.h"
+#include "CompilerErrors.h"
 
-class Logger{
-std::vector<BaseError*> errors;
+class Logger {
 public:
+    std::vector<BaseError *> errors;
+
     Logger() = default;
-    void addBaseError(BaseError * error){
+
+    void addError(BaseError *error) {
         this->errors.push_back(error);
     }
 
-    void printErrors(){
-        for (int i = 0; i < errors.size(); i++){
+    void printErrors() {
+        for (int i = 0; i < errors.size(); i++) {
             errors[i]->printError();
             errors[i]->printSpecificError();
         }

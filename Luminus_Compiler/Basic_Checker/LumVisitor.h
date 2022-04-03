@@ -9,16 +9,18 @@
 #include "ErrorLogger.h"
 #include <unordered_map>
 
-enum Types{
+enum Types {
     NONEXISTENT,
     INTEGER,
     DOUBLE,
     BOOLEAN,
+    VOID,
 };
 
 struct LumFunction{
     Types returnType;
     std::vector<Types> args;
+    bool hasValidReturnVal = false;
     bool sameReturnval(LumFunction & lf) const{
         if (lf.returnType == returnType) return true;
         return false;
@@ -32,32 +34,26 @@ struct LumFunction{
     }
 };
 
-class LumVisitor : public LuminusVisitor{
+class LuminusGenerator : public LuminusVisitor {
     std::string currentLine;
     std::vector<std::unordered_map<std::string, Types>> names;
-    std::unordered_map<std::string, LumFunction> funcs;
+
+    std::unordered_map<std::string, LumFunction> vec_of_funcs;
+
     std::string currentFunctionName;
 
-    inline Types checkForVariable(std::string varName){
-        for (int i = names.size()-1; i >= 0 ; i --){
+    inline Types checkForVariable(std::string varName) {
+        for (int i = names.size() - 1; i >= 0; i--) {
             try {
-                std::cout << "All current Variables: " << varName << " " << names[i].at(varName) << std::endl;
                 return names[i].at(varName);
-            } catch (std::out_of_range r){}
+            } catch (std::out_of_range r) {}
         }
         return NONEXISTENT;
     }
 
-    void print() {
-//        std::cout << "The vector elements are : ";
-
-//        for(int i=0; i < this->names.size(); i++)
-//            std::cout << this->names.at(i). << ' ';
-    }
-
     inline LumFunction checkFunction(std::string functionName){
         try {
-            return funcs.at(functionName);
+            return vec_of_funcs.at(functionName);
         } catch (std::out_of_range r){
             return {NONEXISTENT};
         }
@@ -69,21 +65,28 @@ class LumVisitor : public LuminusVisitor{
             dec_type_t = INTEGER;
         } else if (type == "double"){
             dec_type_t = DOUBLE;
-        } else if (type == "bool"){
+        } else if (type == "bool") {
             dec_type_t = BOOLEAN;
+        } else if (type == "void") {
+            dec_type_t = VOID;
         } else {
             dec_type_t = INTEGER;
         }
         return dec_type_t;
     }
 
-    static size_t getColumnNum (antlr4::ParserRuleContext * ctx){
+
+private:
+
+    static size_t getColumnNum(antlr4::ParserRuleContext *ctx) {
         return ctx->getStart()->getCharPositionInLine();
     }
-    static size_t getRowNum(antlr4::ParserRuleContext * ctx){
+
+    static size_t getRowNum(antlr4::ParserRuleContext *ctx) {
         return ctx->getStart()->getLine();
     }
-    static std::string getText(antlr4::ParserRuleContext * ctx){
+
+    static std::string getText(antlr4::ParserRuleContext *ctx) {
         return ctx->getText();
     }
     static BaseError* fillError(BaseError * err, antlr4::ParserRuleContext * ctx, std::string errDescription){
@@ -110,25 +113,15 @@ public:
         return this->visit(context->inner);
     }
 
-    antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) override {
+        return this->visitChildren(context);
+    };
 
-    antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *context) override;
 
-    antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) override {
-        Types left = this->visit(context->left).as<Types>();
-        Types right = this->visit(context->right).as<Types>();
-        if (left == BOOLEAN || right==BOOLEAN){
-            logger.addBaseError(fillError(
-                    new TypeMismatchError,
-                    context,
-                    "Cannot operate on Booleans"));
-        }
-        return left;
-    }
+    antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *context) override;
+
+    antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) override;
 
     antlrcpp::Any visitFloatExpression(LuminusParser::FloatExpressionContext *context) override {
         return DOUBLE;
@@ -142,43 +135,13 @@ public:
 
     antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) override;
 
-    antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *context) override {
-        std::cout << "Visit Boolean Expression" << std::endl;
-        Types left = this->visit(context->left).as<Types>();
-        Types right = this->visit(context->right).as<Types>();
-        if (left == NONEXISTENT || right==NONEXISTENT){
-            logger.addBaseError(fillError(
-                    new NonexistentVariable,
-                    context,
-                    "One of the values being compared has not been initialized"));
-        } else if (left == BOOLEAN || right==BOOLEAN){
-            logger.addBaseError(fillError(
-                    new TypeMismatchError,
-                    context,
-                    "Cannot operate on Booleans"));
-        } else if (left != right) {
-            logger.addBaseError(fillError(
-                    new TypeMismatchError,
-                    context,
-                    "Cannot operate on Booleans"));
-        }
-        return BOOLEAN;
-    }
+    antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *context) override;
 
     antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) override {
         return antlrcpp::Any();
     }
 
     antlrcpp::Any visitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *context) override;
-
-    antlrcpp::Any visitConditional_if(LuminusParser::Conditional_ifContext *context) override {
-        this->visit(context->inner);
-        return antlrcpp::Any();
-    }
-
-    antlrcpp::Any visitConditional_else(LuminusParser::Conditional_elseContext *context) override {
-        return antlrcpp::Any();
-    }
 
     antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *context) override;
 
@@ -187,14 +150,16 @@ public:
     antlrcpp::Any visitReinitialization(LuminusParser::ReinitializationContext *context) override;
 
     antlrcpp::Any visitStatement(LuminusParser::StatementContext *context) override {
-        this->visitChildren(context);
+        if (this->currentFunctionName.empty()) {
+            logger.addError(fillError(new UnreachableCodeWarning,
+                                      context,
+                                      "Unreachable Code below this line, skipping"));
+        } else return this->visitChildren(context);
+
         return antlrcpp::Any();
     }
 
-    antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) override {
-        this->visitChildren(context);
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) override;
 };
 
 #endif //LUMINUS_LUMVISITOR_H

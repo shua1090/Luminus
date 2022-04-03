@@ -12,19 +12,18 @@
 class  LuminusParser : public antlr4::Parser {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, MUL = 13, DIV = 14, 
-    ADD = 15, SUB = 16, LESS_THAN = 17, GREATER_THAN = 18, LESS_THAN_EQUAL = 19, 
-    GREATER_THAN_EQUAL = 20, EQUAL_TO = 21, TRUE_CONST = 22, FALSE_CONST = 23, 
-    TYPE = 24, IDENTIFIER = 25, INTEGER_CONST = 26, FLOATING_CONST = 27, 
-    DIGIT = 28, OCTAL_DIG = 29, HEX_DIG = 30, WHITESPACE = 31
+      T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7,
+      T__7 = 8, T__8 = 9, T__9 = 10, MUL = 11, DIV = 12, ADD = 13, SUB = 14,
+      LESS_THAN = 15, GREATER_THAN = 16, LESS_THAN_EQUAL = 17, GREATER_THAN_EQUAL = 18,
+      EQUAL_TO = 19, TRUE_CONST = 20, FALSE_CONST = 21, VOID = 22, TYPE = 23,
+      IDENTIFIER = 24, INTEGER_CONST = 25, FLOATING_CONST = 26, DIGIT = 27,
+      OCTAL_DIG = 28, HEX_DIG = 29, WHITESPACE = 30
   };
 
-  enum {
-    RuleStart = 0, RuleExpression = 1, RuleArgument = 2, RuleFunction = 3, 
-    RuleConditional_if = 4, RuleConditional_else = 5, RuleAssignment = 6, 
-    RuleReturn_statement = 7, RuleStatement = 8
-  };
+    enum {
+        RuleStart = 0, RuleExpression = 1, RuleArgument = 2, RuleFunction = 3,
+        RuleFunc_call = 4, RuleAssignment = 5, RuleReturn_statement = 6, RuleStatement = 7
+    };
 
   explicit LuminusParser(antlr4::TokenStream *input);
   ~LuminusParser();
@@ -39,10 +38,12 @@ public:
   class StartContext;
   class ExpressionContext;
   class ArgumentContext;
-  class FunctionContext;
-  class Conditional_ifContext;
-  class Conditional_elseContext;
-  class AssignmentContext;
+
+    class FunctionContext;
+
+    class Func_callContext;
+
+    class AssignmentContext;
   class Return_statementContext;
   class StatementContext; 
 
@@ -104,25 +105,47 @@ public:
   public:
     MultiplyOrDivideContext(ExpressionContext *ctx);
 
-    LuminusParser::ExpressionContext *left = nullptr;
-    antlr4::Token *op = nullptr;
-    LuminusParser::ExpressionContext *right = nullptr;
-    std::vector<ExpressionContext *> expression();
-    ExpressionContext* expression(size_t i);
-    antlr4::tree::TerminalNode *MUL();
-    antlr4::tree::TerminalNode *DIV();
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+      LuminusParser::ExpressionContext *left = nullptr;
+      antlr4::Token *op = nullptr;
+      LuminusParser::ExpressionContext *right = nullptr;
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+      std::vector<ExpressionContext *> expression();
+
+      ExpressionContext *expression(size_t i);
+
+      antlr4::tree::TerminalNode *MUL();
+
+      antlr4::tree::TerminalNode *DIV();
+
+      virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+      virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+      virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  Unary_NegateContext : public ExpressionContext {
-  public:
-    Unary_NegateContext(ExpressionContext *ctx);
+    class Func_Call_ExpressionContext : public ExpressionContext {
+    public:
+        Func_Call_ExpressionContext(ExpressionContext *ctx);
 
-    LuminusParser::ExpressionContext *inner = nullptr;
-    antlr4::tree::TerminalNode *SUB();
+        LuminusParser::Func_callContext *call = nullptr;
+
+        Func_callContext *func_call();
+
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
+
+    class Unary_NegateContext : public ExpressionContext {
+    public:
+        Unary_NegateContext(ExpressionContext *ctx);
+
+        LuminusParser::ExpressionContext *inner = nullptr;
+
+        antlr4::tree::TerminalNode *SUB();
     ExpressionContext *expression();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -163,19 +186,6 @@ public:
     IntegerExpressionContext(ExpressionContext *ctx);
 
     antlr4::tree::TerminalNode *INTEGER_CONST();
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  FunctionCallContext : public ExpressionContext {
-  public:
-    FunctionCallContext(ExpressionContext *ctx);
-
-    antlr4::tree::TerminalNode *IDENTIFIER();
-    std::vector<ExpressionContext *> expression();
-    ExpressionContext* expression(size_t i);
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -256,8 +266,12 @@ public:
     std::vector<ArgumentContext *> args;
     antlr4::Token *returnType = nullptr;
     antlr4::tree::TerminalNode *IDENTIFIER();
-    antlr4::tree::TerminalNode *TYPE();
-    std::vector<StatementContext *> statement();
+
+      antlr4::tree::TerminalNode *TYPE();
+
+      antlr4::tree::TerminalNode *VOID();
+
+      std::vector<StatementContext *> statement();
     StatementContext* statement(size_t i);
     std::vector<ArgumentContext *> argument();
     ArgumentContext* argument(size_t i);
@@ -269,39 +283,43 @@ public:
 
   FunctionContext* function();
 
-  class  Conditional_ifContext : public antlr4::ParserRuleContext {
-  public:
-    LuminusParser::ExpressionContext *inner = nullptr;
-    Conditional_ifContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    ExpressionContext *expression();
-    std::vector<StatementContext *> statement();
-    StatementContext* statement(size_t i);
+    class Func_callContext : public antlr4::ParserRuleContext {
+    public:
+        Func_callContext(antlr4::ParserRuleContext *parent, size_t invokingState);
 
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+        Func_callContext() = default;
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
+        void copyFrom(Func_callContext *context);
 
-  Conditional_ifContext* conditional_if();
+        using antlr4::ParserRuleContext::copyFrom;
 
-  class  Conditional_elseContext : public antlr4::ParserRuleContext {
-  public:
-    Conditional_elseContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    std::vector<StatementContext *> statement();
-    StatementContext* statement(size_t i);
+        virtual size_t getRuleIndex() const override;
 
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
+    };
 
-  Conditional_elseContext* conditional_else();
+    class FunctionCallContext : public Func_callContext {
+    public:
+        FunctionCallContext(Func_callContext *ctx);
+
+        antlr4::Token *funcid = nullptr;
+        LuminusParser::ExpressionContext *expressionContext = nullptr;
+        std::vector<ExpressionContext *> args;
+
+        antlr4::tree::TerminalNode *IDENTIFIER();
+
+        std::vector<ExpressionContext *> expression();
+
+        ExpressionContext *expression(size_t i);
+
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
+
+    Func_callContext *func_call();
 
   class  AssignmentContext : public antlr4::ParserRuleContext {
   public:
@@ -394,10 +412,10 @@ public:
     StatementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     AssignmentContext *assignment();
-    Conditional_ifContext *conditional_if();
-    Conditional_elseContext *conditional_else();
-    FunctionContext *function();
-    Return_statementContext *return_statement();
+
+      Return_statementContext *return_statement();
+
+      Func_callContext *func_call();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
