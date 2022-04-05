@@ -43,3 +43,8 @@ antlrcpp::Any LuminusGenerator::visitMultiplyOrDivide(LuminusParser::MultiplyOrD
 antlrcpp::Any LuminusGenerator::visitUnary_Negate(LuminusParser::Unary_NegateContext *context) {
     return this->visit(context->inner);
 }
+
+antlrcpp::Any LuminusGenerator::visitCastToType(LuminusParser::CastToTypeContext *context) {
+    this->visit(context->inner);
+    return LuminusGenerator::textToType(context->cast_type->getText());
+}

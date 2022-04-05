@@ -41,10 +41,11 @@ expression:
     | FLOATING_CONST #FloatExpression
     | call=func_call #Func_Call_Expression
     | id=IDENTIFIER #IdentifierExpression
-    | '-' inner=expression #Unary_Negate
+    | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
+    | '-' inner=expression #Unary_Negate
     | left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
     ;
 

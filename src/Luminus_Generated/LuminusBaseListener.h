@@ -13,11 +13,12 @@
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-class  LuminusBaseListener : public LuminusListener {
+class LuminusBaseListener : public LuminusListener {
 public:
 
-  virtual void enterStart(LuminusParser::StartContext * /*ctx*/) override { }
-  virtual void exitStart(LuminusParser::StartContext * /*ctx*/) override { }
+    virtual void enterStart(LuminusParser::StartContext * /*ctx*/) override {}
+
+    virtual void exitStart(LuminusParser::StartContext * /*ctx*/) override {}
 
     virtual void enterBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override {}
 
@@ -47,11 +48,17 @@ public:
 
     virtual void exitFloatExpression(LuminusParser::FloatExpressionContext * /*ctx*/) override {}
 
-  virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override { }
-  virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override { }
+    virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override {}
 
-  virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext * /*ctx*/) override { }
-  virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext * /*ctx*/) override { }
+    virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override {}
+
+    virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext * /*ctx*/) override {}
+
+    virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext * /*ctx*/) override {}
+
+    virtual void enterCastToType(LuminusParser::CastToTypeContext * /*ctx*/) override {}
+
+    virtual void exitCastToType(LuminusParser::CastToTypeContext * /*ctx*/) override {}
 
     virtual void enterBoolExpression(LuminusParser::BoolExpressionContext * /*ctx*/) override {}
 
@@ -81,15 +88,18 @@ public:
 
     virtual void exitInitialization(LuminusParser::InitializationContext * /*ctx*/) override {}
 
-  virtual void enterReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override { }
-  virtual void exitReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override { }
+    virtual void enterReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override {}
 
-  virtual void enterStatement(LuminusParser::StatementContext * /*ctx*/) override { }
-  virtual void exitStatement(LuminusParser::StatementContext * /*ctx*/) override { }
+    virtual void exitReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override {}
+
+    virtual void enterStatement(LuminusParser::StatementContext * /*ctx*/) override {}
+
+    virtual void exitStatement(LuminusParser::StatementContext * /*ctx*/) override {}
 
 
-  virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
-  virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
+    virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override {}
+
+    virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override {}
   virtual void visitTerminal(antlr4::tree::TerminalNode * /*node*/) override { }
   virtual void visitErrorNode(antlr4::tree::ErrorNode * /*node*/) override { }
 

@@ -39,6 +39,8 @@ public:
 
     virtual antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) = 0;
 
+    virtual antlrcpp::Any visitCastToType(LuminusParser::CastToTypeContext *context) = 0;
+
     virtual antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) = 0;

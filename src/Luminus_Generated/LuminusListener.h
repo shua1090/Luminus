@@ -11,11 +11,12 @@
 /**
  * This interface defines an abstract listener for a parse tree produced by LuminusParser.
  */
-class  LuminusListener : public antlr4::tree::ParseTreeListener {
+class LuminusListener : public antlr4::tree::ParseTreeListener {
 public:
 
-  virtual void enterStart(LuminusParser::StartContext *ctx) = 0;
-  virtual void exitStart(LuminusParser::StartContext *ctx) = 0;
+    virtual void enterStart(LuminusParser::StartContext *ctx) = 0;
+
+    virtual void exitStart(LuminusParser::StartContext *ctx) = 0;
 
     virtual void enterBool_Const(LuminusParser::Bool_ConstContext *ctx) = 0;
 
@@ -45,11 +46,17 @@ public:
 
     virtual void exitFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
 
-  virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
-  virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
+    virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
 
-  virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
-  virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
+    virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
+
+    virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
+
+    virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
+
+    virtual void enterCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
+
+    virtual void exitCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
 
     virtual void enterBoolExpression(LuminusParser::BoolExpressionContext *ctx) = 0;
 
@@ -79,11 +86,13 @@ public:
 
     virtual void exitInitialization(LuminusParser::InitializationContext *ctx) = 0;
 
-  virtual void enterReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
-  virtual void exitReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
+    virtual void enterReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
 
-  virtual void enterStatement(LuminusParser::StatementContext *ctx) = 0;
-  virtual void exitStatement(LuminusParser::StatementContext *ctx) = 0;
+    virtual void exitReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
+
+    virtual void enterStatement(LuminusParser::StatementContext *ctx) = 0;
+
+    virtual void exitStatement(LuminusParser::StatementContext *ctx) = 0;
 
 
 };

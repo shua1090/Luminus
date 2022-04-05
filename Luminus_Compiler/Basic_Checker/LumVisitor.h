@@ -159,6 +159,8 @@ public:
         return antlrcpp::Any();
     }
 
+    antlrcpp::Any visitCastToType(LuminusParser::CastToTypeContext *context) override;
+
     antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) override;
 };
 
