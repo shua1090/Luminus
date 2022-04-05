@@ -92,6 +92,10 @@ public:
 
     virtual void exitReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override {}
 
+    virtual void enterBlockExpression(LuminusParser::BlockExpressionContext * /*ctx*/) override {}
+
+    virtual void exitBlockExpression(LuminusParser::BlockExpressionContext * /*ctx*/) override {}
+
     virtual void enterStatement(LuminusParser::StatementContext * /*ctx*/) override {}
 
     virtual void exitStatement(LuminusParser::StatementContext * /*ctx*/) override {}
@@ -100,8 +104,10 @@ public:
     virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override {}
 
     virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override {}
-  virtual void visitTerminal(antlr4::tree::TerminalNode * /*node*/) override { }
-  virtual void visitErrorNode(antlr4::tree::ErrorNode * /*node*/) override { }
+
+    virtual void visitTerminal(antlr4::tree::TerminalNode * /*node*/) override {}
+
+    virtual void visitErrorNode(antlr4::tree::ErrorNode * /*node*/) override {}
 
 };
 

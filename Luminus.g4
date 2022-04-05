@@ -49,7 +49,7 @@ expression:
     | left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
     ;
 
-argument: dec_type=TYPE id=IDENTIFIER;
+argument: (ref='ref')? dec_type=TYPE id=IDENTIFIER;
 function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
 
 func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
@@ -62,6 +62,7 @@ assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
 
 return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
-statement: assignment | return_statement | func_call ';';
+block: '{' statement+ '}' #BlockExpression;
+statement: assignment | return_statement | func_call | block ';';
 
 WHITESPACE: [ \r\n\t]+ -> skip;

@@ -12,7 +12,7 @@
  * This class provides an empty implementation of LuminusVisitor, which can be
  * extended to create a visitor which only needs to handle a subset of the available methods.
  */
-class  LuminusBaseVisitor : public LuminusVisitor {
+class LuminusBaseVisitor : public LuminusVisitor {
 public:
 
     virtual antlrcpp::Any visitStart(LuminusParser::StartContext *ctx) override {
@@ -84,16 +84,20 @@ public:
     }
 
     virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *ctx) override {
-    return visitChildren(ctx);
-  }
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitStatement(LuminusParser::StatementContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitBlockExpression(LuminusParser::BlockExpressionContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitStatement(LuminusParser::StatementContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
 
 };

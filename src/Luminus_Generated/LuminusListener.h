@@ -90,6 +90,10 @@ public:
 
     virtual void exitReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
 
+    virtual void enterBlockExpression(LuminusParser::BlockExpressionContext *ctx) = 0;
+
+    virtual void exitBlockExpression(LuminusParser::BlockExpressionContext *ctx) = 0;
+
     virtual void enterStatement(LuminusParser::StatementContext *ctx) = 0;
 
     virtual void exitStatement(LuminusParser::StatementContext *ctx) = 0;

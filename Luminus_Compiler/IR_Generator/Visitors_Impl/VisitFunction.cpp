@@ -59,7 +59,11 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
 
     // Setup Params
     for (int i = 0; i < args.size(); i++) {
-        param_types[i] = textToPtrType(args[i]->dec_type->getText());
+        if (args[i]->ref == nullptr) {
+            param_types[i] = textToType(args[i]->dec_type->getText());
+        } else {
+            param_types[i] = textToPtrType(args[i]->dec_type->getText());
+        }
         param_labels[i] = args[i]->id->getText();
     }
 
@@ -76,11 +80,20 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
     llvm::Function::arg_iterator forNameSetup = theFunction->arg_begin();
     for (int i = 0; i < theFunction->arg_size(); i++) {
         forNameSetup->setName(param_labels[i]);
-        svm.addVariable(param_labels[i], &*forNameSetup);
         forNameSetup++;
     }
     llvm::BasicBlock *body = llvm::BasicBlock::Create(*TheContext, "entry", theFunction);
     Builder->SetInsertPoint(body);
+
+    for (int i = 0; i < param_labels.size(); i++) {
+        if (args[i]->ref == nullptr)
+            svm.addVariable(param_labels[i],
+                            Builder->CreateAlloca(param_types[i], theFunction->getArg(i))
+            );
+        else
+            svm.addVariable(param_labels[i], theFunction->getArg(i));
+    }
+
     this->visitChildren(context);
 
     svm.removeScope();

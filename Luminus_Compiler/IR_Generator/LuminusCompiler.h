@@ -27,7 +27,7 @@ public:
     Value *getVariable(std::string varName) {
         for (int i = 0; i < names.size(); i++) {
             try {
-                return names[i].at(varName);
+                return names[i][varName];
             } catch (std::out_of_range &r) {}
         }
         return nullptr;
@@ -84,9 +84,7 @@ public:
         return this->visit(context->inner);
     }
 
-    antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) override;
 
     antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *context) override;
 
@@ -123,9 +121,7 @@ public:
         return static_cast<Value *>( Builder->getInt32(std::stoi(context->getText())));
     }
 
-    antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) override;
 
     antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) override;
 
@@ -139,15 +135,11 @@ public:
 
     antlrcpp::Any visitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *context) override;
 
-    antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *context) override;
 
     antlrcpp::Any visitDeclaration(LuminusParser::DeclarationContext *context) override;
 
-    antlrcpp::Any visitReinitialization(LuminusParser::ReinitializationContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitReinitialization(LuminusParser::ReinitializationContext *context) override;
 
     antlrcpp::Any visitStatement(LuminusParser::StatementContext *context) override {
         return this->visitChildren(context);

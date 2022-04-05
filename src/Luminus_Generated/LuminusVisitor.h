@@ -57,6 +57,8 @@ public:
 
     virtual antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) = 0;
 
+    virtual antlrcpp::Any visitBlockExpression(LuminusParser::BlockExpressionContext *context) = 0;
+
     virtual antlrcpp::Any visitStatement(LuminusParser::StatementContext *context) = 0;
 
 
