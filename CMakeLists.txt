@@ -6,10 +6,6 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_MSVC_RUNTIME_LIBRARY MDd)
 
 FILE(GLOB ANTLR_GENERATED "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.cpp" "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.hpp")
-set(BASIC_CHECKER Luminus_Compiler/Basic_Checker/LumVisitor.h Luminus_Compiler/Basic_Checker/VisitFunction.cpp
-        Luminus_Compiler/Basic_Checker/ErrorLogger.h Luminus_Compiler/Basic_Checker/CompilerErrors.h Luminus_Compiler/Basic_Checker/VisitAssignment.cpp
-        Luminus_Compiler/Basic_Checker/VisitIdentifier.cpp Luminus_Compiler/Basic_Checker/VisitArithmetic.cpp
-        Luminus_Compiler/Basic_Checker/VisitBoolExpressions.cpp Luminus_Compiler/Basic_Checker/CompilerErrors/TypeErrors.h Luminus_Compiler/Basic_Checker/CompilerErrors/DeclarationErrors.h Luminus_Compiler/Basic_Checker/CompilerErrors/FunctionErrors.h)
 
 set(IR_GENERATOR Luminus_Compiler/IR_Generator/LuminusCompiler.h
         Luminus_Compiler/IR_Generator/IR_Test.h Luminus_Compiler/IR_Generator/Visitors_Impl/VisitAdd_Sub.cpp
@@ -17,8 +13,14 @@ set(IR_GENERATOR Luminus_Compiler/IR_Generator/LuminusCompiler.h
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitReturn.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitCast.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitMul_Div.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitDeclaration.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitReinitialization.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitInitialization.cpp)
-set(ENTRY_POINT Luminus_Compiler/main.cpp Luminus_Compiler/IR_Generator/Definitions.h Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunction.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunctionCall.cpp)
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitDeclaration.cpp
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitReinitialization.cpp
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitInitialization.cpp
+        Luminus_Compiler/IR_Generator/Definitions.h
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunction.cpp
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunctionCall.cpp
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitConditionals.cpp)
+set(ENTRY_POINT Luminus_Compiler/main.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src/Luminus_Generated")
 

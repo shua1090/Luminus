@@ -39,11 +39,11 @@ public:
 
     virtual antlrcpp::Any visitIntegerExpression(LuminusParser::IntegerExpressionContext *context) = 0;
 
+    virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) = 0;
+
     virtual antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitCastToType(LuminusParser::CastToTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) = 0;
 
@@ -56,6 +56,14 @@ public:
     virtual antlrcpp::Any visitReinitialization(LuminusParser::ReinitializationContext *context) = 0;
 
     virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *context) = 0;
+
+    virtual antlrcpp::Any visitIf_statement(LuminusParser::If_statementContext *context) = 0;
+
+    virtual antlrcpp::Any visitElse_statement(LuminusParser::Else_statementContext *context) = 0;
+
+    virtual antlrcpp::Any visitElif_statement(LuminusParser::Elif_statementContext *context) = 0;
+
+    virtual antlrcpp::Any visitConditional_statement(LuminusParser::Conditional_statementContext *context) = 0;
 
     virtual antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) = 0;
 

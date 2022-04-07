@@ -54,6 +54,10 @@ public:
 
     virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
 
+    virtual void enterCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
+
+    virtual void exitCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
+
     virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
 
     virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
@@ -61,10 +65,6 @@ public:
     virtual void enterCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
 
     virtual void exitCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
-
-    virtual void enterBoolExpression(LuminusParser::BoolExpressionContext *ctx) = 0;
-
-    virtual void exitBoolExpression(LuminusParser::BoolExpressionContext *ctx) = 0;
 
     virtual void enterArgument(LuminusParser::ArgumentContext *ctx) = 0;
 
@@ -89,6 +89,22 @@ public:
     virtual void enterInitialization(LuminusParser::InitializationContext *ctx) = 0;
 
     virtual void exitInitialization(LuminusParser::InitializationContext *ctx) = 0;
+
+    virtual void enterIf_statement(LuminusParser::If_statementContext *ctx) = 0;
+
+    virtual void exitIf_statement(LuminusParser::If_statementContext *ctx) = 0;
+
+    virtual void enterElse_statement(LuminusParser::Else_statementContext *ctx) = 0;
+
+    virtual void exitElse_statement(LuminusParser::Else_statementContext *ctx) = 0;
+
+    virtual void enterElif_statement(LuminusParser::Elif_statementContext *ctx) = 0;
+
+    virtual void exitElif_statement(LuminusParser::Elif_statementContext *ctx) = 0;
+
+    virtual void enterConditional_statement(LuminusParser::Conditional_statementContext *ctx) = 0;
+
+    virtual void exitConditional_statement(LuminusParser::Conditional_statementContext *ctx) = 0;
 
     virtual void enterReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
 

@@ -7,5 +7,6 @@
 antlrcpp::Any LuminusCompiler::visitReturnStatement(LuminusParser::ReturnStatementContext *context) {
     Value *returnValue = this->visit(context->value).as<Value *>();
     Builder->CreateRet(returnValue);
+    this->returns = true;
     return returnValue;
 }

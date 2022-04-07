@@ -55,15 +55,15 @@ public:
         return visitChildren(ctx);
     }
 
+    virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
     virtual antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) override {
         return visitChildren(ctx);
     }
 
     virtual antlrcpp::Any visitCastToType(LuminusParser::CastToTypeContext *ctx) override {
-        return visitChildren(ctx);
-    }
-
-    virtual antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *ctx) override {
         return visitChildren(ctx);
     }
 
@@ -88,6 +88,22 @@ public:
     }
 
     virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitIf_statement(LuminusParser::If_statementContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitElse_statement(LuminusParser::Else_statementContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitElif_statement(LuminusParser::Elif_statementContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitConditional_statement(LuminusParser::Conditional_statementContext *ctx) override {
         return visitChildren(ctx);
     }
 

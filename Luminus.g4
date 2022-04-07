@@ -5,11 +5,12 @@ DIV: '/';
 ADD: '+';
 SUB: '-';
 
-LESS_THAN: '<';
-GREATER_THAN: '>';
-LESS_THAN_EQUAL: '<=';
-GREATER_THAN_EQUAL: '>=';
-EQUAL_TO: '==';
+LT: '<';
+GT: '>';
+LTE: '<=';
+GTE: '>=';
+EQ: '==';
+NOT_EQ: '!=';
 
 TRUE_CONST: 'true';
 FALSE_CONST: 'false';
@@ -25,7 +26,7 @@ fragment STRING: 'string';
 fragment BOOL: 'bool';
 
 
-STRING_CONST: '"' [A-Za-z]+ '"';
+STRING_CONST: '"' [A-Za-z %]+ '"';
 IDENTIFIER: [A-Za-z]+;
 INTEGER_CONST: DIGIT | OCTAL_DIG | HEX_DIG;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
@@ -48,7 +49,7 @@ expression:
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | '-' inner=expression #Unary_Negate
-    | left=expression op=(LESS_THAN|GREATER_THAN|LESS_THAN_EQUAL|GREATER_THAN_EQUAL|EQUAL_TO) right=expression #BoolExpression
+    | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     ;
 
 argument: (ref='ref')? dec_type=TYPE id=IDENTIFIER;
@@ -62,12 +63,15 @@ assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
     | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
 
-if_statement: 'if' '(' value=expression ')' ops=block;
+
+if_statement: 'if' '(' value=expression ')' execute_vals=block;
 else_statement: 'else' ops=block;
+elif_statement: 'elif' '(' value=expression ')' ops=block;
+conditional_statement: if_teil=if_statement (else_if_container+=elif_statement)* (else_teil=else_statement)?;
 
 return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
 block: '{' statement+ '}' #BlockExpression;
-statement: assignment | return_statement | func_call ';' | block ';';
+statement: assignment | return_statement | func_call ';' | block ';' | conditional_statement;
 
 WHITESPACE: [ \r\n\t]+ -> skip;

@@ -1,5 +1,17 @@
-function main() returns int {
-    string s = "HelloElynn";
-    puts(s);
-    return 0;
+function max(int a, int b, int c) returns int {
+    printf("Num is %d", a);
+    if (a > b){
+        if (a > c){return a;}
+        if (a < c){return c;}
+    }
+    if (b > a){
+        if (b > c){return b;}
+        if (b < c){return c;}
+    }
+    if (c> a){
+        puts("Here");
+        if (c> b){ return c;}
+        if (c< b){ return b;}
+    }
+    return 12;
 }

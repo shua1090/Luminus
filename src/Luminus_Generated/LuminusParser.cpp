@@ -85,13 +85,13 @@ LuminusParser::StartContext* LuminusParser::start() {
   });
   try {
       enterOuterAlt(_localctx, 1);
-      setState(19);
+      setState(27);
       _errHandler->sync(this);
       _la = _input->LA(1);
       do {
-          setState(18);
+          setState(26);
           function();
-          setState(21);
+          setState(29);
           _errHandler->sync(this);
           _la = _input->LA(1);
       } while (_la == LuminusParser::T__4);
@@ -225,7 +225,6 @@ void LuminusParser::StringConstContext::enterRule(tree::ParseTreeListener *liste
     if (parserListener != nullptr)
         parserListener->enterStringConst(this);
 }
-
 void LuminusParser::StringConstContext::exitRule(tree::ParseTreeListener *listener) {
     auto parserListener = dynamic_cast<LuminusListener *>(listener);
     if (parserListener != nullptr)
@@ -369,26 +368,80 @@ void LuminusParser::IntegerExpressionContext::enterRule(tree::ParseTreeListener 
 }
 void LuminusParser::IntegerExpressionContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<LuminusListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitIntegerExpression(this);
+    if (parserListener != nullptr)
+        parserListener->exitIntegerExpression(this);
 }
 
 antlrcpp::Any LuminusParser::IntegerExpressionContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<LuminusVisitor*>(visitor))
-    return parserVisitor->visitIntegerExpression(this);
-  else
-    return visitor->visitChildren(this);
+    if (auto parserVisitor = dynamic_cast<LuminusVisitor *>(visitor))
+        return parserVisitor->visitIntegerExpression(this);
+    else
+        return visitor->visitChildren(this);
+}
+//----------------- CompExpressionContext ------------------------------------------------------------------
+
+std::vector<LuminusParser::ExpressionContext *> LuminusParser::CompExpressionContext::expression() {
+    return getRuleContexts<LuminusParser::ExpressionContext>();
+}
+
+LuminusParser::ExpressionContext *LuminusParser::CompExpressionContext::expression(size_t i) {
+    return getRuleContext<LuminusParser::ExpressionContext>(i);
+}
+
+tree::TerminalNode *LuminusParser::CompExpressionContext::LT() {
+    return getToken(LuminusParser::LT, 0);
+}
+
+tree::TerminalNode *LuminusParser::CompExpressionContext::GT() {
+    return getToken(LuminusParser::GT, 0);
+}
+
+tree::TerminalNode *LuminusParser::CompExpressionContext::LTE() {
+    return getToken(LuminusParser::LTE, 0);
+}
+
+tree::TerminalNode *LuminusParser::CompExpressionContext::GTE() {
+    return getToken(LuminusParser::GTE, 0);
+}
+
+tree::TerminalNode *LuminusParser::CompExpressionContext::EQ() {
+    return getToken(LuminusParser::EQ, 0);
+}
+
+tree::TerminalNode *LuminusParser::CompExpressionContext::NOT_EQ() {
+    return getToken(LuminusParser::NOT_EQ, 0);
+}
+
+LuminusParser::CompExpressionContext::CompExpressionContext(ExpressionContext *ctx) { copyFrom(ctx); }
+
+void LuminusParser::CompExpressionContext::enterRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->enterCompExpression(this);
+}
+
+void LuminusParser::CompExpressionContext::exitRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->exitCompExpression(this);
+}
+
+antlrcpp::Any LuminusParser::CompExpressionContext::accept(tree::ParseTreeVisitor *visitor) {
+    if (auto parserVisitor = dynamic_cast<LuminusVisitor *>(visitor))
+        return parserVisitor->visitCompExpression(this);
+    else
+        return visitor->visitChildren(this);
 }
 //----------------- IdentifierExpressionContext ------------------------------------------------------------------
 
-tree::TerminalNode* LuminusParser::IdentifierExpressionContext::IDENTIFIER() {
-  return getToken(LuminusParser::IDENTIFIER, 0);
+tree::TerminalNode *LuminusParser::IdentifierExpressionContext::IDENTIFIER() {
+    return getToken(LuminusParser::IDENTIFIER, 0);
 }
 
 LuminusParser::IdentifierExpressionContext::IdentifierExpressionContext(ExpressionContext *ctx) { copyFrom(ctx); }
 
 void LuminusParser::IdentifierExpressionContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterIdentifierExpression(this);
 }
@@ -406,12 +459,12 @@ antlrcpp::Any LuminusParser::IdentifierExpressionContext::accept(tree::ParseTree
 }
 //----------------- CastToTypeContext ------------------------------------------------------------------
 
-tree::TerminalNode *LuminusParser::CastToTypeContext::LESS_THAN() {
-    return getToken(LuminusParser::LESS_THAN, 0);
+tree::TerminalNode *LuminusParser::CastToTypeContext::LT() {
+    return getToken(LuminusParser::LT, 0);
 }
 
-tree::TerminalNode *LuminusParser::CastToTypeContext::GREATER_THAN() {
-    return getToken(LuminusParser::GREATER_THAN, 0);
+tree::TerminalNode *LuminusParser::CastToTypeContext::GT() {
+    return getToken(LuminusParser::GT, 0);
 }
 
 tree::TerminalNode *LuminusParser::CastToTypeContext::TYPE() {
@@ -441,55 +494,6 @@ antlrcpp::Any LuminusParser::CastToTypeContext::accept(tree::ParseTreeVisitor *v
     else
         return visitor->visitChildren(this);
 }
-//----------------- BoolExpressionContext ------------------------------------------------------------------
-
-std::vector<LuminusParser::ExpressionContext *> LuminusParser::BoolExpressionContext::expression() {
-    return getRuleContexts<LuminusParser::ExpressionContext>();
-}
-
-LuminusParser::ExpressionContext *LuminusParser::BoolExpressionContext::expression(size_t i) {
-    return getRuleContext<LuminusParser::ExpressionContext>(i);
-}
-
-tree::TerminalNode* LuminusParser::BoolExpressionContext::LESS_THAN() {
-  return getToken(LuminusParser::LESS_THAN, 0);
-}
-
-tree::TerminalNode* LuminusParser::BoolExpressionContext::GREATER_THAN() {
-  return getToken(LuminusParser::GREATER_THAN, 0);
-}
-
-tree::TerminalNode* LuminusParser::BoolExpressionContext::LESS_THAN_EQUAL() {
-  return getToken(LuminusParser::LESS_THAN_EQUAL, 0);
-}
-
-tree::TerminalNode* LuminusParser::BoolExpressionContext::GREATER_THAN_EQUAL() {
-  return getToken(LuminusParser::GREATER_THAN_EQUAL, 0);
-}
-
-tree::TerminalNode* LuminusParser::BoolExpressionContext::EQUAL_TO() {
-  return getToken(LuminusParser::EQUAL_TO, 0);
-}
-
-LuminusParser::BoolExpressionContext::BoolExpressionContext(ExpressionContext *ctx) { copyFrom(ctx); }
-
-void LuminusParser::BoolExpressionContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<LuminusListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterBoolExpression(this);
-}
-void LuminusParser::BoolExpressionContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<LuminusListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitBoolExpression(this);
-}
-
-antlrcpp::Any LuminusParser::BoolExpressionContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<LuminusVisitor*>(visitor))
-    return parserVisitor->visitBoolExpression(this);
-  else
-    return visitor->visitChildren(this);
-}
 
 LuminusParser::ExpressionContext* LuminusParser::expression() {
    return expression(0);
@@ -516,7 +520,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
   try {
       size_t alt;
       enterOuterAlt(_localctx, 1);
-      setState(44);
+      setState(52);
       _errHandler->sync(this);
       switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 1, _ctx)) {
           case 1: {
@@ -524,7 +528,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _ctx = _localctx;
               previousContext = _localctx;
 
-              setState(24);
+              setState(32);
               antlrcpp::downCast<Bool_ConstContext *>(_localctx)->BOOL_CONST = _input->LT(1);
               _la = _input->LA(1);
               if (!(_la == LuminusParser::TRUE_CONST
@@ -542,7 +546,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<StringConstContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(25);
+              setState(33);
               match(LuminusParser::STRING_CONST);
               break;
           }
@@ -551,7 +555,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<IntegerExpressionContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(26);
+              setState(34);
               match(LuminusParser::INTEGER_CONST);
               break;
           }
@@ -560,7 +564,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<FloatExpressionContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(27);
+              setState(35);
               match(LuminusParser::FLOATING_CONST);
               break;
           }
@@ -569,7 +573,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<Func_Call_ExpressionContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(28);
+              setState(36);
               antlrcpp::downCast<Func_Call_ExpressionContext *>(_localctx)->call = func_call();
               break;
           }
@@ -578,7 +582,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<IdentifierExpressionContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(29);
+              setState(37);
               antlrcpp::downCast<IdentifierExpressionContext *>(_localctx)->id = match(LuminusParser::IDENTIFIER);
               break;
           }
@@ -587,19 +591,19 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<CastToTypeContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(30);
+              setState(38);
               match(LuminusParser::T__0);
-              setState(31);
-              match(LuminusParser::LESS_THAN);
-              setState(32);
+              setState(39);
+              match(LuminusParser::LT);
+              setState(40);
               antlrcpp::downCast<CastToTypeContext *>(_localctx)->cast_type = match(LuminusParser::TYPE);
-              setState(33);
-              match(LuminusParser::GREATER_THAN);
-              setState(34);
+              setState(41);
+              match(LuminusParser::GT);
+              setState(42);
               match(LuminusParser::T__1);
-              setState(35);
+              setState(43);
               antlrcpp::downCast<CastToTypeContext *>(_localctx)->inner = expression(0);
-              setState(36);
+              setState(44);
               match(LuminusParser::T__2);
               break;
           }
@@ -608,11 +612,11 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<ParanthesesContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(38);
+              setState(46);
               match(LuminusParser::T__1);
-              setState(39);
+              setState(47);
               antlrcpp::downCast<ParanthesesContext *>(_localctx)->inner = expression(0);
-              setState(40);
+              setState(48);
               match(LuminusParser::T__2);
               break;
           }
@@ -621,9 +625,9 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               _localctx = _tracker.createInstance<Unary_NegateContext>(_localctx);
               _ctx = _localctx;
               previousContext = _localctx;
-              setState(42);
+              setState(50);
               match(LuminusParser::SUB);
-              setState(43);
+              setState(51);
               antlrcpp::downCast<Unary_NegateContext *>(_localctx)->inner = expression(2);
               break;
           }
@@ -632,7 +636,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               break;
       }
       _ctx->stop = _input->LT(-1);
-      setState(57);
+      setState(65);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx);
       while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
@@ -640,7 +644,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
               if (!_parseListeners.empty())
                   triggerExitRuleEvent();
               previousContext = _localctx;
-              setState(55);
+              setState(63);
               _errHandler->sync(this);
               switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 2, _ctx)) {
                   case 1: {
@@ -649,10 +653,10 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
                       _localctx = newContext;
                       newContext->left = previousContext;
                       pushNewRecursionContext(newContext, startState, RuleExpression);
-                      setState(46);
+                      setState(54);
 
                       if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
-                      setState(47);
+                      setState(55);
                       antlrcpp::downCast<MultiplyOrDivideContext *>(_localctx)->op = _input->LT(1);
                       _la = _input->LA(1);
                       if (!(_la == LuminusParser::MUL
@@ -664,7 +668,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
                           _errHandler->reportMatch(this);
                           consume();
                       }
-                      setState(48);
+                      setState(56);
                       antlrcpp::downCast<MultiplyOrDivideContext *>(_localctx)->right = expression(5);
                       break;
                   }
@@ -675,10 +679,10 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
             _localctx = newContext;
             newContext->left = previousContext;
             pushNewRecursionContext(newContext, startState, RuleExpression);
-            setState(49);
+            setState(57);
 
             if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
-            setState(50);
+            setState(58);
             antlrcpp::downCast<AddOrSubtractContext *>(_localctx)->op = _input->LT(1);
             _la = _input->LA(1);
             if (!(_la == LuminusParser::ADD
@@ -689,36 +693,37 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
                 _errHandler->reportMatch(this);
                 consume();
             }
-            setState(51);
+            setState(59);
             antlrcpp::downCast<AddOrSubtractContext *>(_localctx)->right = expression(4);
             break;
         }
 
         case 3: {
-            auto newContext = _tracker.createInstance<BoolExpressionContext>(
+            auto newContext = _tracker.createInstance<CompExpressionContext>(
                     _tracker.createInstance<ExpressionContext>(parentContext, parentState));
             _localctx = newContext;
             newContext->left = previousContext;
             pushNewRecursionContext(newContext, startState, RuleExpression);
-            setState(52);
+            setState(60);
 
             if (!(precpred(_ctx, 1))) throw FailedPredicateException(this, "precpred(_ctx, 1)");
-            setState(53);
-            antlrcpp::downCast<BoolExpressionContext *>(_localctx)->op = _input->LT(1);
+            setState(61);
+            antlrcpp::downCast<CompExpressionContext *>(_localctx)->op = _input->LT(1);
             _la = _input->LA(1);
             if (!((((_la & ~0x3fULL) == 0) &&
-                   ((1ULL << _la) & ((1ULL << LuminusParser::LESS_THAN)
-                                     | (1ULL << LuminusParser::GREATER_THAN)
-                                     | (1ULL << LuminusParser::LESS_THAN_EQUAL)
-                                     | (1ULL << LuminusParser::GREATER_THAN_EQUAL)
-                                     | (1ULL << LuminusParser::EQUAL_TO))) != 0))) {
-                antlrcpp::downCast<BoolExpressionContext *>(_localctx)->op = _errHandler->recoverInline(this);
+                   ((1ULL << _la) & ((1ULL << LuminusParser::LT)
+                                     | (1ULL << LuminusParser::GT)
+                                     | (1ULL << LuminusParser::LTE)
+                                     | (1ULL << LuminusParser::GTE)
+                                     | (1ULL << LuminusParser::EQ)
+                                     | (1ULL << LuminusParser::NOT_EQ))) != 0))) {
+                antlrcpp::downCast<CompExpressionContext *>(_localctx)->op = _errHandler->recoverInline(this);
             } else {
                 _errHandler->reportMatch(this);
                 consume();
             }
-            setState(54);
-            antlrcpp::downCast<BoolExpressionContext *>(_localctx)->right = expression(2);
+            setState(62);
+            antlrcpp::downCast<CompExpressionContext *>(_localctx)->right = expression(2);
             break;
         }
 
@@ -726,7 +731,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
                       break;
               }
           }
-          setState(59);
+          setState(67);
           _errHandler->sync(this);
           alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx);
       }
@@ -792,17 +797,17 @@ LuminusParser::ArgumentContext* LuminusParser::argument() {
   });
   try {
       enterOuterAlt(_localctx, 1);
-      setState(61);
+      setState(69);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if (_la == LuminusParser::T__3) {
-          setState(60);
+          setState(68);
           antlrcpp::downCast<ArgumentContext *>(_localctx)->ref = match(LuminusParser::T__3);
       }
-      setState(63);
+      setState(71);
       antlrcpp::downCast<ArgumentContext *>(_localctx)->dec_type = match(LuminusParser::TYPE);
-      setState(64);
+      setState(72);
       antlrcpp::downCast<ArgumentContext *>(_localctx)->id = match(LuminusParser::IDENTIFIER);
 
   }
@@ -895,53 +900,53 @@ LuminusParser::FunctionContext* LuminusParser::function() {
       size_t alt;
       _localctx = _tracker.createInstance<LuminusParser::FunctionDeclarationContext>(_localctx);
       enterOuterAlt(_localctx, 1);
-      setState(66);
+      setState(74);
       match(LuminusParser::T__4);
-      setState(67);
+      setState(75);
       antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->funcName = match(LuminusParser::IDENTIFIER);
-      setState(68);
+      setState(76);
       match(LuminusParser::T__1);
-      setState(77);
+      setState(85);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if (_la == LuminusParser::T__3
 
           || _la == LuminusParser::TYPE) {
-          setState(69);
+          setState(77);
           antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->argumentContext = argument();
           antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->args.push_back(
                   antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->argumentContext);
-          setState(74);
+          setState(82);
           _errHandler->sync(this);
           alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 5, _ctx);
           while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
               if (alt == 1) {
-                  setState(70);
+                  setState(78);
                   match(LuminusParser::T__5);
-                  setState(71);
+                  setState(79);
                   antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->argumentContext = argument();
                   antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->args.push_back(
                           antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->argumentContext);
               }
-              setState(76);
+              setState(84);
               _errHandler->sync(this);
               alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 5, _ctx);
           }
       }
-      setState(80);
+      setState(88);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if (_la == LuminusParser::T__5) {
-          setState(79);
+          setState(87);
           match(LuminusParser::T__5);
       }
-      setState(82);
+      setState(90);
       match(LuminusParser::T__2);
-      setState(83);
+      setState(91);
       match(LuminusParser::T__6);
-      setState(84);
+      setState(92);
       antlrcpp::downCast<FunctionDeclarationContext *>(_localctx)->returnType = _input->LT(1);
       _la = _input->LA(1);
       if (!(_la == LuminusParser::VOID
@@ -952,23 +957,24 @@ LuminusParser::FunctionContext* LuminusParser::function() {
           _errHandler->reportMatch(this);
           consume();
       }
-      setState(85);
+      setState(93);
       match(LuminusParser::T__7);
-      setState(87);
+      setState(95);
       _errHandler->sync(this);
       _la = _input->LA(1);
       do {
-          setState(86);
+          setState(94);
           statement();
-          setState(89);
+          setState(97);
           _errHandler->sync(this);
           _la = _input->LA(1);
       } while ((((_la & ~0x3fULL) == 0) &&
                 ((1ULL << _la) & ((1ULL << LuminusParser::T__7)
                                   | (1ULL << LuminusParser::T__11)
+                                  | (1ULL << LuminusParser::T__14)
                                   | (1ULL << LuminusParser::TYPE)
                                   | (1ULL << LuminusParser::IDENTIFIER))) != 0));
-      setState(91);
+      setState(99);
       match(LuminusParser::T__8);
 
   }
@@ -1046,11 +1052,11 @@ LuminusParser::Func_callContext *LuminusParser::func_call() {
         size_t alt;
         _localctx = _tracker.createInstance<LuminusParser::FunctionCallContext>(_localctx);
         enterOuterAlt(_localctx, 1);
-        setState(93);
+        setState(101);
         antlrcpp::downCast<FunctionCallContext *>(_localctx)->funcid = match(LuminusParser::IDENTIFIER);
-        setState(94);
+        setState(102);
         match(LuminusParser::T__1);
-        setState(103);
+        setState(111);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
@@ -1064,36 +1070,36 @@ LuminusParser::Func_callContext *LuminusParser::func_call() {
                                | (1ULL << LuminusParser::IDENTIFIER)
                                | (1ULL << LuminusParser::INTEGER_CONST)
                                | (1ULL << LuminusParser::FLOATING_CONST))) != 0)) {
-            setState(95);
+            setState(103);
             antlrcpp::downCast<FunctionCallContext *>(_localctx)->expressionContext = expression(0);
             antlrcpp::downCast<FunctionCallContext *>(_localctx)->args.push_back(
                     antlrcpp::downCast<FunctionCallContext *>(_localctx)->expressionContext);
-            setState(100);
+            setState(108);
             _errHandler->sync(this);
             alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 9, _ctx);
             while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
                 if (alt == 1) {
-                    setState(96);
+                    setState(104);
                     match(LuminusParser::T__5);
-                    setState(97);
+                    setState(105);
                     antlrcpp::downCast<FunctionCallContext *>(_localctx)->expressionContext = expression(0);
                     antlrcpp::downCast<FunctionCallContext *>(_localctx)->args.push_back(
                             antlrcpp::downCast<FunctionCallContext *>(_localctx)->expressionContext);
                 }
-                setState(102);
+                setState(110);
                 _errHandler->sync(this);
                 alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 9, _ctx);
             }
         }
-        setState(106);
+        setState(114);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
         if (_la == LuminusParser::T__5) {
-            setState(105);
+            setState(113);
             match(LuminusParser::T__5);
         }
-        setState(108);
+        setState(116);
         match(LuminusParser::T__2);
 
     }
@@ -1224,17 +1230,17 @@ LuminusParser::AssignmentContext* LuminusParser::assignment() {
     exitRule();
   });
   try {
-      setState(124);
+      setState(132);
       _errHandler->sync(this);
       switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 12, _ctx)) {
           case 1: {
               _localctx = _tracker.createInstance<LuminusParser::DeclarationContext>(_localctx);
               enterOuterAlt(_localctx, 1);
-              setState(110);
+              setState(118);
               antlrcpp::downCast<DeclarationContext *>(_localctx)->dec_type = match(LuminusParser::TYPE);
-              setState(111);
+              setState(119);
               antlrcpp::downCast<DeclarationContext *>(_localctx)->id = match(LuminusParser::IDENTIFIER);
-              setState(112);
+              setState(120);
               match(LuminusParser::T__9);
               break;
           }
@@ -1242,13 +1248,13 @@ LuminusParser::AssignmentContext* LuminusParser::assignment() {
           case 2: {
               _localctx = _tracker.createInstance<LuminusParser::ReinitializationContext>(_localctx);
               enterOuterAlt(_localctx, 2);
-              setState(113);
+              setState(121);
               antlrcpp::downCast<ReinitializationContext *>(_localctx)->id = match(LuminusParser::IDENTIFIER);
-              setState(114);
+              setState(122);
               match(LuminusParser::T__10);
-              setState(115);
+              setState(123);
               antlrcpp::downCast<ReinitializationContext *>(_localctx)->value = expression(0);
-              setState(116);
+              setState(124);
               match(LuminusParser::T__9);
               break;
           }
@@ -1256,15 +1262,15 @@ LuminusParser::AssignmentContext* LuminusParser::assignment() {
           case 3: {
               _localctx = _tracker.createInstance<LuminusParser::InitializationContext>(_localctx);
               enterOuterAlt(_localctx, 3);
-              setState(118);
+              setState(126);
               antlrcpp::downCast<InitializationContext *>(_localctx)->dec_type = match(LuminusParser::TYPE);
-              setState(119);
+              setState(127);
               antlrcpp::downCast<InitializationContext *>(_localctx)->id = match(LuminusParser::IDENTIFIER);
-              setState(120);
+              setState(128);
               match(LuminusParser::T__10);
-              setState(121);
+              setState(129);
               antlrcpp::downCast<InitializationContext *>(_localctx)->value = expression(0);
-              setState(122);
+              setState(130);
               match(LuminusParser::T__9);
               break;
           }
@@ -1272,26 +1278,330 @@ LuminusParser::AssignmentContext* LuminusParser::assignment() {
           default:
               break;
       }
-   
+
   }
   catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
+      _errHandler->reportError(this, e);
+      _localctx->exception = std::current_exception();
+      _errHandler->recover(this, _localctx->exception);
   }
 
-  return _localctx;
+    return _localctx;
+}
+
+//----------------- If_statementContext ------------------------------------------------------------------
+
+LuminusParser::If_statementContext::If_statementContext(ParserRuleContext *parent, size_t invokingState)
+        : ParserRuleContext(parent, invokingState) {
+}
+
+LuminusParser::ExpressionContext *LuminusParser::If_statementContext::expression() {
+    return getRuleContext<LuminusParser::ExpressionContext>(0);
+}
+
+LuminusParser::BlockContext *LuminusParser::If_statementContext::block() {
+    return getRuleContext<LuminusParser::BlockContext>(0);
+}
+
+
+size_t LuminusParser::If_statementContext::getRuleIndex() const {
+    return LuminusParser::RuleIf_statement;
+}
+
+void LuminusParser::If_statementContext::enterRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->enterIf_statement(this);
+}
+
+void LuminusParser::If_statementContext::exitRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->exitIf_statement(this);
+}
+
+
+antlrcpp::Any LuminusParser::If_statementContext::accept(tree::ParseTreeVisitor *visitor) {
+    if (auto parserVisitor = dynamic_cast<LuminusVisitor *>(visitor))
+        return parserVisitor->visitIf_statement(this);
+    else
+        return visitor->visitChildren(this);
+}
+
+LuminusParser::If_statementContext *LuminusParser::if_statement() {
+    If_statementContext *_localctx = _tracker.createInstance<If_statementContext>(_ctx, getState());
+    enterRule(_localctx, 12, LuminusParser::RuleIf_statement);
+
+#if __cplusplus > 201703L
+    auto onExit = finally([=, this] {
+#else
+    auto onExit = finally([=] {
+#endif
+        exitRule();
+    });
+    try {
+        enterOuterAlt(_localctx, 1);
+        setState(134);
+        match(LuminusParser::T__11);
+        setState(135);
+        match(LuminusParser::T__1);
+        setState(136);
+        antlrcpp::downCast<If_statementContext *>(_localctx)->value = expression(0);
+        setState(137);
+        match(LuminusParser::T__2);
+        setState(138);
+        antlrcpp::downCast<If_statementContext *>(_localctx)->execute_vals = block();
+
+    }
+    catch (RecognitionException &e) {
+        _errHandler->reportError(this, e);
+        _localctx->exception = std::current_exception();
+        _errHandler->recover(this, _localctx->exception);
+    }
+
+    return _localctx;
+}
+
+//----------------- Else_statementContext ------------------------------------------------------------------
+
+LuminusParser::Else_statementContext::Else_statementContext(ParserRuleContext *parent, size_t invokingState)
+        : ParserRuleContext(parent, invokingState) {
+}
+
+LuminusParser::BlockContext *LuminusParser::Else_statementContext::block() {
+    return getRuleContext<LuminusParser::BlockContext>(0);
+}
+
+
+size_t LuminusParser::Else_statementContext::getRuleIndex() const {
+    return LuminusParser::RuleElse_statement;
+}
+
+void LuminusParser::Else_statementContext::enterRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->enterElse_statement(this);
+}
+
+void LuminusParser::Else_statementContext::exitRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->exitElse_statement(this);
+}
+
+
+antlrcpp::Any LuminusParser::Else_statementContext::accept(tree::ParseTreeVisitor *visitor) {
+    if (auto parserVisitor = dynamic_cast<LuminusVisitor *>(visitor))
+        return parserVisitor->visitElse_statement(this);
+    else
+        return visitor->visitChildren(this);
+}
+
+LuminusParser::Else_statementContext *LuminusParser::else_statement() {
+    Else_statementContext *_localctx = _tracker.createInstance<Else_statementContext>(_ctx, getState());
+    enterRule(_localctx, 14, LuminusParser::RuleElse_statement);
+
+#if __cplusplus > 201703L
+    auto onExit = finally([=, this] {
+#else
+    auto onExit = finally([=] {
+#endif
+        exitRule();
+    });
+    try {
+        enterOuterAlt(_localctx, 1);
+        setState(140);
+        match(LuminusParser::T__12);
+        setState(141);
+        antlrcpp::downCast<Else_statementContext *>(_localctx)->ops = block();
+
+    }
+    catch (RecognitionException &e) {
+        _errHandler->reportError(this, e);
+        _localctx->exception = std::current_exception();
+        _errHandler->recover(this, _localctx->exception);
+    }
+
+    return _localctx;
+}
+
+//----------------- Elif_statementContext ------------------------------------------------------------------
+
+LuminusParser::Elif_statementContext::Elif_statementContext(ParserRuleContext *parent, size_t invokingState)
+        : ParserRuleContext(parent, invokingState) {
+}
+
+LuminusParser::ExpressionContext *LuminusParser::Elif_statementContext::expression() {
+    return getRuleContext<LuminusParser::ExpressionContext>(0);
+}
+
+LuminusParser::BlockContext *LuminusParser::Elif_statementContext::block() {
+    return getRuleContext<LuminusParser::BlockContext>(0);
+}
+
+
+size_t LuminusParser::Elif_statementContext::getRuleIndex() const {
+    return LuminusParser::RuleElif_statement;
+}
+
+void LuminusParser::Elif_statementContext::enterRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->enterElif_statement(this);
+}
+
+void LuminusParser::Elif_statementContext::exitRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->exitElif_statement(this);
+}
+
+
+antlrcpp::Any LuminusParser::Elif_statementContext::accept(tree::ParseTreeVisitor *visitor) {
+    if (auto parserVisitor = dynamic_cast<LuminusVisitor *>(visitor))
+        return parserVisitor->visitElif_statement(this);
+    else
+        return visitor->visitChildren(this);
+}
+
+LuminusParser::Elif_statementContext *LuminusParser::elif_statement() {
+    Elif_statementContext *_localctx = _tracker.createInstance<Elif_statementContext>(_ctx, getState());
+    enterRule(_localctx, 16, LuminusParser::RuleElif_statement);
+
+#if __cplusplus > 201703L
+    auto onExit = finally([=, this] {
+#else
+    auto onExit = finally([=] {
+#endif
+        exitRule();
+    });
+    try {
+        enterOuterAlt(_localctx, 1);
+        setState(143);
+        match(LuminusParser::T__13);
+        setState(144);
+        match(LuminusParser::T__1);
+        setState(145);
+        antlrcpp::downCast<Elif_statementContext *>(_localctx)->value = expression(0);
+        setState(146);
+        match(LuminusParser::T__2);
+        setState(147);
+        antlrcpp::downCast<Elif_statementContext *>(_localctx)->ops = block();
+
+    }
+    catch (RecognitionException &e) {
+        _errHandler->reportError(this, e);
+        _localctx->exception = std::current_exception();
+        _errHandler->recover(this, _localctx->exception);
+    }
+
+    return _localctx;
+}
+
+//----------------- Conditional_statementContext ------------------------------------------------------------------
+
+LuminusParser::Conditional_statementContext::Conditional_statementContext(ParserRuleContext *parent,
+                                                                          size_t invokingState)
+        : ParserRuleContext(parent, invokingState) {
+}
+
+LuminusParser::If_statementContext *LuminusParser::Conditional_statementContext::if_statement() {
+    return getRuleContext<LuminusParser::If_statementContext>(0);
+}
+
+std::vector<LuminusParser::Elif_statementContext *> LuminusParser::Conditional_statementContext::elif_statement() {
+    return getRuleContexts<LuminusParser::Elif_statementContext>();
+}
+
+LuminusParser::Elif_statementContext *LuminusParser::Conditional_statementContext::elif_statement(size_t i) {
+    return getRuleContext<LuminusParser::Elif_statementContext>(i);
+}
+
+LuminusParser::Else_statementContext *LuminusParser::Conditional_statementContext::else_statement() {
+    return getRuleContext<LuminusParser::Else_statementContext>(0);
+}
+
+
+size_t LuminusParser::Conditional_statementContext::getRuleIndex() const {
+    return LuminusParser::RuleConditional_statement;
+}
+
+void LuminusParser::Conditional_statementContext::enterRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->enterConditional_statement(this);
+}
+
+void LuminusParser::Conditional_statementContext::exitRule(tree::ParseTreeListener *listener) {
+    auto parserListener = dynamic_cast<LuminusListener *>(listener);
+    if (parserListener != nullptr)
+        parserListener->exitConditional_statement(this);
+}
+
+
+antlrcpp::Any LuminusParser::Conditional_statementContext::accept(tree::ParseTreeVisitor *visitor) {
+    if (auto parserVisitor = dynamic_cast<LuminusVisitor *>(visitor))
+        return parserVisitor->visitConditional_statement(this);
+    else
+        return visitor->visitChildren(this);
+}
+
+LuminusParser::Conditional_statementContext *LuminusParser::conditional_statement() {
+    Conditional_statementContext *_localctx = _tracker.createInstance<Conditional_statementContext>(_ctx, getState());
+    enterRule(_localctx, 18, LuminusParser::RuleConditional_statement);
+    size_t _la = 0;
+
+#if __cplusplus > 201703L
+    auto onExit = finally([=, this] {
+#else
+    auto onExit = finally([=] {
+#endif
+        exitRule();
+    });
+    try {
+        enterOuterAlt(_localctx, 1);
+        setState(149);
+        antlrcpp::downCast<Conditional_statementContext *>(_localctx)->if_teil = if_statement();
+        setState(153);
+        _errHandler->sync(this);
+        _la = _input->LA(1);
+        while (_la == LuminusParser::T__13) {
+            setState(150);
+            antlrcpp::downCast<Conditional_statementContext *>(_localctx)->elif_statementContext = elif_statement();
+            antlrcpp::downCast<Conditional_statementContext *>(_localctx)->else_if_container.push_back(
+                    antlrcpp::downCast<Conditional_statementContext *>(_localctx)->elif_statementContext);
+            setState(155);
+            _errHandler->sync(this);
+            _la = _input->LA(1);
+        }
+        setState(157);
+        _errHandler->sync(this);
+
+        _la = _input->LA(1);
+        if (_la == LuminusParser::T__12) {
+            setState(156);
+            antlrcpp::downCast<Conditional_statementContext *>(_localctx)->else_teil = else_statement();
+        }
+
+    }
+    catch (RecognitionException &e) {
+        _errHandler->reportError(this, e);
+        _localctx->exception = std::current_exception();
+        _errHandler->recover(this, _localctx->exception);
+    }
+
+    return _localctx;
 }
 
 //----------------- Return_statementContext ------------------------------------------------------------------
 
 LuminusParser::Return_statementContext::Return_statementContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
+        : ParserRuleContext(parent, invokingState) {
 }
 
 
 size_t LuminusParser::Return_statementContext::getRuleIndex() const {
-  return LuminusParser::RuleReturn_statement;
+    return LuminusParser::RuleReturn_statement;
 }
 
 void LuminusParser::Return_statementContext::copyFrom(Return_statementContext *ctx) {
@@ -1325,7 +1635,7 @@ antlrcpp::Any LuminusParser::ReturnStatementContext::accept(tree::ParseTreeVisit
 }
 LuminusParser::Return_statementContext* LuminusParser::return_statement() {
     Return_statementContext *_localctx = _tracker.createInstance<Return_statementContext>(_ctx, getState());
-    enterRule(_localctx, 12, LuminusParser::RuleReturn_statement);
+    enterRule(_localctx, 20, LuminusParser::RuleReturn_statement);
     size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1338,9 +1648,9 @@ LuminusParser::Return_statementContext* LuminusParser::return_statement() {
     try {
         _localctx = _tracker.createInstance<LuminusParser::ReturnStatementContext>(_localctx);
         enterOuterAlt(_localctx, 1);
-        setState(126);
-        match(LuminusParser::T__11);
-        setState(128);
+        setState(159);
+        match(LuminusParser::T__14);
+        setState(161);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
@@ -1354,10 +1664,10 @@ LuminusParser::Return_statementContext* LuminusParser::return_statement() {
                                | (1ULL << LuminusParser::IDENTIFIER)
                                | (1ULL << LuminusParser::INTEGER_CONST)
                                | (1ULL << LuminusParser::FLOATING_CONST))) != 0)) {
-            setState(127);
+            setState(160);
             antlrcpp::downCast<ReturnStatementContext *>(_localctx)->value = expression(0);
         }
-        setState(130);
+        setState(163);
         match(LuminusParser::T__9);
 
     }
@@ -1417,7 +1727,7 @@ antlrcpp::Any LuminusParser::BlockExpressionContext::accept(tree::ParseTreeVisit
 
 LuminusParser::BlockContext *LuminusParser::block() {
     BlockContext *_localctx = _tracker.createInstance<BlockContext>(_ctx, getState());
-    enterRule(_localctx, 14, LuminusParser::RuleBlock);
+    enterRule(_localctx, 22, LuminusParser::RuleBlock);
     size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1430,23 +1740,24 @@ LuminusParser::BlockContext *LuminusParser::block() {
     try {
         _localctx = _tracker.createInstance<LuminusParser::BlockExpressionContext>(_localctx);
         enterOuterAlt(_localctx, 1);
-        setState(132);
+        setState(165);
         match(LuminusParser::T__7);
-        setState(134);
+        setState(167);
         _errHandler->sync(this);
         _la = _input->LA(1);
         do {
-            setState(133);
+            setState(166);
             statement();
-            setState(136);
+            setState(169);
             _errHandler->sync(this);
             _la = _input->LA(1);
         } while ((((_la & ~0x3fULL) == 0) &&
                   ((1ULL << _la) & ((1ULL << LuminusParser::T__7)
                                     | (1ULL << LuminusParser::T__11)
+                                    | (1ULL << LuminusParser::T__14)
                                     | (1ULL << LuminusParser::TYPE)
                                     | (1ULL << LuminusParser::IDENTIFIER))) != 0));
-        setState(138);
+        setState(171);
         match(LuminusParser::T__8);
 
     }
@@ -1481,6 +1792,10 @@ LuminusParser::BlockContext *LuminusParser::StatementContext::block() {
     return getRuleContext<LuminusParser::BlockContext>(0);
 }
 
+LuminusParser::Conditional_statementContext *LuminusParser::StatementContext::conditional_statement() {
+    return getRuleContext<LuminusParser::Conditional_statementContext>(0);
+}
+
 
 size_t LuminusParser::StatementContext::getRuleIndex() const {
     return LuminusParser::RuleStatement;
@@ -1508,7 +1823,7 @@ antlrcpp::Any LuminusParser::StatementContext::accept(tree::ParseTreeVisitor *vi
 
 LuminusParser::StatementContext* LuminusParser::statement() {
   StatementContext *_localctx = _tracker.createInstance<StatementContext>(_ctx, getState());
-    enterRule(_localctx, 16, LuminusParser::RuleStatement);
+    enterRule(_localctx, 24, LuminusParser::RuleStatement);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1518,38 +1833,45 @@ LuminusParser::StatementContext* LuminusParser::statement() {
     exitRule();
   });
   try {
-      setState(148);
+      setState(182);
       _errHandler->sync(this);
-      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 15, _ctx)) {
+      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 17, _ctx)) {
           case 1: {
               enterOuterAlt(_localctx, 1);
-              setState(140);
+              setState(173);
               assignment();
               break;
           }
 
           case 2: {
               enterOuterAlt(_localctx, 2);
-              setState(141);
+              setState(174);
               return_statement();
               break;
           }
 
           case 3: {
               enterOuterAlt(_localctx, 3);
-              setState(142);
+              setState(175);
               func_call();
-              setState(143);
+              setState(176);
               match(LuminusParser::T__9);
               break;
           }
 
           case 4: {
               enterOuterAlt(_localctx, 4);
-              setState(145);
+              setState(178);
               block();
-              setState(146);
+              setState(179);
               match(LuminusParser::T__9);
+              break;
+          }
+
+          case 5: {
+              enterOuterAlt(_localctx, 5);
+              setState(181);
+              conditional_statement();
               break;
           }
 
@@ -1602,21 +1924,22 @@ std::vector<uint16_t> LuminusParser::_serializedATN;
 
 std::vector<std::string> LuminusParser::_ruleNames = {
         "start", "expression", "argument", "function", "func_call", "assignment",
+        "if_statement", "else_statement", "elif_statement", "conditional_statement",
         "return_statement", "block", "statement"
 };
 
 std::vector<std::string> LuminusParser::_literalNames = {
         "", "'cast'", "'('", "')'", "'ref'", "'function'", "','", "'returns'",
-        "'{'", "'}'", "';'", "'='", "'return'", "'*'", "'/'", "'+'", "'-'", "'<'",
-        "'>'", "'<='", "'>='", "'=='", "'true'", "'false'", "'void'"
+        "'{'", "'}'", "';'", "'='", "'if'", "'else'", "'elif'", "'return'", "'*'",
+        "'/'", "'+'", "'-'", "'<'", "'>'", "'<='", "'>='", "'=='", "'!='", "'true'",
+        "'false'", "'void'"
 };
 
 std::vector<std::string> LuminusParser::_symbolicNames = {
-        "", "", "", "", "", "", "", "", "", "", "", "", "", "MUL", "DIV", "ADD",
-        "SUB", "LESS_THAN", "GREATER_THAN", "LESS_THAN_EQUAL", "GREATER_THAN_EQUAL",
-        "EQUAL_TO", "TRUE_CONST", "FALSE_CONST", "VOID", "TYPE", "STRING_CONST",
-        "IDENTIFIER", "INTEGER_CONST", "FLOATING_CONST", "DIGIT", "OCTAL_DIG",
-        "HEX_DIG", "WHITESPACE"
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "MUL",
+        "DIV", "ADD", "SUB", "LT", "GT", "LTE", "GTE", "EQ", "NOT_EQ", "TRUE_CONST",
+        "FALSE_CONST", "VOID", "TYPE", "STRING_CONST", "IDENTIFIER", "INTEGER_CONST",
+        "FLOATING_CONST", "DIGIT", "OCTAL_DIG", "HEX_DIG", "WHITESPACE"
 };
 
 dfa::Vocabulary LuminusParser::_vocabulary(_literalNames, _symbolicNames);
@@ -1639,115 +1962,137 @@ LuminusParser::Initializer::Initializer() {
 
   static const uint16_t serializedATNSegment0[] = {
           0x3, 0x608b, 0xa72a, 0x8133, 0xb9ed, 0x417c, 0x3be7, 0x7786, 0x5964,
-          0x3, 0x23, 0x99, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4,
+          0x3, 0x27, 0xbb, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4,
           0x9, 0x4, 0x4, 0x5, 0x9, 0x5, 0x4, 0x6, 0x9, 0x6, 0x4, 0x7, 0x9,
           0x7, 0x4, 0x8, 0x9, 0x8, 0x4, 0x9, 0x9, 0x9, 0x4, 0xa, 0x9, 0xa,
-          0x3, 0x2, 0x6, 0x2, 0x16, 0xa, 0x2, 0xd, 0x2, 0xe, 0x2, 0x17, 0x3,
+          0x4, 0xb, 0x9, 0xb, 0x4, 0xc, 0x9, 0xc, 0x4, 0xd, 0x9, 0xd, 0x4,
+          0xe, 0x9, 0xe, 0x3, 0x2, 0x6, 0x2, 0x1e, 0xa, 0x2, 0xd, 0x2, 0xe,
+          0x2, 0x1f, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3,
           0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3,
           0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3,
+          0x3, 0x3, 0x3, 0x3, 0x3, 0x5, 0x3, 0x37, 0xa, 0x3, 0x3, 0x3, 0x3,
           0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3,
-          0x3, 0x3, 0x5, 0x3, 0x2f, 0xa, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3,
-          0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x7,
-          0x3, 0x3a, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 0x3d, 0xb, 0x3, 0x3, 0x4,
-          0x5, 0x4, 0x40, 0xa, 0x4, 0x3, 0x4, 0x3, 0x4, 0x3, 0x4, 0x3, 0x5,
-          0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x7, 0x5, 0x4b,
-          0xa, 0x5, 0xc, 0x5, 0xe, 0x5, 0x4e, 0xb, 0x5, 0x5, 0x5, 0x50, 0xa,
-          0x5, 0x3, 0x5, 0x5, 0x5, 0x53, 0xa, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3,
-          0x5, 0x3, 0x5, 0x3, 0x5, 0x6, 0x5, 0x5a, 0xa, 0x5, 0xd, 0x5, 0xe,
-          0x5, 0x5b, 0x3, 0x5, 0x3, 0x5, 0x3, 0x6, 0x3, 0x6, 0x3, 0x6, 0x3,
-          0x6, 0x3, 0x6, 0x7, 0x6, 0x65, 0xa, 0x6, 0xc, 0x6, 0xe, 0x6, 0x68,
-          0xb, 0x6, 0x5, 0x6, 0x6a, 0xa, 0x6, 0x3, 0x6, 0x5, 0x6, 0x6d, 0xa,
-          0x6, 0x3, 0x6, 0x3, 0x6, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7,
-          0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3,
-          0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x5, 0x7, 0x7f, 0xa, 0x7, 0x3,
-          0x8, 0x3, 0x8, 0x5, 0x8, 0x83, 0xa, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3,
-          0x9, 0x3, 0x9, 0x6, 0x9, 0x89, 0xa, 0x9, 0xd, 0x9, 0xe, 0x9, 0x8a,
-          0x3, 0x9, 0x3, 0x9, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3,
-          0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x5, 0xa, 0x97, 0xa, 0xa, 0x3,
-          0xa, 0x2, 0x3, 0x4, 0xb, 0x2, 0x4, 0x6, 0x8, 0xa, 0xc, 0xe, 0x10,
-          0x12, 0x2, 0x7, 0x3, 0x2, 0x18, 0x19, 0x3, 0x2, 0xf, 0x10, 0x3, 0x2,
-          0x11, 0x12, 0x3, 0x2, 0x13, 0x17, 0x3, 0x2, 0x1a, 0x1b, 0x2, 0xaa,
-          0x2, 0x15, 0x3, 0x2, 0x2, 0x2, 0x4, 0x2e, 0x3, 0x2, 0x2, 0x2, 0x6,
-          0x3f, 0x3, 0x2, 0x2, 0x2, 0x8, 0x44, 0x3, 0x2, 0x2, 0x2, 0xa, 0x5f,
-          0x3, 0x2, 0x2, 0x2, 0xc, 0x7e, 0x3, 0x2, 0x2, 0x2, 0xe, 0x80, 0x3,
-          0x2, 0x2, 0x2, 0x10, 0x86, 0x3, 0x2, 0x2, 0x2, 0x12, 0x96, 0x3, 0x2,
-          0x2, 0x2, 0x14, 0x16, 0x5, 0x8, 0x5, 0x2, 0x15, 0x14, 0x3, 0x2, 0x2,
-          0x2, 0x16, 0x17, 0x3, 0x2, 0x2, 0x2, 0x17, 0x15, 0x3, 0x2, 0x2, 0x2,
-          0x17, 0x18, 0x3, 0x2, 0x2, 0x2, 0x18, 0x3, 0x3, 0x2, 0x2, 0x2, 0x19,
-          0x1a, 0x8, 0x3, 0x1, 0x2, 0x1a, 0x2f, 0x9, 0x2, 0x2, 0x2, 0x1b, 0x2f,
-          0x7, 0x1c, 0x2, 0x2, 0x1c, 0x2f, 0x7, 0x1e, 0x2, 0x2, 0x1d, 0x2f,
-          0x7, 0x1f, 0x2, 0x2, 0x1e, 0x2f, 0x5, 0xa, 0x6, 0x2, 0x1f, 0x2f,
-          0x7, 0x1d, 0x2, 0x2, 0x20, 0x21, 0x7, 0x3, 0x2, 0x2, 0x21, 0x22,
-          0x7, 0x13, 0x2, 0x2, 0x22, 0x23, 0x7, 0x1b, 0x2, 0x2, 0x23, 0x24,
-          0x7, 0x14, 0x2, 0x2, 0x24, 0x25, 0x7, 0x4, 0x2, 0x2, 0x25, 0x26,
-          0x5, 0x4, 0x3, 0x2, 0x26, 0x27, 0x7, 0x5, 0x2, 0x2, 0x27, 0x2f, 0x3,
-          0x2, 0x2, 0x2, 0x28, 0x29, 0x7, 0x4, 0x2, 0x2, 0x29, 0x2a, 0x5, 0x4,
-          0x3, 0x2, 0x2a, 0x2b, 0x7, 0x5, 0x2, 0x2, 0x2b, 0x2f, 0x3, 0x2, 0x2,
-          0x2, 0x2c, 0x2d, 0x7, 0x12, 0x2, 0x2, 0x2d, 0x2f, 0x5, 0x4, 0x3,
-          0x4, 0x2e, 0x19, 0x3, 0x2, 0x2, 0x2, 0x2e, 0x1b, 0x3, 0x2, 0x2, 0x2,
-          0x2e, 0x1c, 0x3, 0x2, 0x2, 0x2, 0x2e, 0x1d, 0x3, 0x2, 0x2, 0x2, 0x2e,
-          0x1e, 0x3, 0x2, 0x2, 0x2, 0x2e, 0x1f, 0x3, 0x2, 0x2, 0x2, 0x2e, 0x20,
-          0x3, 0x2, 0x2, 0x2, 0x2e, 0x28, 0x3, 0x2, 0x2, 0x2, 0x2e, 0x2c, 0x3,
-          0x2, 0x2, 0x2, 0x2f, 0x3b, 0x3, 0x2, 0x2, 0x2, 0x30, 0x31, 0xc, 0x6,
-          0x2, 0x2, 0x31, 0x32, 0x9, 0x3, 0x2, 0x2, 0x32, 0x3a, 0x5, 0x4, 0x3,
-          0x7, 0x33, 0x34, 0xc, 0x5, 0x2, 0x2, 0x34, 0x35, 0x9, 0x4, 0x2, 0x2,
-          0x35, 0x3a, 0x5, 0x4, 0x3, 0x6, 0x36, 0x37, 0xc, 0x3, 0x2, 0x2, 0x37,
-          0x38, 0x9, 0x5, 0x2, 0x2, 0x38, 0x3a, 0x5, 0x4, 0x3, 0x4, 0x39, 0x30,
-          0x3, 0x2, 0x2, 0x2, 0x39, 0x33, 0x3, 0x2, 0x2, 0x2, 0x39, 0x36, 0x3,
-          0x2, 0x2, 0x2, 0x3a, 0x3d, 0x3, 0x2, 0x2, 0x2, 0x3b, 0x39, 0x3, 0x2,
-          0x2, 0x2, 0x3b, 0x3c, 0x3, 0x2, 0x2, 0x2, 0x3c, 0x5, 0x3, 0x2, 0x2,
-          0x2, 0x3d, 0x3b, 0x3, 0x2, 0x2, 0x2, 0x3e, 0x40, 0x7, 0x6, 0x2, 0x2,
-          0x3f, 0x3e, 0x3, 0x2, 0x2, 0x2, 0x3f, 0x40, 0x3, 0x2, 0x2, 0x2, 0x40,
-          0x41, 0x3, 0x2, 0x2, 0x2, 0x41, 0x42, 0x7, 0x1b, 0x2, 0x2, 0x42,
-          0x43, 0x7, 0x1d, 0x2, 0x2, 0x43, 0x7, 0x3, 0x2, 0x2, 0x2, 0x44, 0x45,
-          0x7, 0x7, 0x2, 0x2, 0x45, 0x46, 0x7, 0x1d, 0x2, 0x2, 0x46, 0x4f,
-          0x7, 0x4, 0x2, 0x2, 0x47, 0x4c, 0x5, 0x6, 0x4, 0x2, 0x48, 0x49, 0x7,
-          0x8, 0x2, 0x2, 0x49, 0x4b, 0x5, 0x6, 0x4, 0x2, 0x4a, 0x48, 0x3, 0x2,
-          0x2, 0x2, 0x4b, 0x4e, 0x3, 0x2, 0x2, 0x2, 0x4c, 0x4a, 0x3, 0x2, 0x2,
-          0x2, 0x4c, 0x4d, 0x3, 0x2, 0x2, 0x2, 0x4d, 0x50, 0x3, 0x2, 0x2, 0x2,
-          0x4e, 0x4c, 0x3, 0x2, 0x2, 0x2, 0x4f, 0x47, 0x3, 0x2, 0x2, 0x2, 0x4f,
-          0x50, 0x3, 0x2, 0x2, 0x2, 0x50, 0x52, 0x3, 0x2, 0x2, 0x2, 0x51, 0x53,
-          0x7, 0x8, 0x2, 0x2, 0x52, 0x51, 0x3, 0x2, 0x2, 0x2, 0x52, 0x53, 0x3,
-          0x2, 0x2, 0x2, 0x53, 0x54, 0x3, 0x2, 0x2, 0x2, 0x54, 0x55, 0x7, 0x5,
-          0x2, 0x2, 0x55, 0x56, 0x7, 0x9, 0x2, 0x2, 0x56, 0x57, 0x9, 0x6, 0x2,
-          0x2, 0x57, 0x59, 0x7, 0xa, 0x2, 0x2, 0x58, 0x5a, 0x5, 0x12, 0xa,
-          0x2, 0x59, 0x58, 0x3, 0x2, 0x2, 0x2, 0x5a, 0x5b, 0x3, 0x2, 0x2, 0x2,
-          0x5b, 0x59, 0x3, 0x2, 0x2, 0x2, 0x5b, 0x5c, 0x3, 0x2, 0x2, 0x2, 0x5c,
-          0x5d, 0x3, 0x2, 0x2, 0x2, 0x5d, 0x5e, 0x7, 0xb, 0x2, 0x2, 0x5e, 0x9,
-          0x3, 0x2, 0x2, 0x2, 0x5f, 0x60, 0x7, 0x1d, 0x2, 0x2, 0x60, 0x69,
-          0x7, 0x4, 0x2, 0x2, 0x61, 0x66, 0x5, 0x4, 0x3, 0x2, 0x62, 0x63, 0x7,
-          0x8, 0x2, 0x2, 0x63, 0x65, 0x5, 0x4, 0x3, 0x2, 0x64, 0x62, 0x3, 0x2,
-          0x2, 0x2, 0x65, 0x68, 0x3, 0x2, 0x2, 0x2, 0x66, 0x64, 0x3, 0x2, 0x2,
-          0x2, 0x66, 0x67, 0x3, 0x2, 0x2, 0x2, 0x67, 0x6a, 0x3, 0x2, 0x2, 0x2,
-          0x68, 0x66, 0x3, 0x2, 0x2, 0x2, 0x69, 0x61, 0x3, 0x2, 0x2, 0x2, 0x69,
-          0x6a, 0x3, 0x2, 0x2, 0x2, 0x6a, 0x6c, 0x3, 0x2, 0x2, 0x2, 0x6b, 0x6d,
-          0x7, 0x8, 0x2, 0x2, 0x6c, 0x6b, 0x3, 0x2, 0x2, 0x2, 0x6c, 0x6d, 0x3,
-          0x2, 0x2, 0x2, 0x6d, 0x6e, 0x3, 0x2, 0x2, 0x2, 0x6e, 0x6f, 0x7, 0x5,
-          0x2, 0x2, 0x6f, 0xb, 0x3, 0x2, 0x2, 0x2, 0x70, 0x71, 0x7, 0x1b, 0x2,
-          0x2, 0x71, 0x72, 0x7, 0x1d, 0x2, 0x2, 0x72, 0x7f, 0x7, 0xc, 0x2,
-          0x2, 0x73, 0x74, 0x7, 0x1d, 0x2, 0x2, 0x74, 0x75, 0x7, 0xd, 0x2,
-          0x2, 0x75, 0x76, 0x5, 0x4, 0x3, 0x2, 0x76, 0x77, 0x7, 0xc, 0x2, 0x2,
-          0x77, 0x7f, 0x3, 0x2, 0x2, 0x2, 0x78, 0x79, 0x7, 0x1b, 0x2, 0x2,
-          0x79, 0x7a, 0x7, 0x1d, 0x2, 0x2, 0x7a, 0x7b, 0x7, 0xd, 0x2, 0x2,
-          0x7b, 0x7c, 0x5, 0x4, 0x3, 0x2, 0x7c, 0x7d, 0x7, 0xc, 0x2, 0x2, 0x7d,
-          0x7f, 0x3, 0x2, 0x2, 0x2, 0x7e, 0x70, 0x3, 0x2, 0x2, 0x2, 0x7e, 0x73,
-          0x3, 0x2, 0x2, 0x2, 0x7e, 0x78, 0x3, 0x2, 0x2, 0x2, 0x7f, 0xd, 0x3,
-          0x2, 0x2, 0x2, 0x80, 0x82, 0x7, 0xe, 0x2, 0x2, 0x81, 0x83, 0x5, 0x4,
-          0x3, 0x2, 0x82, 0x81, 0x3, 0x2, 0x2, 0x2, 0x82, 0x83, 0x3, 0x2, 0x2,
-          0x2, 0x83, 0x84, 0x3, 0x2, 0x2, 0x2, 0x84, 0x85, 0x7, 0xc, 0x2, 0x2,
-          0x85, 0xf, 0x3, 0x2, 0x2, 0x2, 0x86, 0x88, 0x7, 0xa, 0x2, 0x2, 0x87,
-          0x89, 0x5, 0x12, 0xa, 0x2, 0x88, 0x87, 0x3, 0x2, 0x2, 0x2, 0x89,
-          0x8a, 0x3, 0x2, 0x2, 0x2, 0x8a, 0x88, 0x3, 0x2, 0x2, 0x2, 0x8a, 0x8b,
-          0x3, 0x2, 0x2, 0x2, 0x8b, 0x8c, 0x3, 0x2, 0x2, 0x2, 0x8c, 0x8d, 0x7,
-          0xb, 0x2, 0x2, 0x8d, 0x11, 0x3, 0x2, 0x2, 0x2, 0x8e, 0x97, 0x5, 0xc,
-          0x7, 0x2, 0x8f, 0x97, 0x5, 0xe, 0x8, 0x2, 0x90, 0x91, 0x5, 0xa, 0x6,
-          0x2, 0x91, 0x92, 0x7, 0xc, 0x2, 0x2, 0x92, 0x97, 0x3, 0x2, 0x2, 0x2,
-          0x93, 0x94, 0x5, 0x10, 0x9, 0x2, 0x94, 0x95, 0x7, 0xc, 0x2, 0x2,
-          0x95, 0x97, 0x3, 0x2, 0x2, 0x2, 0x96, 0x8e, 0x3, 0x2, 0x2, 0x2, 0x96,
-          0x8f, 0x3, 0x2, 0x2, 0x2, 0x96, 0x90, 0x3, 0x2, 0x2, 0x2, 0x96, 0x93,
-          0x3, 0x2, 0x2, 0x2, 0x97, 0x13, 0x3, 0x2, 0x2, 0x2, 0x12, 0x17, 0x2e,
-          0x39, 0x3b, 0x3f, 0x4c, 0x4f, 0x52, 0x5b, 0x66, 0x69, 0x6c, 0x7e,
-          0x82, 0x8a, 0x96,
+          0x3, 0x3, 0x7, 0x3, 0x42, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 0x45, 0xb,
+          0x3, 0x3, 0x4, 0x5, 0x4, 0x48, 0xa, 0x4, 0x3, 0x4, 0x3, 0x4, 0x3,
+          0x4, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5,
+          0x7, 0x5, 0x53, 0xa, 0x5, 0xc, 0x5, 0xe, 0x5, 0x56, 0xb, 0x5, 0x5,
+          0x5, 0x58, 0xa, 0x5, 0x3, 0x5, 0x5, 0x5, 0x5b, 0xa, 0x5, 0x3, 0x5,
+          0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x3, 0x5, 0x6, 0x5, 0x62, 0xa, 0x5,
+          0xd, 0x5, 0xe, 0x5, 0x63, 0x3, 0x5, 0x3, 0x5, 0x3, 0x6, 0x3, 0x6,
+          0x3, 0x6, 0x3, 0x6, 0x3, 0x6, 0x7, 0x6, 0x6d, 0xa, 0x6, 0xc, 0x6,
+          0xe, 0x6, 0x70, 0xb, 0x6, 0x5, 0x6, 0x72, 0xa, 0x6, 0x3, 0x6, 0x5,
+          0x6, 0x75, 0xa, 0x6, 0x3, 0x6, 0x3, 0x6, 0x3, 0x7, 0x3, 0x7, 0x3,
+          0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7,
+          0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 0x5, 0x7, 0x87,
+          0xa, 0x7, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3,
+          0x8, 0x3, 0x9, 0x3, 0x9, 0x3, 0x9, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa,
+          0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xb, 0x3, 0xb, 0x7, 0xb, 0x9a,
+          0xa, 0xb, 0xc, 0xb, 0xe, 0xb, 0x9d, 0xb, 0xb, 0x3, 0xb, 0x5, 0xb,
+          0xa0, 0xa, 0xb, 0x3, 0xc, 0x3, 0xc, 0x5, 0xc, 0xa4, 0xa, 0xc, 0x3,
+          0xc, 0x3, 0xc, 0x3, 0xd, 0x3, 0xd, 0x6, 0xd, 0xaa, 0xa, 0xd, 0xd,
+          0xd, 0xe, 0xd, 0xab, 0x3, 0xd, 0x3, 0xd, 0x3, 0xe, 0x3, 0xe, 0x3,
+          0xe, 0x3, 0xe, 0x3, 0xe, 0x3, 0xe, 0x3, 0xe, 0x3, 0xe, 0x3, 0xe,
+          0x5, 0xe, 0xb9, 0xa, 0xe, 0x3, 0xe, 0x2, 0x3, 0x4, 0xf, 0x2, 0x4,
+          0x6, 0x8, 0xa, 0xc, 0xe, 0x10, 0x12, 0x14, 0x16, 0x18, 0x1a, 0x2,
+          0x7, 0x3, 0x2, 0x1c, 0x1d, 0x3, 0x2, 0x12, 0x13, 0x3, 0x2, 0x14,
+          0x15, 0x3, 0x2, 0x16, 0x1b, 0x3, 0x2, 0x1e, 0x1f, 0x2, 0xcb, 0x2,
+          0x1d, 0x3, 0x2, 0x2, 0x2, 0x4, 0x36, 0x3, 0x2, 0x2, 0x2, 0x6, 0x47,
+          0x3, 0x2, 0x2, 0x2, 0x8, 0x4c, 0x3, 0x2, 0x2, 0x2, 0xa, 0x67, 0x3,
+          0x2, 0x2, 0x2, 0xc, 0x86, 0x3, 0x2, 0x2, 0x2, 0xe, 0x88, 0x3, 0x2,
+          0x2, 0x2, 0x10, 0x8e, 0x3, 0x2, 0x2, 0x2, 0x12, 0x91, 0x3, 0x2, 0x2,
+          0x2, 0x14, 0x97, 0x3, 0x2, 0x2, 0x2, 0x16, 0xa1, 0x3, 0x2, 0x2, 0x2,
+          0x18, 0xa7, 0x3, 0x2, 0x2, 0x2, 0x1a, 0xb8, 0x3, 0x2, 0x2, 0x2, 0x1c,
+          0x1e, 0x5, 0x8, 0x5, 0x2, 0x1d, 0x1c, 0x3, 0x2, 0x2, 0x2, 0x1e, 0x1f,
+          0x3, 0x2, 0x2, 0x2, 0x1f, 0x1d, 0x3, 0x2, 0x2, 0x2, 0x1f, 0x20, 0x3,
+          0x2, 0x2, 0x2, 0x20, 0x3, 0x3, 0x2, 0x2, 0x2, 0x21, 0x22, 0x8, 0x3,
+          0x1, 0x2, 0x22, 0x37, 0x9, 0x2, 0x2, 0x2, 0x23, 0x37, 0x7, 0x20,
+          0x2, 0x2, 0x24, 0x37, 0x7, 0x22, 0x2, 0x2, 0x25, 0x37, 0x7, 0x23,
+          0x2, 0x2, 0x26, 0x37, 0x5, 0xa, 0x6, 0x2, 0x27, 0x37, 0x7, 0x21,
+          0x2, 0x2, 0x28, 0x29, 0x7, 0x3, 0x2, 0x2, 0x29, 0x2a, 0x7, 0x16,
+          0x2, 0x2, 0x2a, 0x2b, 0x7, 0x1f, 0x2, 0x2, 0x2b, 0x2c, 0x7, 0x17,
+          0x2, 0x2, 0x2c, 0x2d, 0x7, 0x4, 0x2, 0x2, 0x2d, 0x2e, 0x5, 0x4, 0x3,
+          0x2, 0x2e, 0x2f, 0x7, 0x5, 0x2, 0x2, 0x2f, 0x37, 0x3, 0x2, 0x2, 0x2,
+          0x30, 0x31, 0x7, 0x4, 0x2, 0x2, 0x31, 0x32, 0x5, 0x4, 0x3, 0x2, 0x32,
+          0x33, 0x7, 0x5, 0x2, 0x2, 0x33, 0x37, 0x3, 0x2, 0x2, 0x2, 0x34, 0x35,
+          0x7, 0x15, 0x2, 0x2, 0x35, 0x37, 0x5, 0x4, 0x3, 0x4, 0x36, 0x21,
+          0x3, 0x2, 0x2, 0x2, 0x36, 0x23, 0x3, 0x2, 0x2, 0x2, 0x36, 0x24, 0x3,
+          0x2, 0x2, 0x2, 0x36, 0x25, 0x3, 0x2, 0x2, 0x2, 0x36, 0x26, 0x3, 0x2,
+          0x2, 0x2, 0x36, 0x27, 0x3, 0x2, 0x2, 0x2, 0x36, 0x28, 0x3, 0x2, 0x2,
+          0x2, 0x36, 0x30, 0x3, 0x2, 0x2, 0x2, 0x36, 0x34, 0x3, 0x2, 0x2, 0x2,
+          0x37, 0x43, 0x3, 0x2, 0x2, 0x2, 0x38, 0x39, 0xc, 0x6, 0x2, 0x2, 0x39,
+          0x3a, 0x9, 0x3, 0x2, 0x2, 0x3a, 0x42, 0x5, 0x4, 0x3, 0x7, 0x3b, 0x3c,
+          0xc, 0x5, 0x2, 0x2, 0x3c, 0x3d, 0x9, 0x4, 0x2, 0x2, 0x3d, 0x42, 0x5,
+          0x4, 0x3, 0x6, 0x3e, 0x3f, 0xc, 0x3, 0x2, 0x2, 0x3f, 0x40, 0x9, 0x5,
+          0x2, 0x2, 0x40, 0x42, 0x5, 0x4, 0x3, 0x4, 0x41, 0x38, 0x3, 0x2, 0x2,
+          0x2, 0x41, 0x3b, 0x3, 0x2, 0x2, 0x2, 0x41, 0x3e, 0x3, 0x2, 0x2, 0x2,
+          0x42, 0x45, 0x3, 0x2, 0x2, 0x2, 0x43, 0x41, 0x3, 0x2, 0x2, 0x2, 0x43,
+          0x44, 0x3, 0x2, 0x2, 0x2, 0x44, 0x5, 0x3, 0x2, 0x2, 0x2, 0x45, 0x43,
+          0x3, 0x2, 0x2, 0x2, 0x46, 0x48, 0x7, 0x6, 0x2, 0x2, 0x47, 0x46, 0x3,
+          0x2, 0x2, 0x2, 0x47, 0x48, 0x3, 0x2, 0x2, 0x2, 0x48, 0x49, 0x3, 0x2,
+          0x2, 0x2, 0x49, 0x4a, 0x7, 0x1f, 0x2, 0x2, 0x4a, 0x4b, 0x7, 0x21,
+          0x2, 0x2, 0x4b, 0x7, 0x3, 0x2, 0x2, 0x2, 0x4c, 0x4d, 0x7, 0x7, 0x2,
+          0x2, 0x4d, 0x4e, 0x7, 0x21, 0x2, 0x2, 0x4e, 0x57, 0x7, 0x4, 0x2,
+          0x2, 0x4f, 0x54, 0x5, 0x6, 0x4, 0x2, 0x50, 0x51, 0x7, 0x8, 0x2, 0x2,
+          0x51, 0x53, 0x5, 0x6, 0x4, 0x2, 0x52, 0x50, 0x3, 0x2, 0x2, 0x2, 0x53,
+          0x56, 0x3, 0x2, 0x2, 0x2, 0x54, 0x52, 0x3, 0x2, 0x2, 0x2, 0x54, 0x55,
+          0x3, 0x2, 0x2, 0x2, 0x55, 0x58, 0x3, 0x2, 0x2, 0x2, 0x56, 0x54, 0x3,
+          0x2, 0x2, 0x2, 0x57, 0x4f, 0x3, 0x2, 0x2, 0x2, 0x57, 0x58, 0x3, 0x2,
+          0x2, 0x2, 0x58, 0x5a, 0x3, 0x2, 0x2, 0x2, 0x59, 0x5b, 0x7, 0x8, 0x2,
+          0x2, 0x5a, 0x59, 0x3, 0x2, 0x2, 0x2, 0x5a, 0x5b, 0x3, 0x2, 0x2, 0x2,
+          0x5b, 0x5c, 0x3, 0x2, 0x2, 0x2, 0x5c, 0x5d, 0x7, 0x5, 0x2, 0x2, 0x5d,
+          0x5e, 0x7, 0x9, 0x2, 0x2, 0x5e, 0x5f, 0x9, 0x6, 0x2, 0x2, 0x5f, 0x61,
+          0x7, 0xa, 0x2, 0x2, 0x60, 0x62, 0x5, 0x1a, 0xe, 0x2, 0x61, 0x60,
+          0x3, 0x2, 0x2, 0x2, 0x62, 0x63, 0x3, 0x2, 0x2, 0x2, 0x63, 0x61, 0x3,
+          0x2, 0x2, 0x2, 0x63, 0x64, 0x3, 0x2, 0x2, 0x2, 0x64, 0x65, 0x3, 0x2,
+          0x2, 0x2, 0x65, 0x66, 0x7, 0xb, 0x2, 0x2, 0x66, 0x9, 0x3, 0x2, 0x2,
+          0x2, 0x67, 0x68, 0x7, 0x21, 0x2, 0x2, 0x68, 0x71, 0x7, 0x4, 0x2,
+          0x2, 0x69, 0x6e, 0x5, 0x4, 0x3, 0x2, 0x6a, 0x6b, 0x7, 0x8, 0x2, 0x2,
+          0x6b, 0x6d, 0x5, 0x4, 0x3, 0x2, 0x6c, 0x6a, 0x3, 0x2, 0x2, 0x2, 0x6d,
+          0x70, 0x3, 0x2, 0x2, 0x2, 0x6e, 0x6c, 0x3, 0x2, 0x2, 0x2, 0x6e, 0x6f,
+          0x3, 0x2, 0x2, 0x2, 0x6f, 0x72, 0x3, 0x2, 0x2, 0x2, 0x70, 0x6e, 0x3,
+          0x2, 0x2, 0x2, 0x71, 0x69, 0x3, 0x2, 0x2, 0x2, 0x71, 0x72, 0x3, 0x2,
+          0x2, 0x2, 0x72, 0x74, 0x3, 0x2, 0x2, 0x2, 0x73, 0x75, 0x7, 0x8, 0x2,
+          0x2, 0x74, 0x73, 0x3, 0x2, 0x2, 0x2, 0x74, 0x75, 0x3, 0x2, 0x2, 0x2,
+          0x75, 0x76, 0x3, 0x2, 0x2, 0x2, 0x76, 0x77, 0x7, 0x5, 0x2, 0x2, 0x77,
+          0xb, 0x3, 0x2, 0x2, 0x2, 0x78, 0x79, 0x7, 0x1f, 0x2, 0x2, 0x79, 0x7a,
+          0x7, 0x21, 0x2, 0x2, 0x7a, 0x87, 0x7, 0xc, 0x2, 0x2, 0x7b, 0x7c,
+          0x7, 0x21, 0x2, 0x2, 0x7c, 0x7d, 0x7, 0xd, 0x2, 0x2, 0x7d, 0x7e,
+          0x5, 0x4, 0x3, 0x2, 0x7e, 0x7f, 0x7, 0xc, 0x2, 0x2, 0x7f, 0x87, 0x3,
+          0x2, 0x2, 0x2, 0x80, 0x81, 0x7, 0x1f, 0x2, 0x2, 0x81, 0x82, 0x7,
+          0x21, 0x2, 0x2, 0x82, 0x83, 0x7, 0xd, 0x2, 0x2, 0x83, 0x84, 0x5,
+          0x4, 0x3, 0x2, 0x84, 0x85, 0x7, 0xc, 0x2, 0x2, 0x85, 0x87, 0x3, 0x2,
+          0x2, 0x2, 0x86, 0x78, 0x3, 0x2, 0x2, 0x2, 0x86, 0x7b, 0x3, 0x2, 0x2,
+          0x2, 0x86, 0x80, 0x3, 0x2, 0x2, 0x2, 0x87, 0xd, 0x3, 0x2, 0x2, 0x2,
+          0x88, 0x89, 0x7, 0xe, 0x2, 0x2, 0x89, 0x8a, 0x7, 0x4, 0x2, 0x2, 0x8a,
+          0x8b, 0x5, 0x4, 0x3, 0x2, 0x8b, 0x8c, 0x7, 0x5, 0x2, 0x2, 0x8c, 0x8d,
+          0x5, 0x18, 0xd, 0x2, 0x8d, 0xf, 0x3, 0x2, 0x2, 0x2, 0x8e, 0x8f, 0x7,
+          0xf, 0x2, 0x2, 0x8f, 0x90, 0x5, 0x18, 0xd, 0x2, 0x90, 0x11, 0x3,
+          0x2, 0x2, 0x2, 0x91, 0x92, 0x7, 0x10, 0x2, 0x2, 0x92, 0x93, 0x7,
+          0x4, 0x2, 0x2, 0x93, 0x94, 0x5, 0x4, 0x3, 0x2, 0x94, 0x95, 0x7, 0x5,
+          0x2, 0x2, 0x95, 0x96, 0x5, 0x18, 0xd, 0x2, 0x96, 0x13, 0x3, 0x2,
+          0x2, 0x2, 0x97, 0x9b, 0x5, 0xe, 0x8, 0x2, 0x98, 0x9a, 0x5, 0x12,
+          0xa, 0x2, 0x99, 0x98, 0x3, 0x2, 0x2, 0x2, 0x9a, 0x9d, 0x3, 0x2, 0x2,
+          0x2, 0x9b, 0x99, 0x3, 0x2, 0x2, 0x2, 0x9b, 0x9c, 0x3, 0x2, 0x2, 0x2,
+          0x9c, 0x9f, 0x3, 0x2, 0x2, 0x2, 0x9d, 0x9b, 0x3, 0x2, 0x2, 0x2, 0x9e,
+          0xa0, 0x5, 0x10, 0x9, 0x2, 0x9f, 0x9e, 0x3, 0x2, 0x2, 0x2, 0x9f,
+          0xa0, 0x3, 0x2, 0x2, 0x2, 0xa0, 0x15, 0x3, 0x2, 0x2, 0x2, 0xa1, 0xa3,
+          0x7, 0x11, 0x2, 0x2, 0xa2, 0xa4, 0x5, 0x4, 0x3, 0x2, 0xa3, 0xa2,
+          0x3, 0x2, 0x2, 0x2, 0xa3, 0xa4, 0x3, 0x2, 0x2, 0x2, 0xa4, 0xa5, 0x3,
+          0x2, 0x2, 0x2, 0xa5, 0xa6, 0x7, 0xc, 0x2, 0x2, 0xa6, 0x17, 0x3, 0x2,
+          0x2, 0x2, 0xa7, 0xa9, 0x7, 0xa, 0x2, 0x2, 0xa8, 0xaa, 0x5, 0x1a,
+          0xe, 0x2, 0xa9, 0xa8, 0x3, 0x2, 0x2, 0x2, 0xaa, 0xab, 0x3, 0x2, 0x2,
+          0x2, 0xab, 0xa9, 0x3, 0x2, 0x2, 0x2, 0xab, 0xac, 0x3, 0x2, 0x2, 0x2,
+          0xac, 0xad, 0x3, 0x2, 0x2, 0x2, 0xad, 0xae, 0x7, 0xb, 0x2, 0x2, 0xae,
+          0x19, 0x3, 0x2, 0x2, 0x2, 0xaf, 0xb9, 0x5, 0xc, 0x7, 0x2, 0xb0, 0xb9,
+          0x5, 0x16, 0xc, 0x2, 0xb1, 0xb2, 0x5, 0xa, 0x6, 0x2, 0xb2, 0xb3,
+          0x7, 0xc, 0x2, 0x2, 0xb3, 0xb9, 0x3, 0x2, 0x2, 0x2, 0xb4, 0xb5, 0x5,
+          0x18, 0xd, 0x2, 0xb5, 0xb6, 0x7, 0xc, 0x2, 0x2, 0xb6, 0xb9, 0x3,
+          0x2, 0x2, 0x2, 0xb7, 0xb9, 0x5, 0x14, 0xb, 0x2, 0xb8, 0xaf, 0x3,
+          0x2, 0x2, 0x2, 0xb8, 0xb0, 0x3, 0x2, 0x2, 0x2, 0xb8, 0xb1, 0x3, 0x2,
+          0x2, 0x2, 0xb8, 0xb4, 0x3, 0x2, 0x2, 0x2, 0xb8, 0xb7, 0x3, 0x2, 0x2,
+          0x2, 0xb9, 0x1b, 0x3, 0x2, 0x2, 0x2, 0x14, 0x1f, 0x36, 0x41, 0x43,
+          0x47, 0x54, 0x57, 0x5a, 0x63, 0x6e, 0x71, 0x74, 0x86, 0x9b, 0x9f,
+          0xa3, 0xab, 0xb8,
   };
 
   _serializedATN.insert(_serializedATN.end(), serializedATNSegment0,

@@ -15,10 +15,12 @@
 #define INT32_TYPE Type::getInt32Ty(*TheContext)
 #define INT64_TYPE Type::getInt64Ty(*TheContext)
 #define FLOAT_TYPE Type::getDoubleTy(*TheContext)
+#define BOOL_TYPE Type::getInt1Ty(*TheContext)
 
 #define INT32_PTR_TYPE Type::getInt32PtrTy(*TheContext)
 #define INT64_PTR_TYPE Type::getInt64PtrTy(*TheContext)
 #define FLOAT_PTR_TYPE Type::getFloatPtrTy(*TheContext)
+#define BOOL_PTR_TYPE Type::getInt1PtrTy(*TheContext)
 
 #define INT8_PTR_TYPE Type::getInt8PtrTy(*TheContext)
 

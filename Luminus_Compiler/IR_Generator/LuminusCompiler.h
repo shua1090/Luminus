@@ -28,7 +28,7 @@ public:
         for (int i = 0; i < names.size(); i++) {
             try {
                 return names[i][varName];
-            } catch (std::out_of_range &r) {}
+            } catch (std::exception &a) {}
         }
         return nullptr;
     }
@@ -42,11 +42,46 @@ class LuminusCompiler : public LuminusVisitor {
 
     ScopedVariableManager svm;
 
+    CmpInst::Predicate textToCmpOp(std::string text, Type *t) {
+        if (t == INT32_TYPE) {
+            if (text == "==") {
+                return CmpInst::ICMP_EQ;
+            } else if (text == ">") {
+                return CmpInst::ICMP_SGT;
+            } else if (text == "<") {
+                return CmpInst::ICMP_SLT;
+            } else if (text == ">=") {
+                return CmpInst::ICMP_SGE;
+            } else if (text == "<=") {
+                return CmpInst::ICMP_SLE;
+            } else if (text == "!=") {
+                return CmpInst::ICMP_NE;
+            }
+        } else if (t == FLOAT_TYPE) {
+            if (text == "==") {
+                return CmpInst::FCMP_OEQ;
+            } else if (text == ">") {
+                return CmpInst::FCMP_OGT;
+            } else if (text == "<") {
+                return CmpInst::FCMP_OLT;
+            } else if (text == ">=") {
+                return CmpInst::FCMP_OGE;
+            } else if (text == "<=") {
+                return CmpInst::FCMP_OLE;
+            } else if (text == "!=") {
+                return CmpInst::FCMP_ONE;
+            }
+        }
+        return CmpInst::ICMP_UGT;
+    }
+
     llvm::Type *textToType(std::string text) {
         if (text == "int") {
             return INT32_TYPE;
         } else if (text == "double") {
             return FLOAT_TYPE;
+        } else if (text == "bool") {
+            return BOOL_TYPE;
         } else if (text == "string") {
 //            return Type::getInt8PtrTy(*TheContext);
             return Type::getInt8PtrTy(*TheContext);
@@ -60,6 +95,8 @@ class LuminusCompiler : public LuminusVisitor {
             return INT32_PTR_TYPE;
         } else if (text == "double") {
             return FLOAT_PTR_TYPE;
+        } else if (text == "bool") {
+            return BOOL_PTR_TYPE;
         } else if (text == "string") {
             return INT8_PTR_TYPE;
         } else {
@@ -72,6 +109,8 @@ public:
     std::unique_ptr<Module> TheModule = std::make_unique<Module>("Compiled_Lang", *TheContext);
     std::unique_ptr<IRBuilder<>> Builder = std::make_unique<IRBuilder<>>(*TheContext);
 
+    Function *curFunction;
+
     void dump() {
         this->TheModule->dump();
     }
@@ -81,6 +120,11 @@ public:
                                              INT8_PTR_TYPE, false);
 
         Function *F = Function::Create(FT, Function::ExternalLinkage, "puts", *TheModule);
+
+        FunctionType *printft = FunctionType::get(INT32_TYPE,
+                                                  INT8_PTR_TYPE, true);
+
+        Function *printffunc = Function::Create(printft, Function::ExternalLinkage, "printf", *TheModule);
     }
 
     antlrcpp::Any visitStart(LuminusParser::StartContext *context) override {
@@ -93,7 +137,11 @@ public:
     }
 
     antlrcpp::Any visitBool_Const(LuminusParser::Bool_ConstContext *context) override {
-        return antlrcpp::Any();
+        if (context->getText() == "true") {
+            return static_cast<Value *>( Builder->getInt1(1));
+        } else {
+            return static_cast<Value *> (Builder->getInt1(0));
+        }
     }
 
     antlrcpp::Any visitParantheses(LuminusParser::ParanthesesContext *context) override {
@@ -119,6 +167,8 @@ public:
                     val
             );
 
+        } else {
+            std::cout << "Unary Negate on an invalid var/const" << std::endl;
         }
         return nullptr;
     }
@@ -133,6 +183,9 @@ public:
     }
 
     antlrcpp::Any visitBlockExpression(LuminusParser::BlockExpressionContext *context) override {
+        svm.addScope();
+        this->visitChildren(context);
+        svm.removeScope();
         return antlrcpp::Any();
     }
 
@@ -154,8 +207,20 @@ public:
 
     antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) override;
 
-    antlrcpp::Any visitBoolExpression(LuminusParser::BoolExpressionContext *context) override {
-        return antlrcpp::Any();
+    antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) override {
+        Value *LHS = this->visit(context->left).as<Value *>();
+        Value *RHS = this->visit(context->right).as<Value *>();
+        if (LHS == nullptr || RHS == nullptr) {
+            std::cout << "ERR! - Visit Comp Exiression" << std::endl;
+            // TODO: ERROR HANDLING
+            return nullptr;
+        } else if (LHS->getType() != RHS->getType()) {
+            std::cout << "ERR! - TYPE MISMATCH" << std::endl;
+            // TODO: ERROR HANDLING
+            return nullptr;
+        } else {
+            return Builder->CreateCmp(textToCmpOp(context->op->getText(), LHS->getType()), LHS, RHS);
+        }
     }
 
     antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) override {
@@ -174,11 +239,24 @@ public:
         return this->visitChildren(context);
     }
 
+
     antlrcpp::Any visitCastToType(LuminusParser::CastToTypeContext *context) override;
 
     antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) override;
 
     Function *specialMainDeclaration(LuminusParser::FunctionDeclarationContext *context);
+
+    antlrcpp::Any visitIf_statement(LuminusParser::If_statementContext *context) override { return NULL; }
+
+    antlrcpp::Any visitElse_statement(LuminusParser::Else_statementContext *context) override { return NULL; }
+
+    antlrcpp::Any visitElif_statement(LuminusParser::Elif_statementContext *context) override { return NULL; }
+
+    antlrcpp::Any visitConditional_statement(LuminusParser::Conditional_statementContext *context) override;
+
+    BasicBlock *curReturnBlock;
+    Value *curReturnValue;
+    bool returns = false;
 };
 
 #endif //LUMINUS_LUMVISITOR_H

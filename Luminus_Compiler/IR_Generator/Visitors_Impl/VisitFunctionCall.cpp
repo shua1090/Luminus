@@ -7,22 +7,21 @@ antlrcpp::Any LuminusCompiler::visitFunctionCall(LuminusParser::FunctionCallCont
         return nullptr;
     } else {
         int paramCount = f->getFunctionType()->getNumParams();
-
+        std::cout << context->args.size();
+        std::cout << "-" << paramCount << std::endl;
         if (context->args.size() != paramCount) {
             std::cout << "Param count incorrect!" << std::endl;
             // TODO: INCORRECT CALL!
         }
-        std::vector<Value *> paramCallValues(paramCount);
-        for (int i = 0; i < paramCallValues.size(); i++) {
-            if (f->getFunctionType()->getParamType(i)->isPointerTy()) {
-                paramCallValues[i] = svm.getVariable(context->args[i]->getText());
-            } else paramCallValues[i] = this->visit(context->args[i]).as<Value *>();
-            std::cout << "Type " << i << " ";
+        std::vector<Value *> paramCallValues(context->args.size());
+        for (int i = 0; i < context->args.size(); i++) {
+//            if (f->getFunctionType()->getParamType(i)->isPointerTy()) {
+//                paramCallValues[i] = svm.getVariable(context->args[i]->getText());
+//            } else
+            paramCallValues[i] = this->visit(context->args[i]).as<Value *>();
+            std::cout << "Type (Func Call)" << i << " ";
             paramCallValues[i]->getType()->dump();
             std::cout << std::endl;
-            if (paramCallValues[i]->getType() != f->getFunctionType()->getParamType(i)) {
-                //TODO: INCORRECT CALL TYPES
-            }
         }
         return static_cast<Value *> ( Builder->CreateCall(f, paramCallValues));
     }

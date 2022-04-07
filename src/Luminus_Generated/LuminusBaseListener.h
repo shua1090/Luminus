@@ -56,6 +56,10 @@ public:
 
     virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override {}
 
+    virtual void enterCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
+
+    virtual void exitCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
+
     virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext * /*ctx*/) override {}
 
     virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext * /*ctx*/) override {}
@@ -63,10 +67,6 @@ public:
     virtual void enterCastToType(LuminusParser::CastToTypeContext * /*ctx*/) override {}
 
     virtual void exitCastToType(LuminusParser::CastToTypeContext * /*ctx*/) override {}
-
-    virtual void enterBoolExpression(LuminusParser::BoolExpressionContext * /*ctx*/) override {}
-
-    virtual void exitBoolExpression(LuminusParser::BoolExpressionContext * /*ctx*/) override {}
 
     virtual void enterArgument(LuminusParser::ArgumentContext * /*ctx*/) override {}
 
@@ -91,6 +91,22 @@ public:
     virtual void enterInitialization(LuminusParser::InitializationContext * /*ctx*/) override {}
 
     virtual void exitInitialization(LuminusParser::InitializationContext * /*ctx*/) override {}
+
+    virtual void enterIf_statement(LuminusParser::If_statementContext * /*ctx*/) override {}
+
+    virtual void exitIf_statement(LuminusParser::If_statementContext * /*ctx*/) override {}
+
+    virtual void enterElse_statement(LuminusParser::Else_statementContext * /*ctx*/) override {}
+
+    virtual void exitElse_statement(LuminusParser::Else_statementContext * /*ctx*/) override {}
+
+    virtual void enterElif_statement(LuminusParser::Elif_statementContext * /*ctx*/) override {}
+
+    virtual void exitElif_statement(LuminusParser::Elif_statementContext * /*ctx*/) override {}
+
+    virtual void enterConditional_statement(LuminusParser::Conditional_statementContext * /*ctx*/) override {}
+
+    virtual void exitConditional_statement(LuminusParser::Conditional_statementContext * /*ctx*/) override {}
 
     virtual void enterReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override {}
 

@@ -13,11 +13,11 @@ class  LuminusLexer : public antlr4::Lexer {
 public:
   enum {
       T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7,
-      T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, MUL = 13, DIV = 14,
-      ADD = 15, SUB = 16, LESS_THAN = 17, GREATER_THAN = 18, LESS_THAN_EQUAL = 19,
-      GREATER_THAN_EQUAL = 20, EQUAL_TO = 21, TRUE_CONST = 22, FALSE_CONST = 23,
-      VOID = 24, TYPE = 25, STRING_CONST = 26, IDENTIFIER = 27, INTEGER_CONST = 28,
-      FLOATING_CONST = 29, DIGIT = 30, OCTAL_DIG = 31, HEX_DIG = 32, WHITESPACE = 33
+      T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14,
+      T__14 = 15, MUL = 16, DIV = 17, ADD = 18, SUB = 19, LT = 20, GT = 21,
+      LTE = 22, GTE = 23, EQ = 24, NOT_EQ = 25, TRUE_CONST = 26, FALSE_CONST = 27,
+      VOID = 28, TYPE = 29, STRING_CONST = 30, IDENTIFIER = 31, INTEGER_CONST = 32,
+      FLOATING_CONST = 33, DIGIT = 34, OCTAL_DIG = 35, HEX_DIG = 36, WHITESPACE = 37
   };
 
   explicit LuminusLexer(antlr4::CharStream *input);

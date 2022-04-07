@@ -79,6 +79,5 @@ int main() {
     std::error_code ec;
     raw_fd_ostream b("compiled_lang.bc", ec);
     llvm::WriteBitcodeToFile(*visitor.TheModule, b, sys::fs::OF_None);
-
     return 0;
 }

@@ -86,13 +86,16 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
     Builder->SetInsertPoint(body);
 
     for (int i = 0; i < param_labels.size(); i++) {
-        if (args[i]->ref == nullptr)
+        if (args[i]->ref == nullptr) {
             svm.addVariable(param_labels[i],
-                            Builder->CreateAlloca(param_types[i], theFunction->getArg(i))
+                            Builder->CreateAlloca(param_types[i])
             );
-        else
+            Builder->CreateStore(theFunction->getArg(i), svm.getVariable(param_labels[i]));
+        } else
             svm.addVariable(param_labels[i], theFunction->getArg(i));
     }
+
+    this->curFunction = theFunction;
 
     this->visitChildren(context);
 
@@ -101,6 +104,6 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
     llvm::raw_string_ostream rs(s);
     bool f = verifyFunction(*theFunction, &rs);
     std::cout << "f: " << f << " errors: " << rs.str() << std::endl;
-
+    this->curFunction = nullptr;
     return nullptr;
 }
