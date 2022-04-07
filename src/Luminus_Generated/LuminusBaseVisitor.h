@@ -31,6 +31,10 @@ public:
         return visitChildren(ctx);
     }
 
+    virtual antlrcpp::Any visitStringConst(LuminusParser::StringConstContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
     virtual antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) override {
         return visitChildren(ctx);
     }

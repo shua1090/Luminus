@@ -1,5 +1,5 @@
-function test() returns int {
-    int x = 12;
-    int y = add(x, 5);
-    return x;
+function main() returns int {
+    string s = "HelloElynn";
+    puts(s);
+    return 0;
 }

@@ -30,6 +30,10 @@ public:
 
     virtual void exitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *ctx) = 0;
 
+    virtual void enterStringConst(LuminusParser::StringConstContext *ctx) = 0;
+
+    virtual void exitStringConst(LuminusParser::StringConstContext *ctx) = 0;
+
     virtual void enterFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) = 0;
 
     virtual void exitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) = 0;

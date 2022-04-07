@@ -20,6 +20,8 @@
 #define INT64_PTR_TYPE Type::getInt64PtrTy(*TheContext)
 #define FLOAT_PTR_TYPE Type::getFloatPtrTy(*TheContext)
 
+#define INT8_PTR_TYPE Type::getInt8PtrTy(*TheContext)
+
 #define VOID_TYPE Type::getVoidTy(*TheContext)
 
 #endif //LUMINUS_DEFINITIONS_H

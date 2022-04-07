@@ -24,8 +24,9 @@ fragment DOUBLE: 'double';
 fragment STRING: 'string';
 fragment BOOL: 'bool';
 
-IDENTIFIER: [A-Za-z]+;
 
+STRING_CONST: '"' [A-Za-z]+ '"';
+IDENTIFIER: [A-Za-z]+;
 INTEGER_CONST: DIGIT | OCTAL_DIG | HEX_DIG;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
 
@@ -37,6 +38,7 @@ start: function+;
 
 expression:
     BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const
+    | STRING_CONST #StringConst
     | INTEGER_CONST #IntegerExpression
     | FLOATING_CONST #FloatExpression
     | call=func_call #Func_Call_Expression
@@ -63,6 +65,6 @@ assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
 return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
 block: '{' statement+ '}' #BlockExpression;
-statement: assignment | return_statement | func_call | block ';';
+statement: assignment | return_statement | func_call ';' | block ';';
 
 WHITESPACE: [ \r\n\t]+ -> skip;

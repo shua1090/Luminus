@@ -32,6 +32,10 @@ public:
 
     virtual void exitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext * /*ctx*/) override {}
 
+    virtual void enterStringConst(LuminusParser::StringConstContext * /*ctx*/) override {}
+
+    virtual void exitStringConst(LuminusParser::StringConstContext * /*ctx*/) override {}
+
     virtual void enterFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext * /*ctx*/) override {}
 
     virtual void exitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext * /*ctx*/) override {}

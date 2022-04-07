@@ -47,6 +47,9 @@ class LuminusCompiler : public LuminusVisitor {
             return INT32_TYPE;
         } else if (text == "double") {
             return FLOAT_TYPE;
+        } else if (text == "string") {
+//            return Type::getInt8PtrTy(*TheContext);
+            return Type::getInt8PtrTy(*TheContext);
         } else {
             return INT32_TYPE;
         }
@@ -57,6 +60,8 @@ class LuminusCompiler : public LuminusVisitor {
             return INT32_PTR_TYPE;
         } else if (text == "double") {
             return FLOAT_PTR_TYPE;
+        } else if (text == "string") {
+            return INT8_PTR_TYPE;
         } else {
             return INT32_TYPE;
         }
@@ -71,7 +76,18 @@ public:
         this->TheModule->dump();
     }
 
+    void setupPrintFunction() {
+        FunctionType *FT = FunctionType::get(INT32_TYPE,
+                                             INT8_PTR_TYPE, false);
+
+        Function *F = Function::Create(FT, Function::ExternalLinkage, "puts", *TheModule);
+    }
+
     antlrcpp::Any visitStart(LuminusParser::StartContext *context) override {
+
+        setupPrintFunction();
+
+
         this->visitChildren(context);
         return NULL;
     }
@@ -105,6 +121,19 @@ public:
 
         }
         return nullptr;
+    }
+
+    antlrcpp::Any visitStringConst(LuminusParser::StringConstContext *context) override {
+        std::string text = context->getText();
+        text = text.substr(1, text.length() - 1);
+        return Builder->CreateBitCast(
+                static_cast<Value *> ( Builder->CreateGlobalString(text)),
+                INT8_PTR_TYPE
+        );
+    }
+
+    antlrcpp::Any visitBlockExpression(LuminusParser::BlockExpressionContext *context) override {
+        return antlrcpp::Any();
     }
 
     antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) override;

@@ -27,6 +27,8 @@ public:
 
     virtual antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *context) = 0;
 
+    virtual antlrcpp::Any visitStringConst(LuminusParser::StringConstContext *context) = 0;
+
     virtual antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *context) = 0;
