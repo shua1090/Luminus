@@ -49,6 +49,7 @@ expression:
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | '-' inner=expression #Unary_Negate
+    | id=IDENTIFIER'['index=expression']' #Indexing
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     ;
 
