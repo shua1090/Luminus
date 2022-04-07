@@ -62,6 +62,9 @@ assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
     | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
 
+if_statement: 'if' '(' value=expression ')' ops=block;
+else_statement: 'else' ops=block;
+
 return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
 block: '{' statement+ '}' #BlockExpression;
