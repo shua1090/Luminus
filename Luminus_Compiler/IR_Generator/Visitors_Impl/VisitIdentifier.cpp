@@ -6,7 +6,7 @@
 
 antlrcpp::Any LuminusCompiler::visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) {
     Value *var = this->svm.getVariable(context->id->getText());
-    if (var == nullptr) throw std::exception("ERR!");
+    if (var == nullptr) std::cout << "Error!" << std::endl;
     std::cout << "Type (ID):";
     var->dump();
     std::cout << std::endl;
@@ -18,7 +18,7 @@ antlrcpp::Any LuminusCompiler::visitIdentifierExpression(LuminusParser::Identifi
         std::cout << "Load Float" << std::endl;
         var = Builder->CreateLoad(FLOAT_TYPE, var);
     } else {
-        throw std::exception("ERR!");
+        std::cout << "Error visiting Variable" << std::endl;
     }
 
     return var;

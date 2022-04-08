@@ -20,5 +20,6 @@ antlrcpp::Any LuminusCompiler::visitCastToType(LuminusParser::CastToTypeContext 
         return Builder->CreateCast(Instruction::SIToFP, originalType, destTy);
     } else if (originalType->getType() == FLOAT_TYPE && destTy == INT32_TYPE) {
         return Builder->CreateCast(Instruction::FPToSI, originalType, destTy);
-    } else throw std::exception("! Cast not supported !");
+    } else std::cout << "Cast Not Supported" << std::endl;
+    return nullptr;
 }

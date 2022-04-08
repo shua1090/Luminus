@@ -1,7 +1,7 @@
 project(luminus)
 cmake_minimum_required(VERSION 3.17)
 # A convenience variable:
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_MSVC_RUNTIME_LIBRARY MDd)
 
@@ -31,6 +31,10 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 message(${CMAKE_MODULE_PATH})
 
 #################### ANTLR ####################
+if (UNIX)
+set(ANTLR_EXECUTABLE /usr/local/lib/antlr-4.9-complete.jar)
+endif()
+
 # required if linking to static library
 add_definitions(-DANTLR4CPP_STATIC)
 
