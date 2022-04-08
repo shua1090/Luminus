@@ -17,7 +17,7 @@ FALSE_CONST: 'false';
 
 VOID: 'void';
 
-TYPE: INT | BYTE | LONG | DOUBLE | STRING | BOOL;
+TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL)'*'*;
 fragment INT: 'int';
 fragment BYTE: 'byte';
 fragment LONG: 'long';
@@ -32,8 +32,6 @@ INTEGER_CONST: DIGIT | OCTAL_DIG | HEX_DIG;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
 
 DIGIT: [0-9]+;
-OCTAL_DIG: '0o'[0-9]+;
-HEX_DIG: '0x'[0-9]+;
 
 start: function+;
 
@@ -44,6 +42,8 @@ expression:
     | FLOATING_CONST #FloatExpression
     | call=func_call #Func_Call_Expression
     | id=IDENTIFIER #IdentifierExpression
+    | '&'id=IDENTIFIER #DereferenceExpression
+    | '*'id=IDENTIFIER #ValueOfPointerExpression
     | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
