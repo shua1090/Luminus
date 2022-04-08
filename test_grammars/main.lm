@@ -1,5 +1,5 @@
 function max(int a, int b, int c) returns int {
     int x = 12;
-    int y= x[15];
+    int * f = &x;
     return 12;
 }

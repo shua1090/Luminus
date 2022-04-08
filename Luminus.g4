@@ -17,23 +17,34 @@ FALSE_CONST: 'false';
 
 VOID: 'void';
 
-TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL)'*'*;
-fragment INT: 'int';
-fragment BYTE: 'byte';
-fragment LONG: 'long';
-fragment DOUBLE: 'double';
-fragment STRING: 'string';
-fragment BOOL: 'bool';
+TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL) ' '* ('*')*;
+INT: 'int';
+BYTE: 'byte';
+LONG: 'long';
+DOUBLE: 'double';
+STRING: 'string';
+BOOL: 'bool';
 
 
-STRING_CONST: '"' [A-Za-z %]+ '"';
+STRING_CONST: '"' [A-Za-z]+ '"';
 IDENTIFIER: [A-Za-z]+;
-INTEGER_CONST: DIGIT | OCTAL_DIG | HEX_DIG;
+INTEGER_CONST: DIGIT;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
 
 DIGIT: [0-9]+;
 
 start: function+;
+
+argument: dec_type=TYPE id=IDENTIFIER;
+function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
+
+func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
+    ;
+
+assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
+    | id=IDENTIFIER '=' value=expression ';' #Reinitialization
+    | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
+    ;
 
 expression:
     BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const
@@ -52,18 +63,6 @@ expression:
     | id=IDENTIFIER'['index=expression']' #Indexing
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     ;
-
-argument: dec_type=TYPE id=IDENTIFIER;
-function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
-
-func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
-    ;
-
-assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
-    | id=IDENTIFIER '=' value=expression ';' #Reinitialization
-    | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
-    ;
-
 
 if_statement: 'if' '(' value=expression ')' execute_vals=block;
 else_statement: 'else' ops=block;
