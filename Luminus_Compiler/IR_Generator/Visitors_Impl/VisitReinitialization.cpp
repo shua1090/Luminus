@@ -1,11 +1,11 @@
 # include "../LuminusCompiler.h"
 
 antlrcpp::Any LuminusCompiler::visitReinitialization(LuminusParser::ReinitializationContext *context) {
-    if (svm.getVariable(context->id->getText()) == nullptr) {
-        // TODO: Throw Var not declared error;
+    Value *lhs = this->visit(context->id).as<Value *>();
+    Value *rhs = this->visit(context->value).as<Value *>();
+    if (lhs->getType() != PointerType::get(rhs->getType(), 0)) {
+        std::cout << "Mismatch Error!" << std::endl;
     }
-    return Builder->CreateStore(
-            this->visit(context->value).as<Value *>(), svm.getVariable(context->id->getText())
-    );
+    return Builder->CreateStore(rhs, lhs);
 }
 

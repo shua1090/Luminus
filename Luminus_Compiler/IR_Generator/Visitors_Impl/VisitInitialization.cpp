@@ -5,19 +5,16 @@ antlrcpp::Any LuminusCompiler::visitInitialization(LuminusParser::Initialization
     Type *lhs = this->textToType(context->dec_type->getText());
 
     if (lhs != rhs->getType()) {
-        lhs->dump();
-        rhs->getType()->dump();
         std::cout << "ERROR INITIALIZING" << std::endl;
         //TODO: THROW ERROR LHS != RHS
         return nullptr;
-    } else if (lhs->isPointerTy()) {
-        std::cout << "idk" << std::endl;
-        this->svm.addVariable(context->id->getText(), rhs);
-        return rhs;
     } else {
-        std::cout << "Here" << std::endl;
-        Value *temp = Builder->CreateAlloca(lhs, rhs, context->id->getText());
-        this->svm.addVariable(context->id->getText(), temp);
+        auto a = rhs;
+
+        auto ptr = Builder->CreateAlloca(lhs);
+
+        Value *temp = Builder->CreateStore(rhs, ptr);
+        this->svm.addVariable(context->id->getText(), ptr);
         return temp;
     }
 }

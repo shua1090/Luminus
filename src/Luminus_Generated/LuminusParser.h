@@ -216,12 +216,12 @@ public:
     public:
         ReinitializationContext(AssignmentContext *ctx);
 
-        antlr4::Token *id = nullptr;
+        LuminusParser::ExpressionContext *id = nullptr;
         LuminusParser::ExpressionContext *value = nullptr;
 
-        antlr4::tree::TerminalNode *IDENTIFIER();
+        std::vector<ExpressionContext *> expression();
 
-        ExpressionContext *expression();
+        ExpressionContext *expression(size_t i);
 
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -373,9 +373,11 @@ public:
 
         antlr4::Token *id = nullptr;
 
-        antlr4::tree::TerminalNode *MUL();
-
         antlr4::tree::TerminalNode *IDENTIFIER();
+
+        std::vector<antlr4::tree::TerminalNode *> MUL();
+
+        antlr4::tree::TerminalNode *MUL(size_t i);
 
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 

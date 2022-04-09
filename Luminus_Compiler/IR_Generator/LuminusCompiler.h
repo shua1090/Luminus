@@ -86,6 +86,10 @@ class LuminusCompiler : public LuminusVisitor {
 //            return Type::getInt8PtrTy(*TheContext);
             return Type::getInt8PtrTy(*TheContext);
         } else {
+            if (text.find('*') != std::string::npos) {
+                Type *t;
+                return PointerType::get(textToType(text.substr(0, text.size() - 1)), 0);
+            }
             return INT32_TYPE;
         }
     }
@@ -108,6 +112,35 @@ public:
     std::unique_ptr<LLVMContext> TheContext = std::make_unique<LLVMContext>();
     std::unique_ptr<Module> TheModule = std::make_unique<Module>("Compiled_Lang", *TheContext);
     std::unique_ptr<IRBuilder<>> Builder = std::make_unique<IRBuilder<>>(*TheContext);
+
+    antlrcpp::Any visitDereferenceExpression(LuminusParser::DereferenceExpressionContext *context) override {
+        std::string inpName = context->getText();
+        size_t dereferenceCount = count(inpName.begin(), inpName.end(), '&');
+        auto a = svm.getVariable(inpName.substr(inpName.find_last_of('&') + 1));
+        if (a == nullptr) {
+            // TODO: THROW EXCEPTION
+            std::cout << "Visit Dereference Failure" << std::endl;
+        }
+        return a;
+    }
+
+    antlrcpp::Any visitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *context) override {
+        std::string inpName = context->getText();
+        size_t ptrCount = count(inpName.begin(), inpName.end(), '*');
+        auto a = svm.getVariable(inpName.substr(inpName.find_last_of('*') + 1));
+        if (a == nullptr) {
+            // TODO: THROW EXCEPTION
+            std::cout << "Visit Ptr Failure" << std::endl;
+        }
+        for (int i = 0; i < ptrCount; i++) {
+            a = Builder->CreateLoad(a->getType()->getContainedType(0), a);
+        }
+        return a;
+    }
+
+    antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) override {
+        return antlrcpp::Any();
+    }
 
     Function *curFunction;
 

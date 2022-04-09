@@ -25,8 +25,9 @@ DOUBLE: 'double';
 STRING: 'string';
 BOOL: 'bool';
 
+STRING_CONST : '"' CHAR_NO_NL+ '"' ;
+fragment CHAR_NO_NL : 'a'..'z'|'A'..'Z'|'\t'|'\\'|EOF|'%'|' '|'\n';
 
-STRING_CONST: '"' [A-Za-z]+ '"';
 IDENTIFIER: [A-Za-z]+;
 INTEGER_CONST: DIGIT;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
@@ -42,7 +43,7 @@ func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','
     ;
 
 assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
-    | id=IDENTIFIER '=' value=expression ';' #Reinitialization
+    | id=expression '=' value=expression ';' #Reinitialization
     | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
 
@@ -54,7 +55,7 @@ expression:
     | call=func_call #Func_Call_Expression
     | id=IDENTIFIER #IdentifierExpression
     | '&'id=IDENTIFIER #DereferenceExpression
-    | '*'id=IDENTIFIER #ValueOfPointerExpression
+    | '*'*id=IDENTIFIER #ValueOfPointerExpression
     | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide

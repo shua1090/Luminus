@@ -1,5 +1,10 @@
-function max(int a, int b, int c) returns int {
+function max() returns int {
     int x = 12;
     int * f = &x;
-    return 12;
+    int **fx = &f;
+
+    **fx = 17;
+
+    printf("X is %d\n", x);
+    return x;
 }

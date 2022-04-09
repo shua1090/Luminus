@@ -59,11 +59,8 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
 
     // Setup Params
     for (int i = 0; i < args.size(); i++) {
-        if (args[i]->ref == nullptr) {
-            param_types[i] = textToType(args[i]->dec_type->getText());
-        } else {
-            param_types[i] = textToPtrType(args[i]->dec_type->getText());
-        }
+        param_types[i] = textToType(args[i]->dec_type->getText());
+
         param_labels[i] = args[i]->id->getText();
     }
 
@@ -86,13 +83,10 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
     Builder->SetInsertPoint(body);
 
     for (int i = 0; i < param_labels.size(); i++) {
-        if (args[i]->ref == nullptr) {
-            svm.addVariable(param_labels[i],
-                            Builder->CreateAlloca(param_types[i])
-            );
-            Builder->CreateStore(theFunction->getArg(i), svm.getVariable(param_labels[i]));
-        } else
-            svm.addVariable(param_labels[i], theFunction->getArg(i));
+        svm.addVariable(param_labels[i],
+                        Builder->CreateAlloca(param_types[i])
+        );
+        Builder->CreateStore(theFunction->getArg(i), svm.getVariable(param_labels[i]));
     }
 
     this->curFunction = theFunction;
