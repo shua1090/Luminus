@@ -10,10 +10,12 @@ antlrcpp::Any LuminusCompiler::visitFunctionCall(LuminusParser::FunctionCallCont
         std::vector<Value *> paramCallValues(context->args.size());
         for (int i = 0; i < context->args.size(); i++) {
             paramCallValues[i] = this->visit(context->args[i]).as<Value *>();
+            paramCallValues[i]->getType()->dump();
             if (paramCallValues[i]->getType()->isPointerTy() &&
-                svm.getVariable(context->args[i]->getText()) != nullptr) {
+                svm.getVariable(removeAllStars(context->args[i]->getText())) != nullptr) {
                 paramCallValues[i] = Builder->CreateLoad(paramCallValues[i]->getType()->getContainedType(0),
                                                          paramCallValues[i]);
+                paramCallValues[i]->getType()->dump();
             }
         }
         return static_cast<Value *> ( Builder->CreateCall(f, paramCallValues));

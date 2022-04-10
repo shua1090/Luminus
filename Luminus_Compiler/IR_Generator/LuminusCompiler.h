@@ -9,6 +9,7 @@
 #include "Definitions.h"
 
 #include <unordered_map>
+#include <utility>
 
 using namespace llvm;
 
@@ -106,6 +107,27 @@ class LuminusCompiler : public LuminusVisitor {
         } else {
             return INT32_TYPE;
         }
+    }
+
+    static std::string ReplaceAll(std::string str, const std::string &from, const std::string &to) {
+        size_t start_pos = 0;
+        while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+            str.replace(start_pos, from.length(), to);
+            start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+        }
+        return str;
+    }
+
+    static std::string removeAllStars(std::string text) {
+        return ReplaceAll(std::move(text), "*", "");
+    }
+
+    static std::string removeAllAmpsAndStars(std::string text) {
+        return ReplaceAll(ReplaceAll(std::move(text), "*", ""), "&", "");
+    }
+
+    static std::string fixBackslashes(std::string text) {
+        return ReplaceAll(ReplaceAll(ReplaceAll(text, "\\n", "\n"), "\\t", "\t"), "\\\"", "\"");
     }
 
 public:
@@ -208,7 +230,9 @@ public:
 
     antlrcpp::Any visitStringConst(LuminusParser::StringConstContext *context) override {
         std::string text = context->getText();
-        text = text.substr(1, text.length() - 1);
+        text = text.substr(1, text.length() - 2);
+        text = fixBackslashes(text);
+
         return Builder->CreateBitCast(
                 static_cast<Value *> ( Builder->CreateGlobalString(text)),
                 INT8_PTR_TYPE

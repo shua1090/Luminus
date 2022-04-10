@@ -50,17 +50,16 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
     // Gathered Info about Function from tokens
     std::string function_name = context->funcName->getText();
     llvm::Type *returnType = textToType(context->returnType->getText());
+    if (context->returnType->getText() == "void") returnType = VOID_TYPE;
     if (function_name == "main") {
         return specialMainDeclaration(context);
     }
-    if (context->returnType->getText() == "void") returnType = VOID_TYPE;
     std::vector<llvm::Type *> param_types(args.size());
     std::vector<std::string> param_labels(args.size());
 
     // Setup Params
     for (int i = 0; i < args.size(); i++) {
         param_types[i] = textToType(args[i]->dec_type->getText());
-
         param_labels[i] = args[i]->id->getText();
     }
 

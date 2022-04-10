@@ -26,7 +26,7 @@ STRING: 'string';
 BOOL: 'bool';
 
 STRING_CONST : '"' CHAR_NO_NL+ '"' ;
-fragment CHAR_NO_NL : 'a'..'z'|'A'..'Z'|'\t'|'\\'|EOF|'%'|' '|'\n';
+fragment CHAR_NO_NL : 'a'..'z'|[0-9]|'A'..'Z'|'%'|' '|'\\'|'"';
 
 IDENTIFIER: [A-Za-z]+;
 INTEGER_CONST: DIGIT;
@@ -52,7 +52,6 @@ expression:
     | STRING_CONST #StringConst
     | INTEGER_CONST #IntegerExpression
     | FLOATING_CONST #FloatExpression
-    | call=func_call #Func_Call_Expression
     | id=IDENTIFIER #IdentifierExpression
     | '&'id=IDENTIFIER #DereferenceExpression
     | '*'*id=IDENTIFIER #ValueOfPointerExpression
@@ -62,6 +61,7 @@ expression:
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | '-' inner=expression #Unary_Negate
     | id=IDENTIFIER'['index=expression']' #Indexing
+    | call=func_call #Func_Call_Expression
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     ;
 
