@@ -42,7 +42,7 @@ DIGIT: [0-9]+;
 start: function+;
 
 argument: dec_type=TYPE id=IDENTIFIER;
-function: 'function' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' 'returns' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
+function: funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
 
 func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
     ;

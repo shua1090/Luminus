@@ -21,7 +21,7 @@ set(IR_GENERATOR Luminus_Compiler/IR_Generator/LuminusCompiler.h
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunctionCall.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitConditionals.cpp
         Luminus_Compiler/IR_Generator/Compiler_Errors/CompileException.hpp
-        Luminus_Compiler/IR_Generator/Compiler_Errors/TypeErrors.hpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitWhile_Statement.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitMod.cpp)
+        Luminus_Compiler/IR_Generator/Compiler_Errors/TypeErrors.hpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitWhile_Statement.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitMod.cpp Luminus_Compiler/IR_Generator/StringUtils.cpp Luminus_Compiler/IR_Generator/AutoCast.cpp)
 set(ENTRY_POINT Luminus_Compiler/main.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src/Luminus_Generated")
