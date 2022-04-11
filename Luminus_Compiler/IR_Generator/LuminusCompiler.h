@@ -353,6 +353,7 @@ public:
 
     antlrcpp::Any visitModulus(LuminusParser::ModulusContext *context) override;
 
+
     BasicBlock *curReturnBlock;
     Value *curReturnValue;
     bool returns = false;

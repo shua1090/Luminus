@@ -16,10 +16,10 @@ public:
         T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14,
         T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, MUL = 19, DIV = 20,
         MOD = 21, ADD = 22, SUB = 23, LT = 24, GT = 25, LTE = 26, GTE = 27,
-        EQ = 28, NOT_EQ = 29, TRUE_CONST = 30, FALSE_CONST = 31, VOID = 32,
-        TYPE = 33, INT = 34, BYTE = 35, LONG = 36, DOUBLE = 37, STRING = 38,
-        BOOL = 39, STRING_CONST = 40, IDENTIFIER = 41, INTEGER_CONST = 42, FLOATING_CONST = 43,
-        DIGIT = 44, WHITESPACE = 45
+        EQ = 28, NOT_EQ = 29, LOG_AND = 30, LOG_OR = 31, LOG_NOT = 32, TRUE_CONST = 33,
+        FALSE_CONST = 34, VOID = 35, TYPE = 36, INT = 37, BYTE = 38, LONG = 39,
+        DOUBLE = 40, STRING = 41, BOOL = 42, STRING_CONST = 43, IDENTIFIER = 44,
+        INTEGER_CONST = 45, FLOATING_CONST = 46, DIGIT = 47, WHITESPACE = 48
     };
 
     enum {
@@ -469,6 +469,31 @@ public:
         virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
     };
 
+    class LogicalExpressionContext : public ExpressionContext {
+    public:
+        LogicalExpressionContext(ExpressionContext *ctx);
+
+        LuminusParser::ExpressionContext *left = nullptr;
+        antlr4::Token *log_op = nullptr;
+        LuminusParser::ExpressionContext *right = nullptr;
+
+        std::vector<ExpressionContext *> expression();
+
+        ExpressionContext *expression(size_t i);
+
+        antlr4::tree::TerminalNode *LOG_AND();
+
+        antlr4::tree::TerminalNode *LOG_OR();
+
+        antlr4::tree::TerminalNode *LOG_NOT();
+
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
+
     class ModulusContext : public ExpressionContext {
     public:
         ModulusContext(ExpressionContext *ctx);
@@ -521,6 +546,56 @@ public:
         antlr4::tree::TerminalNode *ADD();
 
         antlr4::tree::TerminalNode *SUB();
+
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
+
+    class ExtendedComparisonContext : public ExpressionContext {
+    public:
+        ExtendedComparisonContext(ExpressionContext *ctx);
+
+        std::vector<ExpressionContext *> left;
+        antlr4::Token *log_andToken = nullptr;
+        std::vector<antlr4::Token *> log_op;
+        antlr4::Token *log_orToken = nullptr;
+        antlr4::Token *log_notToken = nullptr;
+        antlr4::Token *_tset368 = nullptr;
+        LuminusParser::ExpressionContext *expressionContext = nullptr;
+        std::vector<ExpressionContext *> right;
+        antlr4::Token *comp_op = nullptr;
+        LuminusParser::ExpressionContext *utmostRight = nullptr;
+
+        std::vector<ExpressionContext *> expression();
+
+        ExpressionContext *expression(size_t i);
+
+        antlr4::tree::TerminalNode *LT();
+
+        antlr4::tree::TerminalNode *GT();
+
+        antlr4::tree::TerminalNode *LTE();
+
+        antlr4::tree::TerminalNode *GTE();
+
+        antlr4::tree::TerminalNode *EQ();
+
+        antlr4::tree::TerminalNode *NOT_EQ();
+
+        std::vector<antlr4::tree::TerminalNode *> LOG_AND();
+
+        antlr4::tree::TerminalNode *LOG_AND(size_t i);
+
+        std::vector<antlr4::tree::TerminalNode *> LOG_OR();
+
+        antlr4::tree::TerminalNode *LOG_OR(size_t i);
+
+        std::vector<antlr4::tree::TerminalNode *> LOG_NOT();
+
+        antlr4::tree::TerminalNode *LOG_NOT(size_t i);
 
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 

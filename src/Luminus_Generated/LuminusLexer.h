@@ -16,10 +16,10 @@ public:
       T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14,
       T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, MUL = 19, DIV = 20,
       MOD = 21, ADD = 22, SUB = 23, LT = 24, GT = 25, LTE = 26, GTE = 27,
-      EQ = 28, NOT_EQ = 29, TRUE_CONST = 30, FALSE_CONST = 31, VOID = 32,
-      TYPE = 33, INT = 34, BYTE = 35, LONG = 36, DOUBLE = 37, STRING = 38,
-      BOOL = 39, STRING_CONST = 40, IDENTIFIER = 41, INTEGER_CONST = 42, FLOATING_CONST = 43,
-      DIGIT = 44, WHITESPACE = 45
+      EQ = 28, NOT_EQ = 29, LOG_AND = 30, LOG_OR = 31, LOG_NOT = 32, TRUE_CONST = 33,
+      FALSE_CONST = 34, VOID = 35, TYPE = 36, INT = 37, BYTE = 38, LONG = 39,
+      DOUBLE = 40, STRING = 41, BOOL = 42, STRING_CONST = 43, IDENTIFIER = 44,
+      INTEGER_CONST = 45, FLOATING_CONST = 46, DIGIT = 47, WHITESPACE = 48
   };
 
   explicit LuminusLexer(antlr4::CharStream *input);

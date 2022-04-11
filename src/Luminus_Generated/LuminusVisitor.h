@@ -55,11 +55,15 @@ public:
 
     virtual antlrcpp::Any visitBool_Const(LuminusParser::Bool_ConstContext *context) = 0;
 
+    virtual antlrcpp::Any visitLogicalExpression(LuminusParser::LogicalExpressionContext *context) = 0;
+
     virtual antlrcpp::Any visitModulus(LuminusParser::ModulusContext *context) = 0;
 
     virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *context) = 0;
 
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) = 0;
+
+    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *context) = 0;
 
     virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) = 0;
 

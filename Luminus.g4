@@ -13,6 +13,10 @@ GTE: '>=';
 EQ: '==';
 NOT_EQ: '!=';
 
+LOG_AND: 'and';
+LOG_OR: 'or';
+LOG_NOT: 'not';
+
 TRUE_CONST: 'true';
 FALSE_CONST: 'false';
 
@@ -56,6 +60,7 @@ expression:
     | id=IDENTIFIER #IdentifierExpression
     | '&'id=IDENTIFIER #DereferenceExpression
     | '*'*id=IDENTIFIER #ValueOfPointerExpression
+    | call=func_call #Func_Call_Expression
     | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
@@ -63,15 +68,16 @@ expression:
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | '-' inner=expression #Unary_Negate
     | id=IDENTIFIER'['index=expression']' #Indexing
-    | call=func_call #Func_Call_Expression
+    | left+=expression (log_op+=(LOG_AND|LOG_OR|LOG_NOT) right+=expression)+ comp_op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) utmostRight=expression #ExtendedComparison
+    | left=expression log_op=(LOG_AND|LOG_OR|LOG_NOT) right=expression #LogicalExpression
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     ;
 
 while_statement: 'while' condition=expression ops=block;
 
-if_statement: 'if' '(' value=expression ')' execute_vals=block;
+if_statement: 'if' value=expression execute_vals=block;
 else_statement: 'else' ops=block;
-elif_statement: 'elif' '(' value=expression ')' ops=block;
+elif_statement: 'elif' value=expression ops=block;
 conditional_statement: if_teil=if_statement (else_if_container+=elif_statement)* (else_teil=else_statement)?;
 
 return_statement: 'return' (value=expression)? ';' #ReturnStatement ;

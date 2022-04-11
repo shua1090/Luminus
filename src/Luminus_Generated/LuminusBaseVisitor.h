@@ -87,6 +87,10 @@ public:
         return visitChildren(ctx);
     }
 
+    virtual antlrcpp::Any visitLogicalExpression(LuminusParser::LogicalExpressionContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
     virtual antlrcpp::Any visitModulus(LuminusParser::ModulusContext *ctx) override {
         return visitChildren(ctx);
     }
@@ -96,6 +100,10 @@ public:
     }
 
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) override {
         return visitChildren(ctx);
     }
 

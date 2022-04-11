@@ -88,6 +88,10 @@ public:
 
     virtual void exitBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override {}
 
+    virtual void enterLogicalExpression(LuminusParser::LogicalExpressionContext * /*ctx*/) override {}
+
+    virtual void exitLogicalExpression(LuminusParser::LogicalExpressionContext * /*ctx*/) override {}
+
     virtual void enterModulus(LuminusParser::ModulusContext * /*ctx*/) override {}
 
     virtual void exitModulus(LuminusParser::ModulusContext * /*ctx*/) override {}
@@ -99,6 +103,10 @@ public:
     virtual void enterAddOrSubtract(LuminusParser::AddOrSubtractContext * /*ctx*/) override {}
 
     virtual void exitAddOrSubtract(LuminusParser::AddOrSubtractContext * /*ctx*/) override {}
+
+    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
+
+    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
 
     virtual void enterCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
 

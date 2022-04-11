@@ -86,6 +86,10 @@ public:
 
     virtual void exitBool_Const(LuminusParser::Bool_ConstContext *ctx) = 0;
 
+    virtual void enterLogicalExpression(LuminusParser::LogicalExpressionContext *ctx) = 0;
+
+    virtual void exitLogicalExpression(LuminusParser::LogicalExpressionContext *ctx) = 0;
+
     virtual void enterModulus(LuminusParser::ModulusContext *ctx) = 0;
 
     virtual void exitModulus(LuminusParser::ModulusContext *ctx) = 0;
@@ -97,6 +101,10 @@ public:
     virtual void enterAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
 
     virtual void exitAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
+
+    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
+
+    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
 
     virtual void enterCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
 
