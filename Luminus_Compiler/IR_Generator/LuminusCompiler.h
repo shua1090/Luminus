@@ -311,7 +311,6 @@ public:
             if (RHS->getType()->isPointerTy()) {
                 RHS = Builder->CreateLoad(RHS->getType()->getContainedType(0), RHS);
             }
-
             if (LHS->getType() != RHS->getType()) {
                 std::cout << "ERR! - TYPE MISMATCH (conditions)" << std::endl;
                 // TODO: ERROR HANDLING

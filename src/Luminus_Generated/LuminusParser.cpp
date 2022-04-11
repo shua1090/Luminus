@@ -971,7 +971,6 @@ void LuminusParser::Bool_ConstContext::enterRule(tree::ParseTreeListener *listen
     if (parserListener != nullptr)
         parserListener->enterBool_Const(this);
 }
-
 void LuminusParser::Bool_ConstContext::exitRule(tree::ParseTreeListener *listener) {
     auto parserListener = dynamic_cast<LuminusListener *>(listener);
     if (parserListener != nullptr)
@@ -1005,7 +1004,6 @@ void LuminusParser::ModulusContext::enterRule(tree::ParseTreeListener *listener)
     if (parserListener != nullptr)
         parserListener->enterModulus(this);
 }
-
 void LuminusParser::ModulusContext::exitRule(tree::ParseTreeListener *listener) {
     auto parserListener = dynamic_cast<LuminusListener *>(listener);
     if (parserListener != nullptr)
