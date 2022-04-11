@@ -857,7 +857,6 @@ void LuminusParser::FloatExpressionContext::enterRule(tree::ParseTreeListener *l
     if (parserListener != nullptr)
         parserListener->enterFloatExpression(this);
 }
-
 void LuminusParser::FloatExpressionContext::exitRule(tree::ParseTreeListener *listener) {
     auto parserListener = dynamic_cast<LuminusListener *>(listener);
     if (parserListener != nullptr)
@@ -887,7 +886,6 @@ void LuminusParser::NotExpressionContext::enterRule(tree::ParseTreeListener *lis
     if (parserListener != nullptr)
         parserListener->enterNotExpression(this);
 }
-
 void LuminusParser::NotExpressionContext::exitRule(tree::ParseTreeListener *listener) {
     auto parserListener = dynamic_cast<LuminusListener *>(listener);
     if (parserListener != nullptr)
