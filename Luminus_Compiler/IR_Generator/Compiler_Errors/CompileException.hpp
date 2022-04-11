@@ -72,7 +72,7 @@ public:
 
     void addError(BaseError *be, antlr4::ParserRuleContext *rc, std::string specific_error) {
         be->characterNum = rc->getStart()->getCharPositionInLine();
-        be->rowNum = rc->getStart()->getLine();
+        be->rowNum = rc->getStart()->getLine() - 1;
         be->specificError = std::move(specific_error);
         be->textLine = fileData[be->rowNum][be->characterNum];
         this->errors.push_back(be);

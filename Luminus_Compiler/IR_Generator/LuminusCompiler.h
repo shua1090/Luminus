@@ -378,6 +378,8 @@ public:
     static std::string trim(std::string text);
 
     void autoCast(Value *a, Value *b);
+
+    static std::string typeToString(Type *t);
 };
 
 #endif //LUMINUS_LUMVISITOR_H
