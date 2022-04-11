@@ -1,3 +1,3 @@
 # Projekt Luminus
 
-A Compiled language with supreme ease of use
+A Compiled language with LLVM
