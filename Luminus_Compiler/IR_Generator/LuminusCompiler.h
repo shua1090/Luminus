@@ -56,8 +56,6 @@ public:
 
 private:
 
-
-
     CmpInst::Predicate textToCmpOp(std::string text, Type *t) {
         text = trim(text);
         std::cout << "\"" << text << "\"" << std::endl;
@@ -347,6 +345,8 @@ public:
     static std::string &rtrim(std::string &s);
 
     static std::string trim(std::string text);
+
+    void autoCast(Value *a, Value *b);
 };
 
 #endif //LUMINUS_LUMVISITOR_H
