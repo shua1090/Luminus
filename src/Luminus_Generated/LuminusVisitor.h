@@ -13,12 +13,12 @@
  * This class defines an abstract visitor for a parse tree
  * produced by LuminusParser.
  */
-class LuminusVisitor : public antlr4::tree::AbstractParseTreeVisitor {
+class  LuminusVisitor : public antlr4::tree::AbstractParseTreeVisitor {
 public:
 
-    /**
-     * Visit parse trees produced by LuminusParser.
-     */
+  /**
+   * Visit parse trees produced by LuminusParser.
+   */
     virtual antlrcpp::Any visitStart(LuminusParser::StartContext *context) = 0;
 
     virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) = 0;

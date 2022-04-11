@@ -29,11 +29,12 @@ LONG: 'long';
 DOUBLE: 'double';
 STRING: 'string';
 BOOL: 'bool';
+IDENTIFIER: [A-Za-z]+ (' '* ('*')+)?;
+
 
 STRING_CONST : '"' CHAR_NO_NL+ '"' ;
 fragment CHAR_NO_NL : 'a'..'z'|[0-9]|'A'..'Z'|'%'|' '|'\\'|'"';
 
-IDENTIFIER: [A-Za-z]+;
 INTEGER_CONST: DIGIT;
 FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
 
@@ -41,8 +42,9 @@ DIGIT: [0-9]+;
 
 start: function+;
 
-argument: dec_type=TYPE id=IDENTIFIER;
-function: funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
+fragment TEST: IDENTIFIER;
+argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER;
+function: 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
 
 func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
     ;
@@ -84,5 +86,6 @@ return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
 block: '{' statement+ '}' #BlockExpression;
 statement: assignment | return_statement | func_call ';' | block ';' | conditional_statement | while_statement;
+
 
 WHITESPACE: [ \r\n\t]+ -> skip;
