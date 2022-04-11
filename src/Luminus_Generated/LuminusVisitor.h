@@ -47,6 +47,8 @@ public:
 
     virtual antlrcpp::Any visitFloatExpression(LuminusParser::FloatExpressionContext *context) = 0;
 
+    virtual antlrcpp::Any visitNotExpression(LuminusParser::NotExpressionContext *context) = 0;
+
     virtual antlrcpp::Any visitIntegerExpression(LuminusParser::IntegerExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) = 0;
@@ -64,8 +66,6 @@ public:
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) = 0;
 
     virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) = 0;
-
-    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *context) = 0;
 
     virtual antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) = 0;
 

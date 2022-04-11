@@ -70,7 +70,7 @@ expression:
     | id=IDENTIFIER'['index=expression']' #Indexing
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     | left=expression log_op=(LOG_AND|LOG_OR) right=expression #LogicalExpression
-
+    | LOG_NOT exp=expression #NotExpression
     ;
 
 while_statement: 'while' condition=expression ops=block;

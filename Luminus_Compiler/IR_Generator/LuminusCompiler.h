@@ -376,6 +376,14 @@ public:
         }
     }
 
+    antlrcpp::Any visitNotExpression(LuminusParser::NotExpressionContext *context) override {
+        Value *val = this->visit(context->exp).as<Value *>();
+        if (val->getType()->isPointerTy()) {
+            val = Builder->CreateLoad(val->getType()->getContainedType(0), val);
+        }
+        return Builder->CreateNot(val, "not_expr");
+    }
+
     BasicBlock *curReturnBlock;
     Value *curReturnValue;
     bool returns = false;

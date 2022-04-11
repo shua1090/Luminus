@@ -402,6 +402,23 @@ public:
         virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
     };
 
+    class NotExpressionContext : public ExpressionContext {
+    public:
+        NotExpressionContext(ExpressionContext *ctx);
+
+        LuminusParser::ExpressionContext *exp = nullptr;
+
+        antlr4::tree::TerminalNode *LOG_NOT();
+
+        ExpressionContext *expression();
+
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
+
     class IntegerExpressionContext : public ExpressionContext {
     public:
         IntegerExpressionContext(ExpressionContext *ctx);
@@ -575,50 +592,6 @@ public:
         antlr4::tree::TerminalNode *EQ();
 
         antlr4::tree::TerminalNode *NOT_EQ();
-
-        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-
-        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-
-        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-    };
-
-    class ExtendedComparisonContext : public ExpressionContext {
-    public:
-        ExtendedComparisonContext(ExpressionContext *ctx);
-
-        std::vector<ExpressionContext *> right;
-        antlr4::Token *log_andToken = nullptr;
-        std::vector<antlr4::Token *> log_op;
-        antlr4::Token *log_orToken = nullptr;
-        antlr4::Token *_tset487 = nullptr;
-        LuminusParser::ExpressionContext *expressionContext = nullptr;
-        antlr4::Token *comp_op = nullptr;
-        LuminusParser::ExpressionContext *utmostRight = nullptr;
-
-        std::vector<ExpressionContext *> expression();
-
-        ExpressionContext *expression(size_t i);
-
-        antlr4::tree::TerminalNode *LT();
-
-        antlr4::tree::TerminalNode *GT();
-
-        antlr4::tree::TerminalNode *LTE();
-
-        antlr4::tree::TerminalNode *GTE();
-
-        antlr4::tree::TerminalNode *EQ();
-
-        antlr4::tree::TerminalNode *NOT_EQ();
-
-        std::vector<antlr4::tree::TerminalNode *> LOG_AND();
-
-        antlr4::tree::TerminalNode *LOG_AND(size_t i);
-
-        std::vector<antlr4::tree::TerminalNode *> LOG_OR();
-
-        antlr4::tree::TerminalNode *LOG_OR(size_t i);
 
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 

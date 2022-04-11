@@ -70,6 +70,10 @@ public:
 
     virtual void exitFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
 
+    virtual void enterNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
+
+    virtual void exitNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
+
     virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
 
     virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
@@ -105,10 +109,6 @@ public:
     virtual void enterCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
 
     virtual void exitCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
-
-    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
-
-    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
 
     virtual void enterIndexing(LuminusParser::IndexingContext *ctx) = 0;
 

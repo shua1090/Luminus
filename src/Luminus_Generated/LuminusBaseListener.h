@@ -72,6 +72,10 @@ public:
 
     virtual void exitFloatExpression(LuminusParser::FloatExpressionContext * /*ctx*/) override {}
 
+    virtual void enterNotExpression(LuminusParser::NotExpressionContext * /*ctx*/) override {}
+
+    virtual void exitNotExpression(LuminusParser::NotExpressionContext * /*ctx*/) override {}
+
     virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override {}
 
     virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override {}
@@ -107,10 +111,6 @@ public:
     virtual void enterCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
 
     virtual void exitCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
-
-    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
-
-    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
 
     virtual void enterIndexing(LuminusParser::IndexingContext * /*ctx*/) override {}
 
