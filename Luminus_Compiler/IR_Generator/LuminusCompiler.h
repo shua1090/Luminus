@@ -7,6 +7,7 @@
 
 #include "LuminusVisitor.h"
 #include "Definitions.h"
+#include "Compiler_Errors/CompileException.hpp"
 
 #include <unordered_map>
 #include <utility>
@@ -42,8 +43,40 @@ public:
 class LuminusCompiler : public LuminusVisitor {
 
     ScopedVariableManager svm;
+public:
+    CompilerErrorHandler *ceh;
+
+    LuminusCompiler(std::string filename) {
+        ceh = new CompilerErrorHandler(filename);
+    }
+
+    ~LuminusCompiler() {
+        delete ceh;
+    }
+
+private:
+
+    // trim from start
+    static inline std::string &ltrim(std::string &s) {
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+                                        std::not1(std::ptr_fun<int, int>(std::isspace))));
+        return s;
+    }
+
+// trim from end
+    static inline std::string &rtrim(std::string &s) {
+        s.erase(std::find_if(s.rbegin(), s.rend(),
+                             std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        return s;
+    }
+
+    static std::string trim(std::string text) {
+        return ltrim(rtrim(text));
+    }
 
     CmpInst::Predicate textToCmpOp(std::string text, Type *t) {
+        text = trim(text);
+        std::cout << "\"" << text << "\"" << std::endl;
         if (t == INT32_TYPE) {
             if (text == "==") {
                 return CmpInst::ICMP_EQ;
@@ -268,14 +301,23 @@ public:
         Value *LHS = this->visit(context->left).as<Value *>();
         Value *RHS = this->visit(context->right).as<Value *>();
         if (LHS == nullptr || RHS == nullptr) {
-            std::cout << "ERR! - Visit Comp Exiression" << std::endl;
-            // TODO: ERROR HANDLING
-            return nullptr;
-        } else if (LHS->getType() != RHS->getType()) {
-            std::cout << "ERR! - TYPE MISMATCH" << std::endl;
+            std::cout << "ERR! - Visit Comp Expression" << std::endl;
             // TODO: ERROR HANDLING
             return nullptr;
         } else {
+            if (LHS->getType()->isPointerTy()) {
+                LHS = Builder->CreateLoad(LHS->getType()->getContainedType(0), LHS);
+            }
+            if (RHS->getType()->isPointerTy()) {
+                RHS = Builder->CreateLoad(RHS->getType()->getContainedType(0), RHS);
+            }
+
+            if (LHS->getType() != RHS->getType()) {
+                std::cout << "ERR! - TYPE MISMATCH (conditions)" << std::endl;
+                // TODO: ERROR HANDLING
+                return nullptr;
+            }
+
             return Builder->CreateCmp(textToCmpOp(context->op->getText(), LHS->getType()), LHS, RHS);
         }
     }
@@ -296,12 +338,11 @@ public:
         return this->visitChildren(context);
     }
 
+    antlrcpp::Any visitWhile_statement(LuminusParser::While_statementContext *context) override;
 
     antlrcpp::Any visitCastToType(LuminusParser::CastToTypeContext *context) override;
 
     antlrcpp::Any visitReturnStatement(LuminusParser::ReturnStatementContext *context) override;
-
-    Function *specialMainDeclaration(LuminusParser::FunctionDeclarationContext *context);
 
     antlrcpp::Any visitIf_statement(LuminusParser::If_statementContext *context) override { return NULL; }
 
@@ -310,6 +351,8 @@ public:
     antlrcpp::Any visitElif_statement(LuminusParser::Elif_statementContext *context) override { return NULL; }
 
     antlrcpp::Any visitConditional_statement(LuminusParser::Conditional_statementContext *context) override;
+
+    antlrcpp::Any visitModulus(LuminusParser::ModulusContext *context) override;
 
     BasicBlock *curReturnBlock;
     Value *curReturnValue;

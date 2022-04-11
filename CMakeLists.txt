@@ -8,7 +8,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY MDd)
 FILE(GLOB ANTLR_GENERATED "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.cpp" "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.hpp")
 
 set(IR_GENERATOR Luminus_Compiler/IR_Generator/LuminusCompiler.h
-        Luminus_Compiler/IR_Generator/IR_Test.h Luminus_Compiler/IR_Generator/Visitors_Impl/VisitAdd_Sub.cpp
+        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitAdd_Sub.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitIdentifier.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitReturn.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitCast.cpp
@@ -20,7 +20,8 @@ set(IR_GENERATOR Luminus_Compiler/IR_Generator/LuminusCompiler.h
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunction.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunctionCall.cpp
         Luminus_Compiler/IR_Generator/Visitors_Impl/VisitConditionals.cpp
-        Luminus_Compiler/IR_Generator/Compiler_Errors/CompileException.hpp)
+        Luminus_Compiler/IR_Generator/Compiler_Errors/CompileException.hpp
+        Luminus_Compiler/IR_Generator/Compiler_Errors/TypeErrors.hpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitWhile_Statement.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitMod.cpp)
 set(ENTRY_POINT Luminus_Compiler/main.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src/Luminus_Generated")
@@ -32,6 +33,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 message(${CMAKE_MODULE_PATH})
 
 #################### ANTLR ####################
+set(ANTLR4_TAG "7b32c9b169a2d9dd2375d4fc9c5e678f0ed0039c")
 if (UNIX)
 set(ANTLR_EXECUTABLE /usr/local/lib/antlr-4.9-complete.jar)
 endif()
@@ -42,7 +44,7 @@ add_definitions(-DANTLR4CPP_STATIC)
 # using /MD flag for antlr4_runtime (for Visual C++ compilers only)
 set(ANTLR4_WITH_STATIC_CRT OFF)
 
-message("Antlr with Static: ${ANTLR4_WITH_STATIC_CRT}")
+message("Antlr with Static CRT: ${ANTLR4_WITH_STATIC_CRT}")
 # add external build for antlrcpp
 include(ExternalAntlr4Cpp)
 # add antrl4cpp artifacts to project environment

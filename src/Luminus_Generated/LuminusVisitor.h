@@ -55,6 +55,8 @@ public:
 
     virtual antlrcpp::Any visitBool_Const(LuminusParser::Bool_ConstContext *context) = 0;
 
+    virtual antlrcpp::Any visitModulus(LuminusParser::ModulusContext *context) = 0;
+
     virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *context) = 0;
 
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) = 0;
@@ -62,6 +64,8 @@ public:
     virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) = 0;
+
+    virtual antlrcpp::Any visitWhile_statement(LuminusParser::While_statementContext *context) = 0;
 
     virtual antlrcpp::Any visitIf_statement(LuminusParser::If_statementContext *context) = 0;
 

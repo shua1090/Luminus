@@ -14,11 +14,12 @@ public:
   enum {
       T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7,
       T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14,
-      T__14 = 15, T__15 = 16, T__16 = 17, MUL = 18, DIV = 19, ADD = 20, SUB = 21,
-      LT = 22, GT = 23, LTE = 24, GTE = 25, EQ = 26, NOT_EQ = 27, TRUE_CONST = 28,
-      FALSE_CONST = 29, VOID = 30, TYPE = 31, INT = 32, BYTE = 33, LONG = 34,
-      DOUBLE = 35, STRING = 36, BOOL = 37, STRING_CONST = 38, IDENTIFIER = 39,
-      INTEGER_CONST = 40, FLOATING_CONST = 41, DIGIT = 42, WHITESPACE = 43
+      T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, MUL = 19, DIV = 20,
+      MOD = 21, ADD = 22, SUB = 23, LT = 24, GT = 25, LTE = 26, GTE = 27,
+      EQ = 28, NOT_EQ = 29, TRUE_CONST = 30, FALSE_CONST = 31, VOID = 32,
+      TYPE = 33, INT = 34, BYTE = 35, LONG = 36, DOUBLE = 37, STRING = 38,
+      BOOL = 39, STRING_CONST = 40, IDENTIFIER = 41, INTEGER_CONST = 42, FLOATING_CONST = 43,
+      DIGIT = 44, WHITESPACE = 45
   };
 
   explicit LuminusLexer(antlr4::CharStream *input);

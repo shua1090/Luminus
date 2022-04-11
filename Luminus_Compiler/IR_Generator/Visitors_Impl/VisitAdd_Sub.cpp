@@ -25,13 +25,8 @@ antlrcpp::Any LuminusCompiler::visitAddOrSubtract(LuminusParser::AddOrSubtractCo
                                     right
         );
     } else {
-        std::cout << "Error in this method, printing" << std::endl;
-        std::cout << "Left: " << std::endl;
-        left->getType()->print(llvm::outs());
-        std::cout << std::endl << "Right: ";
-        right->getType()->print(llvm::outs());
-        std::cout << std::endl;
-
+        ceh->addError(new TypeMismatchError, context, "Type mismatch lmao!");
+        std::cout << "Type Mismatch!" << std::endl;
         return nullptr;
     }
 

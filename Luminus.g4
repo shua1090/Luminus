@@ -2,6 +2,7 @@ grammar Luminus;
 
 MUL: '*';
 DIV: '/';
+MOD: '%';
 ADD: '+';
 SUB: '-';
 
@@ -17,7 +18,7 @@ FALSE_CONST: 'false';
 
 VOID: 'void';
 
-TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL) ' '* ('*')*;
+TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL) (' '* ('*')+)?;
 INT: 'int';
 BYTE: 'byte';
 LONG: 'long';
@@ -58,12 +59,15 @@ expression:
     | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
+    | left=expression MOD right=expression #Modulus
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | '-' inner=expression #Unary_Negate
     | id=IDENTIFIER'['index=expression']' #Indexing
     | call=func_call #Func_Call_Expression
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
     ;
+
+while_statement: 'while' condition=expression ops=block;
 
 if_statement: 'if' '(' value=expression ')' execute_vals=block;
 else_statement: 'else' ops=block;
@@ -73,6 +77,6 @@ conditional_statement: if_teil=if_statement (else_if_container+=elif_statement)*
 return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
 
 block: '{' statement+ '}' #BlockExpression;
-statement: assignment | return_statement | func_call ';' | block ';' | conditional_statement;
+statement: assignment | return_statement | func_call ';' | block ';' | conditional_statement | while_statement;
 
 WHITESPACE: [ \r\n\t]+ -> skip;

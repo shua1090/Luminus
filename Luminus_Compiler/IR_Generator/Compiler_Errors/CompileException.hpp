@@ -8,7 +8,8 @@
 #include <thread>
 #include <chrono>
 
-namespace colors {
+#ifdef COLORS_ENABLED
+namespace  {
     std::string red = "\033[91m";
     std::string green = "\033[92m";
     std::string yellow = "\033[93m";
@@ -22,6 +23,23 @@ namespace colors {
 
     std::string reset = "\033[0m";
 }
+#else
+namespace {
+    std::string red = "";
+    std::string green = "";
+    std::string yellow = "";
+    std::string blue = "";
+    std::string purple = "";
+    std::string underline_on = "";
+    std::string underline_off = "";
+
+    std::string move_forward = "";
+    std::string move_backward = "";
+
+    std::string reset = "";
+}
+#endif
+
 using namespace std::chrono_literals;
 
 struct BaseError {
@@ -52,9 +70,9 @@ public:
         }
     }
 
-    void addError(BaseError *be, antlr4::ParserRuleContext rc, std::string specific_error) {
-        be->characterNum = rc.getStart()->getCharPositionInLine();
-        be->rowNum = rc.getStart()->getLine();
+    void addError(BaseError *be, antlr4::ParserRuleContext *rc, std::string specific_error) {
+        be->characterNum = rc->getStart()->getCharPositionInLine();
+        be->rowNum = rc->getStart()->getLine();
         be->specificError = std::move(specific_error);
         be->textLine = fileData[be->rowNum][be->characterNum];
         this->errors.push_back(be);
@@ -66,9 +84,9 @@ public:
             std::string ErrorDescription = "Compilation Error - " + be->getString();
             std::cout << std::string(std::max(ErrorDescription.size(), be->textLine.size()), '#') << std::endl;
             std::cout << ErrorDescription << std::endl;
-            std::cout << colors::yellow << be->textLine << colors::reset << std::endl;
-            std::cout << colors::red << std::string(be->characterNum, ' ') << "^" << colors::reset << std::endl;
-            std::cout << colors::red << be->specificError << colors::reset << std::endl;
+            std::cout << yellow << be->textLine << reset << std::endl;
+            std::cout << red << std::string(be->characterNum, ' ') << "^" << reset << std::endl;
+            std::cout << red << be->specificError << reset << std::endl;
             std::cout << std::string(std::max(ErrorDescription.size(), be->textLine.size()), '#') << std::endl;
         }
     }
@@ -81,4 +99,5 @@ public:
 
 };
 
+#include "TypeErrors.hpp"
 #endif

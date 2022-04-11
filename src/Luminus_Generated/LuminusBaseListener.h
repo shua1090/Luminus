@@ -88,6 +88,10 @@ public:
 
     virtual void exitBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override {}
 
+    virtual void enterModulus(LuminusParser::ModulusContext * /*ctx*/) override {}
+
+    virtual void exitModulus(LuminusParser::ModulusContext * /*ctx*/) override {}
+
     virtual void enterUnary_Negate(LuminusParser::Unary_NegateContext * /*ctx*/) override {}
 
     virtual void exitUnary_Negate(LuminusParser::Unary_NegateContext * /*ctx*/) override {}
@@ -103,6 +107,10 @@ public:
     virtual void enterIndexing(LuminusParser::IndexingContext * /*ctx*/) override {}
 
     virtual void exitIndexing(LuminusParser::IndexingContext * /*ctx*/) override {}
+
+    virtual void enterWhile_statement(LuminusParser::While_statementContext * /*ctx*/) override {}
+
+    virtual void exitWhile_statement(LuminusParser::While_statementContext * /*ctx*/) override {}
 
     virtual void enterIf_statement(LuminusParser::If_statementContext * /*ctx*/) override {}
 

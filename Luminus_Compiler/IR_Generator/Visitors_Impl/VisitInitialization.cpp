@@ -5,8 +5,9 @@ antlrcpp::Any LuminusCompiler::visitInitialization(LuminusParser::Initialization
     Type *lhs = this->textToType(context->dec_type->getText());
 
     if (lhs != rhs->getType()) {
-        std::cout << "ERROR INITIALIZING" << std::endl;
-        //TODO: THROW ERROR LHS != RHS
+        std::cout << "Adding error" << std::endl;
+        ceh->addError(new TypeMismatchError, context, "LHS Type doesn't match RHS type!");
+        throw std::exception("Compilation Exception!");
         return nullptr;
     } else {
         auto a = rhs;

@@ -1,12 +1,9 @@
-function max(int j) returns void {
-    printf("\t\"J is %d\"\n", j);
-    return;
-}
-
-function main(int argc, int ** argv) returns int{
-    int f = 12;
-    int * l = &f;
-    max(*l);
-
+function multiplyByTwo(int * num, int addTimes) returns int{
+    int ctr = 0;
+    while (ctr < addTimes) {
+        printf("Num is currently %d\n", *num);
+        *num = *num * 2;
+        ctr = ctr + 1;
+    }
     return 0;
 }

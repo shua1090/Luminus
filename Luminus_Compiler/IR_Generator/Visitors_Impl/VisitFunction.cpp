@@ -5,55 +5,17 @@
 #include "../LuminusCompiler.h"
 #include "llvm/IR/Verifier.h"
 
-Function *LuminusCompiler::specialMainDeclaration(LuminusParser::FunctionDeclarationContext *context) {
-
-    std::vector<llvm::Type *> param_types(2);
-    std::vector<std::string> param_labels(2);
-    param_types[0] = INT32_TYPE;
-    param_types[1] = PointerType::get(Type::getInt8PtrTy(*TheContext), 0);
-
-    llvm::FunctionType *typeOfFunc = llvm::FunctionType::get(
-            INT32_TYPE, param_types, false
-    );
-
-
-    if (!TheModule->getFunction("main")) {
-        llvm::Function *theFunction = llvm::Function::Create(
-                typeOfFunc, Function::ExternalLinkage, "main", *TheModule
-        );
-
-        llvm::Function::arg_iterator forNameSetup = theFunction->arg_begin();
-        forNameSetup->setName("argc");
-        svm.addVariable("argc", &*forNameSetup);
-        forNameSetup++;
-        forNameSetup->setName("argv");
-        svm.addVariable("argv", &*forNameSetup);
-
-        llvm::BasicBlock *body = llvm::BasicBlock::Create(*TheContext, "entry", theFunction);
-        Builder->SetInsertPoint(body);
-        this->visitChildren(context);
-
-        std::string s = "";
-        llvm::raw_string_ostream rs(s);
-        bool f = verifyFunction(*theFunction, &rs);
-        std::cout << "Main Errors: " << f << " errors: " << rs.str() << std::endl;
-
-    }
-    svm.removeScope();
-    return nullptr;
-}
-
 antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *context) {
     svm.addScope();
     std::vector<LuminusParser::ArgumentContext *> args = context->args;
 
     // Gathered Info about Function from tokens
     std::string function_name = context->funcName->getText();
-    llvm::Type *returnType = textToType(context->returnType->getText());
+    llvm::Type *returnType;
+
     if (context->returnType->getText() == "void") returnType = VOID_TYPE;
-    if (function_name == "main") {
-        return specialMainDeclaration(context);
-    }
+    else returnType = textToType(context->returnType->getText());
+
     std::vector<llvm::Type *> param_types(args.size());
     std::vector<std::string> param_labels(args.size());
 

@@ -87,6 +87,10 @@ public:
         return visitChildren(ctx);
     }
 
+    virtual antlrcpp::Any visitModulus(LuminusParser::ModulusContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
     virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *ctx) override {
         return visitChildren(ctx);
     }
@@ -100,6 +104,10 @@ public:
     }
 
     virtual antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitWhile_statement(LuminusParser::While_statementContext *ctx) override {
         return visitChildren(ctx);
     }
 

@@ -15,22 +15,24 @@
 
 #include "llvm/Bitcode/BitcodeWriter.h"
 
-#include "IR_Generator/Compiler_Errors/CompileException.hpp"
-
 using namespace antlr4;
 
 int main() {
+    std::string filename = "D:/Luminus/test_grammars/main.lm";
     std::ifstream stream;
-    stream.open("D:/Luminus/test_grammars/main.lm");
+    stream.open(filename);
 
     antlr4::ANTLRInputStream input(stream);
     LuminusLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
-
     LuminusParser parser(&tokens);
     auto tree = parser.start();
-    LuminusCompiler visitor;
-    auto scene = visitor.visitStart(tree);
+    LuminusCompiler visitor(filename);
+    try {
+        auto scene = visitor.visitStart(tree);
+    } catch (std::exception &r) {
+        visitor.ceh->printErrors();
+    }
     visitor.dump();
 
     InitializeAllTargetInfos();
