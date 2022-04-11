@@ -104,13 +104,13 @@ public:
 
     virtual void exitAddOrSubtract(LuminusParser::AddOrSubtractContext * /*ctx*/) override {}
 
-    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
-
-    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
-
     virtual void enterCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
 
     virtual void exitCompExpression(LuminusParser::CompExpressionContext * /*ctx*/) override {}
+
+    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
+
+    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext * /*ctx*/) override {}
 
     virtual void enterIndexing(LuminusParser::IndexingContext * /*ctx*/) override {}
 

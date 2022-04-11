@@ -1,8 +1,12 @@
-function isPrime(int num) returns int{
-    int ctr = 2;
-    int btr = 10;
-    if btr and ctr > 0 {
-        printf("Both are positive");
+function isPrime(int one, int two) returns int{
+    if (one > 2 and two > 2){
+        printf("both are greater than two");
     }
-    printf("Both arent positive");
+    if (one == 2 and two == 2){
+        printf("Both are equal to two");
+    }
+    if (one and two < 0){
+        printf("Both are neg");
+    }
+    return 0;
 }

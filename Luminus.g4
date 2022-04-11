@@ -68,9 +68,9 @@ expression:
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
     | '-' inner=expression #Unary_Negate
     | id=IDENTIFIER'['index=expression']' #Indexing
-    | left+=expression (log_op+=(LOG_AND|LOG_OR|LOG_NOT) right+=expression)+ comp_op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) utmostRight=expression #ExtendedComparison
-    | left=expression log_op=(LOG_AND|LOG_OR|LOG_NOT) right=expression #LogicalExpression
     | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
+    | left=expression log_op=(LOG_AND|LOG_OR) right=expression #LogicalExpression
+
     ;
 
 while_statement: 'while' condition=expression ops=block;

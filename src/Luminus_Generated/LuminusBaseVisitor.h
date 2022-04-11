@@ -103,11 +103,11 @@ public:
         return visitChildren(ctx);
     }
 
-    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) override {
+    virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *ctx) override {
         return visitChildren(ctx);
     }
 
-    virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *ctx) override {
+    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) override {
         return visitChildren(ctx);
     }
 

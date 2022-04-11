@@ -312,6 +312,10 @@ public:
                 RHS = Builder->CreateLoad(RHS->getType()->getContainedType(0), RHS);
             }
             if (LHS->getType() != RHS->getType()) {
+                LHS->getType()->dump();
+                RHS->getType()->dump();
+                std::cout << context->left->getText() << std::endl;
+                std::cout << context->right->getText() << std::endl;
                 std::cout << "ERR! - TYPE MISMATCH (conditions)" << std::endl;
                 // TODO: ERROR HANDLING
                 return nullptr;
@@ -353,6 +357,24 @@ public:
 
     antlrcpp::Any visitModulus(LuminusParser::ModulusContext *context) override;
 
+    antlrcpp::Any visitLogicalExpression(LuminusParser::LogicalExpressionContext *context) override {
+        auto a = this->visit(context->left).as<Value *>();
+        auto b = this->visit(context->right).as<Value *>();
+
+        if (a->getType()->isPointerTy()) {
+            a = Builder->CreateLoad(a->getType()->getContainedType(0), a);
+        }
+        if (b->getType()->isPointerTy()) {
+            b = Builder->CreateLoad(b->getType()->getContainedType(0), b);
+        }
+
+        std::string op = trim(context->log_op->getText());
+        if (op == "and") {
+            return Builder->CreateLogicalAnd(a, b, "logical_and");
+        } else {
+            return Builder->CreateLogicalOr(a, b, "logical_or");
+        }
+    }
 
     BasicBlock *curReturnBlock;
     Value *curReturnValue;

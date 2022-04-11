@@ -102,13 +102,13 @@ public:
 
     virtual void exitAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
 
-    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
-
-    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
-
     virtual void enterCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
 
     virtual void exitCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
+
+    virtual void enterExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
+
+    virtual void exitExtendedComparison(LuminusParser::ExtendedComparisonContext *ctx) = 0;
 
     virtual void enterIndexing(LuminusParser::IndexingContext *ctx) = 0;
 

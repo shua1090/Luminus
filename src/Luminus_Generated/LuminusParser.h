@@ -485,8 +485,6 @@ public:
 
         antlr4::tree::TerminalNode *LOG_OR();
 
-        antlr4::tree::TerminalNode *LOG_NOT();
-
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 
         virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -554,18 +552,47 @@ public:
         virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
     };
 
+    class CompExpressionContext : public ExpressionContext {
+    public:
+        CompExpressionContext(ExpressionContext *ctx);
+
+        LuminusParser::ExpressionContext *left = nullptr;
+        antlr4::Token *op = nullptr;
+        LuminusParser::ExpressionContext *right = nullptr;
+
+        std::vector<ExpressionContext *> expression();
+
+        ExpressionContext *expression(size_t i);
+
+        antlr4::tree::TerminalNode *LT();
+
+        antlr4::tree::TerminalNode *GT();
+
+        antlr4::tree::TerminalNode *LTE();
+
+        antlr4::tree::TerminalNode *GTE();
+
+        antlr4::tree::TerminalNode *EQ();
+
+        antlr4::tree::TerminalNode *NOT_EQ();
+
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
+
     class ExtendedComparisonContext : public ExpressionContext {
     public:
         ExtendedComparisonContext(ExpressionContext *ctx);
 
-        std::vector<ExpressionContext *> left;
+        std::vector<ExpressionContext *> right;
         antlr4::Token *log_andToken = nullptr;
         std::vector<antlr4::Token *> log_op;
         antlr4::Token *log_orToken = nullptr;
-        antlr4::Token *log_notToken = nullptr;
-        antlr4::Token *_tset368 = nullptr;
+        antlr4::Token *_tset487 = nullptr;
         LuminusParser::ExpressionContext *expressionContext = nullptr;
-        std::vector<ExpressionContext *> right;
         antlr4::Token *comp_op = nullptr;
         LuminusParser::ExpressionContext *utmostRight = nullptr;
 
@@ -592,41 +619,6 @@ public:
         std::vector<antlr4::tree::TerminalNode *> LOG_OR();
 
         antlr4::tree::TerminalNode *LOG_OR(size_t i);
-
-        std::vector<antlr4::tree::TerminalNode *> LOG_NOT();
-
-        antlr4::tree::TerminalNode *LOG_NOT(size_t i);
-
-        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-
-        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-
-        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-    };
-
-    class CompExpressionContext : public ExpressionContext {
-    public:
-        CompExpressionContext(ExpressionContext *ctx);
-
-        LuminusParser::ExpressionContext *left = nullptr;
-        antlr4::Token *op = nullptr;
-        LuminusParser::ExpressionContext *right = nullptr;
-
-        std::vector<ExpressionContext *> expression();
-
-        ExpressionContext *expression(size_t i);
-
-        antlr4::tree::TerminalNode *LT();
-
-        antlr4::tree::TerminalNode *GT();
-
-        antlr4::tree::TerminalNode *LTE();
-
-        antlr4::tree::TerminalNode *GTE();
-
-        antlr4::tree::TerminalNode *EQ();
-
-        antlr4::tree::TerminalNode *NOT_EQ();
 
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 

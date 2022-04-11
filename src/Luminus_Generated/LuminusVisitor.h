@@ -63,9 +63,9 @@ public:
 
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) = 0;
 
-    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *context) = 0;
-
     virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) = 0;
+
+    virtual antlrcpp::Any visitExtendedComparison(LuminusParser::ExtendedComparisonContext *context) = 0;
 
     virtual antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) = 0;
 
