@@ -18,6 +18,16 @@ class ScopedVariableManager {
 private:
     std::vector<std::unordered_map<std::string, Value *>> names;
 public:
+
+    std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+        std::stringstream ss(s + ' ');
+        std::string item;
+        while (std::getline(ss, item, delim)) {
+            elems.push_back(item);
+        }
+        return elems;
+    }
+
     void addScope() {
         names.emplace_back();
     }
@@ -27,6 +37,25 @@ public:
     }
 
     Value *getVariable(std::string varName) {
+//            if (varName.find('.') != std::string::npos){
+//                std::vector<std::string> names;
+//                split(varName, '.', names);
+//                Value * val = this->getVariable(names[0]);
+//                if (val == nullptr){
+//                    throw std::exception("NULLPTR IN STRUCT ACCESS");
+//                }
+//                for (int i = 1; i < names.size(); i++){
+//                    int index =
+//                    val = Builder->CreateGEP(
+//                            val->getType(),
+//                            val,
+//                            {ConstantInt::get(INT32_TYPE, 0),
+//                             ConstantInt::get(INT32_TYPE, )
+//                            }
+//                            );
+//                }
+//            }
+
         for (int i = 0; i < names.size(); i++) {
             try {
                 return names[i][varName];
@@ -70,10 +99,14 @@ public:
 };
 
 class LuminusCompiler : public LuminusVisitor {
+public:
+    std::unique_ptr<LLVMContext> TheContext = std::make_unique<LLVMContext>();
+    std::unique_ptr<Module> TheModule = std::make_unique<Module>("Compiled_Lang", *TheContext);
+    std::unique_ptr<IRBuilder<>> Builder = std::make_unique<IRBuilder<>>(*TheContext);
+
 
     ScopedVariableManager svm;
     StructDeclarationManager sdm;
-public:
     CompilerErrorHandler *ceh;
 
 
@@ -180,9 +213,6 @@ private:
     }
 
 public:
-    std::unique_ptr<LLVMContext> TheContext = std::make_unique<LLVMContext>();
-    std::unique_ptr<Module> TheModule = std::make_unique<Module>("Compiled_Lang", *TheContext);
-    std::unique_ptr<IRBuilder<>> Builder = std::make_unique<IRBuilder<>>(*TheContext);
 
     antlrcpp::Any visitDereferenceExpression(LuminusParser::DereferenceExpressionContext *context) override {
         std::string inpName = context->getText();
@@ -211,18 +241,28 @@ public:
     }
 
     antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) override {
-        Value *varVal = svm.getVariable(context->id->getText());
+//        Value *varVal = svm.getVariable(context->id->getText());
+        Value *varVal = this->visit(context->id).as<Value *>();
         if (varVal == nullptr) {
             std::cout << "Variable doesn't exist!" << std::endl;
             throw std::exception("Var DNE");
         }
 
         std::cout << "Indexing: " << typeToString(varVal->getType()) << std::endl;
+        Value *index = this->visit(context->index).as<Value *>();
+        if (index->getType()->isPointerTy()) {
+            index = Builder->CreateLoad(index->getType()->getContainedType(0), index);
+        }
+        if (index->getType() != INT32_TYPE) {
+            throw std::exception("Invalid Index Type!");
+        }
 
+        std::cout << typeToString(index->getType()) << std::endl;
         return Builder->CreateGEP(varVal->getType()->getContainedType(0),
                                   varVal,
                                   {ConstantInt::get(INT32_TYPE, 0),
-                                   this->visit(context->index).as<Value *>()}
+                                   index
+                                  }
         );
 
         return antlrcpp::Any();
@@ -235,15 +275,16 @@ public:
     }
 
     void setupPrintFunction() {
-        FunctionType *FT = FunctionType::get(INT32_TYPE,
-                                             INT8_PTR_TYPE, false);
-
-        Function *F = Function::Create(FT, Function::ExternalLinkage, "puts", *TheModule);
 
         FunctionType *printft = FunctionType::get(INT32_TYPE,
                                                   INT8_PTR_TYPE, true);
 
         Function *printffunc = Function::Create(printft, Function::ExternalLinkage, "printf", *TheModule);
+
+        FunctionType *scanft = FunctionType::get(INT32_TYPE,
+                                                 INT8_PTR_TYPE, true);
+
+        Function *scanff = Function::Create(scanft, Function::ExternalLinkage, "scanf", *TheModule);
     }
 
     antlrcpp::Any visitStart(LuminusParser::StartContext *context) override {

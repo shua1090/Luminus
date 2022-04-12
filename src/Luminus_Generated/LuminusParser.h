@@ -123,23 +123,25 @@ public:
 
         virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
 
-  ArgumentContext* argument();
+    };
+
+    ArgumentContext *argument();
 
   class  FunctionContext : public antlr4::ParserRuleContext {
   public:
     FunctionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    FunctionContext() = default;
-    void copyFrom(FunctionContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
 
-    virtual size_t getRuleIndex() const override;
+      FunctionContext() = default;
 
-   
+      void copyFrom(FunctionContext *context);
+
+      using antlr4::ParserRuleContext::copyFrom;
+
+      virtual size_t getRuleIndex() const override;
+
+
   };
 
     class FunctionDeclarationContext : public FunctionContext {
@@ -172,9 +174,9 @@ public:
         virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
         virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
+    };
 
-  FunctionContext* function();
+    FunctionContext *function();
 
     class Func_callContext : public antlr4::ParserRuleContext {
     public:
@@ -347,28 +349,28 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  MultiplyOrDivideContext : public ExpressionContext {
-  public:
-    MultiplyOrDivideContext(ExpressionContext *ctx);
+    class MultiplyOrDivideContext : public ExpressionContext {
+    public:
+        MultiplyOrDivideContext(ExpressionContext *ctx);
 
-    LuminusParser::ExpressionContext *left = nullptr;
-    antlr4::Token *op = nullptr;
-    LuminusParser::ExpressionContext *right = nullptr;
+        LuminusParser::ExpressionContext *left = nullptr;
+        antlr4::Token *op = nullptr;
+        LuminusParser::ExpressionContext *right = nullptr;
 
-      std::vector<ExpressionContext *> expression();
+        std::vector<ExpressionContext *> expression();
 
-      ExpressionContext *expression(size_t i);
+        ExpressionContext *expression(size_t i);
 
-      antlr4::tree::TerminalNode *MUL();
+        antlr4::tree::TerminalNode *MUL();
 
-      antlr4::tree::TerminalNode *DIV();
+        antlr4::tree::TerminalNode *DIV();
 
-      virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 
-      virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
-      virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
 
     class DereferenceExpressionContext : public ExpressionContext {
     public:
@@ -386,15 +388,17 @@ public:
     };
 
     class StringConstContext : public ExpressionContext {
-  public:
-    StringConstContext(ExpressionContext *ctx);
+    public:
+        StringConstContext(ExpressionContext *ctx);
 
-    antlr4::tree::TerminalNode *STRING_CONST();
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+        antlr4::tree::TerminalNode *STRING_CONST();
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
+        virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+        virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+    };
 
   class  Func_Call_ExpressionContext : public ExpressionContext {
   public:
@@ -534,13 +538,17 @@ public:
   public:
     Unary_NegateContext(ExpressionContext *ctx);
 
-    LuminusParser::ExpressionContext *inner = nullptr;
-    antlr4::tree::TerminalNode *SUB();
-    ExpressionContext *expression();
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+      LuminusParser::ExpressionContext *inner = nullptr;
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+      antlr4::tree::TerminalNode *SUB();
+
+      ExpressionContext *expression();
+
+      virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+
+      virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+      virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
     class AddOrSubtractContext : public ExpressionContext {
@@ -619,12 +627,12 @@ public:
     public:
         IndexingContext(ExpressionContext *ctx);
 
-        antlr4::Token *id = nullptr;
+        LuminusParser::ExpressionContext *id = nullptr;
         LuminusParser::ExpressionContext *index = nullptr;
 
-        antlr4::tree::TerminalNode *IDENTIFIER();
+        std::vector<ExpressionContext *> expression();
 
-        ExpressionContext *expression();
+        ExpressionContext *expression(size_t i);
 
         virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
 

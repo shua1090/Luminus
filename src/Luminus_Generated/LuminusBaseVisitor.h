@@ -68,20 +68,20 @@ public:
     }
 
     virtual antlrcpp::Any visitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *ctx) override {
-    return visitChildren(ctx);
-  }
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitFloatExpression(LuminusParser::FloatExpressionContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitFloatExpression(LuminusParser::FloatExpressionContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitNotExpression(LuminusParser::NotExpressionContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitNotExpression(LuminusParser::NotExpressionContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
     virtual antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) override {
         return visitChildren(ctx);
@@ -152,8 +152,8 @@ public:
     }
 
     virtual antlrcpp::Any visitStatement(LuminusParser::StatementContext *ctx) override {
-    return visitChildren(ctx);
-  }
+        return visitChildren(ctx);
+    }
 
 
 };
