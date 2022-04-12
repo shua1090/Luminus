@@ -48,7 +48,7 @@ struct BaseError {
     std::string textLine;
     std::string specificError;
 
-    std::string getString() { return "Base Error"; }
+    virtual std::string getString() { return "BaseError"; }
 };
 
 struct BaseWarning : BaseError {
@@ -72,9 +72,9 @@ public:
 
     void addError(BaseError *be, antlr4::ParserRuleContext *rc, std::string specific_error) {
         be->characterNum = rc->getStart()->getCharPositionInLine();
-        be->rowNum = rc->getStart()->getLine();
+        be->rowNum = rc->getStart()->getLine() - 1;
         be->specificError = std::move(specific_error);
-        be->textLine = fileData[be->rowNum][be->characterNum];
+        be->textLine = fileData[be->rowNum];
         this->errors.push_back(be);
     }
 
@@ -82,12 +82,21 @@ public:
         for (int i = 0; i < errors.size(); i++) {
             BaseError *be = errors[i];
             std::string ErrorDescription = "Compilation Error - " + be->getString();
-            std::cout << std::string(std::max(ErrorDescription.size(), be->textLine.size()), '#') << std::endl;
+
+            std::cout << std::string(std::max
+                                             (std::max(ErrorDescription.size(), be->textLine.size()),
+                                              be->specificError.size()), '#') << std::endl;
+
             std::cout << ErrorDescription << std::endl;
             std::cout << yellow << be->textLine << reset << std::endl;
-            std::cout << red << std::string(be->characterNum, ' ') << "^" << reset << std::endl;
+            std::cout << red << std::string(be->characterNum, ' ') << "^"
+                      << std::string(be->textLine.size() - be->characterNum - 1, '~') << reset << std::endl;
             std::cout << red << be->specificError << reset << std::endl;
-            std::cout << std::string(std::max(ErrorDescription.size(), be->textLine.size()), '#') << std::endl;
+
+            std::cout << std::string(std::max
+                                             (std::max(ErrorDescription.size(), be->textLine.size()),
+                                              be->specificError.size()), '#') << std::endl;
+
         }
     }
 

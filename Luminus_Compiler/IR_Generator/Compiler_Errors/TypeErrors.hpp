@@ -9,14 +9,14 @@
 
 struct TypeError : BaseError {
     std::string getString() {
-        return BaseError::getString() + "->TypeError";
+        return "TypeError <- " + BaseError::getString();
     }
 };
 
 
 struct TypeMismatchError : TypeError {
     std::string getString() {
-        return TypeError::getString() + "->TypeMismatchError";
+        return "TypeMismatchError <- " + TypeError::getString();
     }
 };
 
