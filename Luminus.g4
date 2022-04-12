@@ -42,18 +42,20 @@ DIGIT: [0-9]+;
 
 start: (function|struct_declaration)+;
 
-argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER;
-function: 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
+argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ( '[' count+=expression ']' )? ;
+function: 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID|IDENTIFIER) '{' statement+ '}' #FunctionDeclaration;
+
 
 func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
     ;
 
 struct_declaration: 'struct' struct_name=IDENTIFIER '{' (struct_vals+=argument ';')+ '}';
 
-assignment: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ';' #Declaration
+assignment: dec_type=(TYPE|IDENTIFIER)  id=IDENTIFIER ('[' count+=expression ']')? ';' #Declaration
     | id=expression '=' value=expression ';' #Reinitialization
     | dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
+
 
 expression:
     BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const

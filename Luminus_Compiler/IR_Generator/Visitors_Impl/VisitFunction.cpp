@@ -22,6 +22,9 @@ antlrcpp::Any LuminusCompiler::visitFunctionDeclaration(LuminusParser::FunctionD
     // Setup Params
     for (int i = 0; i < args.size(); i++) {
         param_types[i] = textToType(args[i]->dec_type->getText());
+        if (!args[i]->count.empty()) {
+            param_types[i] = ArrayType::get(param_types[i], std::stoi(args[i]->count[0]->getText()));
+        }
         param_labels[i] = args[i]->id->getText();
     }
 

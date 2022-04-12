@@ -211,6 +211,20 @@ public:
     }
 
     antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) override {
+        Value *varVal = svm.getVariable(context->id->getText());
+        if (varVal == nullptr) {
+            std::cout << "Variable doesn't exist!" << std::endl;
+            throw std::exception("Var DNE");
+        }
+
+        std::cout << "Indexing: " << typeToString(varVal->getType()) << std::endl;
+
+        return Builder->CreateGEP(varVal->getType()->getContainedType(0),
+                                  varVal,
+                                  {ConstantInt::get(INT32_TYPE, 0),
+                                   this->visit(context->index).as<Value *>()}
+        );
+
         return antlrcpp::Any();
     }
 

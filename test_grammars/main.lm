@@ -1,13 +1,13 @@
 struct TreeStruct {
-    int * iValue;
-    double dValue;
+    int iValue[20];
+}
+
+func avg(int * vals) -> int{
+    return 0;
 }
 
 func num() -> int {
-    TreeStruct t;
-    int testNum = 16;
-    t.iValue = &testNum;
-    t.dValue = 4.2;
-    printf("T Values %d %f\n", t.iValue, t.dValue);
+    int arr [50];
+    int z = arr[5];
     return 0;
 }

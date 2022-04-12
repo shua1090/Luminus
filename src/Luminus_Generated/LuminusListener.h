@@ -70,11 +70,13 @@ public:
 
     virtual void exitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *ctx) = 0;
 
-  virtual void enterFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
-  virtual void exitFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
+    virtual void enterFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
 
-  virtual void enterNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
-  virtual void exitNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
+    virtual void exitFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
+
+    virtual void enterNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
+
+    virtual void exitNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
 
     virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
 

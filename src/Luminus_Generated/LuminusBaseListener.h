@@ -72,11 +72,13 @@ public:
 
     virtual void exitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext * /*ctx*/) override {}
 
-  virtual void enterFloatExpression(LuminusParser::FloatExpressionContext * /*ctx*/) override { }
-  virtual void exitFloatExpression(LuminusParser::FloatExpressionContext * /*ctx*/) override { }
+    virtual void enterFloatExpression(LuminusParser::FloatExpressionContext * /*ctx*/) override {}
 
-  virtual void enterNotExpression(LuminusParser::NotExpressionContext * /*ctx*/) override { }
-  virtual void exitNotExpression(LuminusParser::NotExpressionContext * /*ctx*/) override { }
+    virtual void exitFloatExpression(LuminusParser::FloatExpressionContext * /*ctx*/) override {}
+
+    virtual void enterNotExpression(LuminusParser::NotExpressionContext * /*ctx*/) override {}
+
+    virtual void exitNotExpression(LuminusParser::NotExpressionContext * /*ctx*/) override {}
 
     virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext * /*ctx*/) override {}
 
@@ -155,10 +157,13 @@ public:
     virtual void exitStatement(LuminusParser::StatementContext * /*ctx*/) override {}
 
 
-  virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
-  virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
-  virtual void visitTerminal(antlr4::tree::TerminalNode * /*node*/) override { }
-  virtual void visitErrorNode(antlr4::tree::ErrorNode * /*node*/) override { }
+    virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override {}
+
+    virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override {}
+
+    virtual void visitTerminal(antlr4::tree::TerminalNode * /*node*/) override {}
+
+    virtual void visitErrorNode(antlr4::tree::ErrorNode * /*node*/) override {}
 
 };
 
