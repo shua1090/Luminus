@@ -198,7 +198,7 @@ public:
     antlrcpp::Any visitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *context) override {
         std::string inpName = context->getText();
         size_t ptrCount = count(inpName.begin(), inpName.end(), '*');
-        auto val = this->visit(context->id).as<Value *>();
+//        auto val = this->visit(context->id).as<Value *>();
         auto a = svm.getVariable(inpName.substr(inpName.find_last_of('*') + 1));
         if (a == nullptr) {
             // TODO: THROW EXCEPTION

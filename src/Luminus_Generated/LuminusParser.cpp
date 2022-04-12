@@ -473,10 +473,10 @@ LuminusParser::Func_callContext* LuminusParser::func_call() {
                              | (1ULL << LuminusParser::LOG_NOT)
                              | (1ULL << LuminusParser::TRUE_CONST)
                              | (1ULL << LuminusParser::FALSE_CONST)
-      | (1ULL << LuminusParser::IDENTIFIER)
-      | (1ULL << LuminusParser::STRING_CONST)
-      | (1ULL << LuminusParser::INTEGER_CONST)
-      | (1ULL << LuminusParser::FLOATING_CONST))) != 0)) {
+                             | (1ULL << LuminusParser::IDENTIFIER)
+                             | (1ULL << LuminusParser::STRING_CONST)
+                             | (1ULL << LuminusParser::INTEGER_CONST)
+                             | (1ULL << LuminusParser::FLOATING_CONST))) != 0)) {
           setState(68);
           antlrcpp::downCast<FunctionCallContext *>(_localctx)->expressionContext = expression(0);
           antlrcpp::downCast<FunctionCallContext *>(_localctx)->args.push_back(
@@ -894,8 +894,8 @@ antlrcpp::Any LuminusParser::MultiplyOrDivideContext::accept(tree::ParseTreeVisi
 }
 //----------------- DereferenceExpressionContext ------------------------------------------------------------------
 
-tree::TerminalNode* LuminusParser::DereferenceExpressionContext::IDENTIFIER() {
-  return getToken(LuminusParser::IDENTIFIER, 0);
+LuminusParser::ExpressionContext *LuminusParser::DereferenceExpressionContext::expression() {
+    return getRuleContext<LuminusParser::ExpressionContext>(0);
 }
 
 LuminusParser::DereferenceExpressionContext::DereferenceExpressionContext(ExpressionContext *ctx) { copyFrom(ctx); }
@@ -1508,7 +1508,7 @@ LuminusParser::ExpressionContext* LuminusParser::expression(int precedence) {
         setState(117);
         match(LuminusParser::T__11);
         setState(118);
-        antlrcpp::downCast<DereferenceExpressionContext *>(_localctx)->id = match(LuminusParser::IDENTIFIER);
+        antlrcpp::downCast<DereferenceExpressionContext *>(_localctx)->id = expression(13);
         break;
     }
 
@@ -2429,14 +2429,14 @@ LuminusParser::StatementContext* LuminusParser::statement() {
               break;
           }
 
-    case 4: {
-        enterOuterAlt(_localctx, 4);
-        setState(217);
-        block();
-        setState(218);
-        match(LuminusParser::T__8);
-        break;
-    }
+          case 4: {
+              enterOuterAlt(_localctx, 4);
+              setState(217);
+              block();
+              setState(218);
+              match(LuminusParser::T__8);
+              break;
+          }
 
     case 5: {
         enterOuterAlt(_localctx, 5);
@@ -2643,7 +2643,7 @@ LuminusParser::Initializer::Initializer() {
           0x2, 0x72, 0x97, 0x9, 0x4, 0x2, 0x2, 0x73, 0x97, 0x7, 0x30, 0x2,
           0x2, 0x74, 0x97, 0x7, 0x31, 0x2, 0x2, 0x75, 0x97, 0x7, 0x32, 0x2,
           0x2, 0x76, 0x97, 0x7, 0x2f, 0x2, 0x2, 0x77, 0x78, 0x7, 0xe, 0x2,
-          0x2, 0x78, 0x97, 0x7, 0x2f, 0x2, 0x2, 0x79, 0x7b, 0x7, 0x17, 0x2,
+          0x2, 0x78, 0x97, 0x5, 0xe, 0x8, 0xf, 0x79, 0x7b, 0x7, 0x17, 0x2,
           0x2, 0x7a, 0x79, 0x3, 0x2, 0x2, 0x2, 0x7b, 0x7e, 0x3, 0x2, 0x2, 0x2,
           0x7c, 0x7a, 0x3, 0x2, 0x2, 0x2, 0x7c, 0x7d, 0x3, 0x2, 0x2, 0x2, 0x7d,
           0x7f, 0x3, 0x2, 0x2, 0x2, 0x7e, 0x7c, 0x3, 0x2, 0x2, 0x2, 0x7f, 0x97,

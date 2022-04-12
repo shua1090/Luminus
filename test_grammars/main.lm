@@ -1,10 +1,13 @@
-struct Tree {
+struct TreeStruct {
     int * iValue;
     double dValue;
 }
 
 func num() -> int {
-    Tree t;
-    int j = 50;
+    TreeStruct t;
+    int testNum = 16;
+    t.iValue = &testNum;
+    t.dValue = 4.2;
+    printf("T Values %d %f\n", t.iValue, t.dValue);
     return 0;
 }

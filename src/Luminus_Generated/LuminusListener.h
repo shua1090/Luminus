@@ -58,14 +58,17 @@ public:
 
     virtual void exitDereferenceExpression(LuminusParser::DereferenceExpressionContext *ctx) = 0;
 
-  virtual void enterStringConst(LuminusParser::StringConstContext *ctx) = 0;
-  virtual void exitStringConst(LuminusParser::StringConstContext *ctx) = 0;
+    virtual void enterStringConst(LuminusParser::StringConstContext *ctx) = 0;
 
-  virtual void enterFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) = 0;
-  virtual void exitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) = 0;
+    virtual void exitStringConst(LuminusParser::StringConstContext *ctx) = 0;
 
-  virtual void enterValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *ctx) = 0;
-  virtual void exitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *ctx) = 0;
+    virtual void enterFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) = 0;
+
+    virtual void exitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *ctx) = 0;
+
+    virtual void enterValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *ctx) = 0;
+
+    virtual void exitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *ctx) = 0;
 
   virtual void enterFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
   virtual void exitFloatExpression(LuminusParser::FloatExpressionContext *ctx) = 0;
@@ -73,14 +76,17 @@ public:
   virtual void enterNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
   virtual void exitNotExpression(LuminusParser::NotExpressionContext *ctx) = 0;
 
-  virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
-  virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
+    virtual void enterIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
 
-  virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
-  virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
+    virtual void exitIntegerExpression(LuminusParser::IntegerExpressionContext *ctx) = 0;
 
-  virtual void enterCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
-  virtual void exitCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
+    virtual void enterIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
+
+    virtual void exitIdentifierExpression(LuminusParser::IdentifierExpressionContext *ctx) = 0;
+
+    virtual void enterCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
+
+    virtual void exitCastToType(LuminusParser::CastToTypeContext *ctx) = 0;
 
     virtual void enterBool_Const(LuminusParser::Bool_ConstContext *ctx) = 0;
 
@@ -134,14 +140,17 @@ public:
 
     virtual void exitConditional_statement(LuminusParser::Conditional_statementContext *ctx) = 0;
 
-  virtual void enterReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
-  virtual void exitReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
+    virtual void enterReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
 
-  virtual void enterBlockExpression(LuminusParser::BlockExpressionContext *ctx) = 0;
-  virtual void exitBlockExpression(LuminusParser::BlockExpressionContext *ctx) = 0;
+    virtual void exitReturnStatement(LuminusParser::ReturnStatementContext *ctx) = 0;
 
-  virtual void enterStatement(LuminusParser::StatementContext *ctx) = 0;
-  virtual void exitStatement(LuminusParser::StatementContext *ctx) = 0;
+    virtual void enterBlockExpression(LuminusParser::BlockExpressionContext *ctx) = 0;
+
+    virtual void exitBlockExpression(LuminusParser::BlockExpressionContext *ctx) = 0;
+
+    virtual void enterStatement(LuminusParser::StatementContext *ctx) = 0;
+
+    virtual void exitStatement(LuminusParser::StatementContext *ctx) = 0;
 
 
 };
