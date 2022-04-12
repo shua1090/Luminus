@@ -40,18 +40,19 @@ FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
 
 DIGIT: [0-9]+;
 
-start: function+;
+start: (function|struct_declaration)+;
 
-fragment TEST: IDENTIFIER;
 argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER;
 function: 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID) '{' statement+ '}' #FunctionDeclaration;
 
 func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
     ;
 
-assignment: dec_type=TYPE id=IDENTIFIER ';' #Declaration
+struct_declaration: 'struct' struct_name=IDENTIFIER '{' (struct_vals+=argument ';')+ '}';
+
+assignment: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ';' #Declaration
     | id=expression '=' value=expression ';' #Reinitialization
-    | dec_type=TYPE id=IDENTIFIER '=' value=expression ';' #Initialization
+    | dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER '=' value=expression ';' #Initialization
     ;
 
 expression:
@@ -65,6 +66,7 @@ expression:
     | call=func_call #Func_Call_Expression
     | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
+    | exp=expression '.' accessed_element=IDENTIFIER #AccessInternal
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression MOD right=expression #Modulus
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract

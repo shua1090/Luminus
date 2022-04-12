@@ -17,23 +17,33 @@ public:
   virtual void enterStart(LuminusParser::StartContext *ctx) = 0;
   virtual void exitStart(LuminusParser::StartContext *ctx) = 0;
 
-  virtual void enterArgument(LuminusParser::ArgumentContext *ctx) = 0;
-  virtual void exitArgument(LuminusParser::ArgumentContext *ctx) = 0;
+    virtual void enterArgument(LuminusParser::ArgumentContext *ctx) = 0;
 
-  virtual void enterFunctionDeclaration(LuminusParser::FunctionDeclarationContext *ctx) = 0;
-  virtual void exitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *ctx) = 0;
+    virtual void exitArgument(LuminusParser::ArgumentContext *ctx) = 0;
 
-  virtual void enterFunctionCall(LuminusParser::FunctionCallContext *ctx) = 0;
-  virtual void exitFunctionCall(LuminusParser::FunctionCallContext *ctx) = 0;
+    virtual void enterFunctionDeclaration(LuminusParser::FunctionDeclarationContext *ctx) = 0;
 
-  virtual void enterDeclaration(LuminusParser::DeclarationContext *ctx) = 0;
-  virtual void exitDeclaration(LuminusParser::DeclarationContext *ctx) = 0;
+    virtual void exitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *ctx) = 0;
 
-  virtual void enterReinitialization(LuminusParser::ReinitializationContext *ctx) = 0;
-  virtual void exitReinitialization(LuminusParser::ReinitializationContext *ctx) = 0;
+    virtual void enterFunctionCall(LuminusParser::FunctionCallContext *ctx) = 0;
 
-  virtual void enterInitialization(LuminusParser::InitializationContext *ctx) = 0;
-  virtual void exitInitialization(LuminusParser::InitializationContext *ctx) = 0;
+    virtual void exitFunctionCall(LuminusParser::FunctionCallContext *ctx) = 0;
+
+    virtual void enterStruct_declaration(LuminusParser::Struct_declarationContext *ctx) = 0;
+
+    virtual void exitStruct_declaration(LuminusParser::Struct_declarationContext *ctx) = 0;
+
+    virtual void enterDeclaration(LuminusParser::DeclarationContext *ctx) = 0;
+
+    virtual void exitDeclaration(LuminusParser::DeclarationContext *ctx) = 0;
+
+    virtual void enterReinitialization(LuminusParser::ReinitializationContext *ctx) = 0;
+
+    virtual void exitReinitialization(LuminusParser::ReinitializationContext *ctx) = 0;
+
+    virtual void enterInitialization(LuminusParser::InitializationContext *ctx) = 0;
+
+    virtual void exitInitialization(LuminusParser::InitializationContext *ctx) = 0;
 
   virtual void enterParantheses(LuminusParser::ParanthesesContext *ctx) = 0;
   virtual void exitParantheses(LuminusParser::ParanthesesContext *ctx) = 0;
@@ -77,23 +87,33 @@ public:
   virtual void enterModulus(LuminusParser::ModulusContext *ctx) = 0;
   virtual void exitModulus(LuminusParser::ModulusContext *ctx) = 0;
 
-  virtual void enterUnary_Negate(LuminusParser::Unary_NegateContext *ctx) = 0;
-  virtual void exitUnary_Negate(LuminusParser::Unary_NegateContext *ctx) = 0;
+    virtual void enterUnary_Negate(LuminusParser::Unary_NegateContext *ctx) = 0;
 
-  virtual void enterAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
-  virtual void exitAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
+    virtual void exitUnary_Negate(LuminusParser::Unary_NegateContext *ctx) = 0;
 
-  virtual void enterCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
-  virtual void exitCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
+    virtual void enterAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
 
-  virtual void enterIndexing(LuminusParser::IndexingContext *ctx) = 0;
-  virtual void exitIndexing(LuminusParser::IndexingContext *ctx) = 0;
+    virtual void exitAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) = 0;
 
-  virtual void enterWhile_statement(LuminusParser::While_statementContext *ctx) = 0;
-  virtual void exitWhile_statement(LuminusParser::While_statementContext *ctx) = 0;
+    virtual void enterCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
 
-  virtual void enterIf_statement(LuminusParser::If_statementContext *ctx) = 0;
-  virtual void exitIf_statement(LuminusParser::If_statementContext *ctx) = 0;
+    virtual void exitCompExpression(LuminusParser::CompExpressionContext *ctx) = 0;
+
+    virtual void enterAccessInternal(LuminusParser::AccessInternalContext *ctx) = 0;
+
+    virtual void exitAccessInternal(LuminusParser::AccessInternalContext *ctx) = 0;
+
+    virtual void enterIndexing(LuminusParser::IndexingContext *ctx) = 0;
+
+    virtual void exitIndexing(LuminusParser::IndexingContext *ctx) = 0;
+
+    virtual void enterWhile_statement(LuminusParser::While_statementContext *ctx) = 0;
+
+    virtual void exitWhile_statement(LuminusParser::While_statementContext *ctx) = 0;
+
+    virtual void enterIf_statement(LuminusParser::If_statementContext *ctx) = 0;
+
+    virtual void exitIf_statement(LuminusParser::If_statementContext *ctx) = 0;
 
   virtual void enterElse_statement(LuminusParser::Else_statementContext *ctx) = 0;
   virtual void exitElse_statement(LuminusParser::Else_statementContext *ctx) = 0;

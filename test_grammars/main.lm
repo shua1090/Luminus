@@ -1,4 +1,12 @@
 
-func id(int a, teippi * t) -> int {
+struct Tree {
+    int value;
+    int * nextNode;
+}
+
+func id(int a, Tree * t) -> int {
+    Tree tob;
+    tob.value = 5;
+    tob.nextNode = &a;
     return 0;
 }

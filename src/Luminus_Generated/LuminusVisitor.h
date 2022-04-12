@@ -19,13 +19,15 @@ public:
   /**
    * Visit parse trees produced by LuminusParser.
    */
-    virtual antlrcpp::Any visitStart(LuminusParser::StartContext *context) = 0;
+  virtual antlrcpp::Any visitStart(LuminusParser::StartContext *context) = 0;
 
     virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) = 0;
 
     virtual antlrcpp::Any visitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *context) = 0;
 
     virtual antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) = 0;
+
+    virtual antlrcpp::Any visitStruct_declaration(LuminusParser::Struct_declarationContext *context) = 0;
 
     virtual antlrcpp::Any visitDeclaration(LuminusParser::DeclarationContext *context) = 0;
 
@@ -66,6 +68,8 @@ public:
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *context) = 0;
 
     virtual antlrcpp::Any visitCompExpression(LuminusParser::CompExpressionContext *context) = 0;
+
+    virtual antlrcpp::Any visitAccessInternal(LuminusParser::AccessInternalContext *context) = 0;
 
     virtual antlrcpp::Any visitIndexing(LuminusParser::IndexingContext *context) = 0;
 
