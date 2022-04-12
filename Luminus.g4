@@ -61,12 +61,12 @@ expression:
     | INTEGER_CONST #IntegerExpression
     | FLOATING_CONST #FloatExpression
     | id=IDENTIFIER #IdentifierExpression
+    | exp=expression '.' accessed_element=IDENTIFIER #AccessInternal
     | '&'id=IDENTIFIER #DereferenceExpression
-    | '*'*id=IDENTIFIER #ValueOfPointerExpression
+    | '*'* id=IDENTIFIER #ValueOfPointerExpression
     | call=func_call #Func_Call_Expression
     | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
     | '(' inner=expression ')' #Parantheses
-    | exp=expression '.' accessed_element=IDENTIFIER #AccessInternal
     | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
     | left=expression MOD right=expression #Modulus
     | left=expression op=(ADD|SUB) right=expression #AddOrSubtract

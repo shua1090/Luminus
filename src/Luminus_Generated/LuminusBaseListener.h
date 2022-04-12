@@ -13,11 +13,12 @@
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-class  LuminusBaseListener : public LuminusListener {
+class LuminusBaseListener : public LuminusListener {
 public:
 
-  virtual void enterStart(LuminusParser::StartContext * /*ctx*/) override { }
-  virtual void exitStart(LuminusParser::StartContext * /*ctx*/) override { }
+    virtual void enterStart(LuminusParser::StartContext * /*ctx*/) override {}
+
+    virtual void exitStart(LuminusParser::StartContext * /*ctx*/) override {}
 
     virtual void enterArgument(LuminusParser::ArgumentContext * /*ctx*/) override {}
 
@@ -47,14 +48,17 @@ public:
 
     virtual void exitInitialization(LuminusParser::InitializationContext * /*ctx*/) override {}
 
-  virtual void enterParantheses(LuminusParser::ParanthesesContext * /*ctx*/) override { }
-  virtual void exitParantheses(LuminusParser::ParanthesesContext * /*ctx*/) override { }
+    virtual void enterParantheses(LuminusParser::ParanthesesContext * /*ctx*/) override {}
 
-  virtual void enterMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext * /*ctx*/) override { }
-  virtual void exitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext * /*ctx*/) override { }
+    virtual void exitParantheses(LuminusParser::ParanthesesContext * /*ctx*/) override {}
 
-  virtual void enterDereferenceExpression(LuminusParser::DereferenceExpressionContext * /*ctx*/) override { }
-  virtual void exitDereferenceExpression(LuminusParser::DereferenceExpressionContext * /*ctx*/) override { }
+    virtual void enterMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext * /*ctx*/) override {}
+
+    virtual void exitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext * /*ctx*/) override {}
+
+    virtual void enterDereferenceExpression(LuminusParser::DereferenceExpressionContext * /*ctx*/) override {}
+
+    virtual void exitDereferenceExpression(LuminusParser::DereferenceExpressionContext * /*ctx*/) override {}
 
   virtual void enterStringConst(LuminusParser::StringConstContext * /*ctx*/) override { }
   virtual void exitStringConst(LuminusParser::StringConstContext * /*ctx*/) override { }
@@ -80,14 +84,17 @@ public:
   virtual void enterCastToType(LuminusParser::CastToTypeContext * /*ctx*/) override { }
   virtual void exitCastToType(LuminusParser::CastToTypeContext * /*ctx*/) override { }
 
-  virtual void enterBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override { }
-  virtual void exitBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override { }
+    virtual void enterBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override {}
 
-  virtual void enterLogicalExpression(LuminusParser::LogicalExpressionContext * /*ctx*/) override { }
-  virtual void exitLogicalExpression(LuminusParser::LogicalExpressionContext * /*ctx*/) override { }
+    virtual void exitBool_Const(LuminusParser::Bool_ConstContext * /*ctx*/) override {}
 
-  virtual void enterModulus(LuminusParser::ModulusContext * /*ctx*/) override { }
-  virtual void exitModulus(LuminusParser::ModulusContext * /*ctx*/) override { }
+    virtual void enterLogicalExpression(LuminusParser::LogicalExpressionContext * /*ctx*/) override {}
+
+    virtual void exitLogicalExpression(LuminusParser::LogicalExpressionContext * /*ctx*/) override {}
+
+    virtual void enterModulus(LuminusParser::ModulusContext * /*ctx*/) override {}
+
+    virtual void exitModulus(LuminusParser::ModulusContext * /*ctx*/) override {}
 
     virtual void enterUnary_Negate(LuminusParser::Unary_NegateContext * /*ctx*/) override {}
 
@@ -117,14 +124,17 @@ public:
 
     virtual void exitIf_statement(LuminusParser::If_statementContext * /*ctx*/) override {}
 
-  virtual void enterElse_statement(LuminusParser::Else_statementContext * /*ctx*/) override { }
-  virtual void exitElse_statement(LuminusParser::Else_statementContext * /*ctx*/) override { }
+    virtual void enterElse_statement(LuminusParser::Else_statementContext * /*ctx*/) override {}
 
-  virtual void enterElif_statement(LuminusParser::Elif_statementContext * /*ctx*/) override { }
-  virtual void exitElif_statement(LuminusParser::Elif_statementContext * /*ctx*/) override { }
+    virtual void exitElse_statement(LuminusParser::Else_statementContext * /*ctx*/) override {}
 
-  virtual void enterConditional_statement(LuminusParser::Conditional_statementContext * /*ctx*/) override { }
-  virtual void exitConditional_statement(LuminusParser::Conditional_statementContext * /*ctx*/) override { }
+    virtual void enterElif_statement(LuminusParser::Elif_statementContext * /*ctx*/) override {}
+
+    virtual void exitElif_statement(LuminusParser::Elif_statementContext * /*ctx*/) override {}
+
+    virtual void enterConditional_statement(LuminusParser::Conditional_statementContext * /*ctx*/) override {}
+
+    virtual void exitConditional_statement(LuminusParser::Conditional_statementContext * /*ctx*/) override {}
 
   virtual void enterReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override { }
   virtual void exitReturnStatement(LuminusParser::ReturnStatementContext * /*ctx*/) override { }

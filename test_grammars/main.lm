@@ -1,12 +1,10 @@
-
 struct Tree {
-    int value;
-    int * nextNode;
+    int * iValue;
+    double dValue;
 }
 
-func id(int a, Tree * t) -> int {
-    Tree tob;
-    tob.value = 5;
-    tob.nextNode = &a;
+func num() -> int {
+    Tree t;
+    int j = 50;
     return 0;
 }

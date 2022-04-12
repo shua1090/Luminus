@@ -22,7 +22,7 @@ std::string LuminusCompiler::trim(std::string text) {
     return ltrim(rtrim(text));
 }
 
-std::string typeToString(Type *t) {
+std::string LuminusCompiler::typeToString(Type *t) {
     std::string type_str;
     llvm::raw_string_ostream rso(type_str);
     t->print(rso);

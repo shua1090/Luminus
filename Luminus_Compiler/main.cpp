@@ -31,6 +31,8 @@ int main() {
     try {
         auto scene = visitor.visitStart(tree);
     } catch (std::exception &r) {
+        std::cout << r.what() << std::endl;
+        std::cout << "Some kind of exception occurred!" << std::endl;
         visitor.ceh->printErrors();
     }
     visitor.dump();

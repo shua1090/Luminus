@@ -15,13 +15,13 @@
 class  LuminusBaseVisitor : public LuminusVisitor {
 public:
 
-  virtual antlrcpp::Any visitStart(LuminusParser::StartContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitStart(LuminusParser::StartContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
     virtual antlrcpp::Any visitFunctionDeclaration(LuminusParser::FunctionDeclarationContext *ctx) override {
         return visitChildren(ctx);
@@ -44,14 +44,14 @@ public:
     }
 
     virtual antlrcpp::Any visitInitialization(LuminusParser::InitializationContext *ctx) override {
-    return visitChildren(ctx);
-  }
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitParantheses(LuminusParser::ParanthesesContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitParantheses(LuminusParser::ParanthesesContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *ctx) override {
+    virtual antlrcpp::Any visitMultiplyOrDivide(LuminusParser::MultiplyOrDivideContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -99,13 +99,13 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitModulus(LuminusParser::ModulusContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitModulus(LuminusParser::ModulusContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *ctx) override {
-      return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitUnary_Negate(LuminusParser::Unary_NegateContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
     virtual antlrcpp::Any visitAddOrSubtract(LuminusParser::AddOrSubtractContext *ctx) override {
         return visitChildren(ctx);
@@ -128,14 +128,14 @@ public:
     }
 
     virtual antlrcpp::Any visitIf_statement(LuminusParser::If_statementContext *ctx) override {
-    return visitChildren(ctx);
-  }
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitElse_statement(LuminusParser::Else_statementContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    virtual antlrcpp::Any visitElse_statement(LuminusParser::Else_statementContext *ctx) override {
+        return visitChildren(ctx);
+    }
 
-  virtual antlrcpp::Any visitElif_statement(LuminusParser::Elif_statementContext *ctx) override {
+    virtual antlrcpp::Any visitElif_statement(LuminusParser::Elif_statementContext *ctx) override {
     return visitChildren(ctx);
   }
 

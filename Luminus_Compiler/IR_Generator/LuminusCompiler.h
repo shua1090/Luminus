@@ -40,11 +40,42 @@ public:
     }
 };
 
+struct Structure {
+    Type *typeOfStruct;
+    std::vector<std::string> argsAsStrings;
+};
+
+class StructDeclarationManager {
+private:
+    std::unordered_map<std::string, Structure *> struct_decls;
+public:
+
+    Structure *getVariable(std::string varName) {
+        try {
+            return struct_decls[varName];
+        } catch (std::exception &a) {}
+        return nullptr;
+    }
+
+    void addStruct(std::string structName, Structure *structType) {
+        this->struct_decls[structName] = structType;
+    }
+
+    ~StructDeclarationManager() {
+        for (auto kv: struct_decls) {
+            delete struct_decls[kv.first];
+        }
+
+    }
+};
+
 class LuminusCompiler : public LuminusVisitor {
 
     ScopedVariableManager svm;
+    StructDeclarationManager sdm;
 public:
     CompilerErrorHandler *ceh;
+
 
     LuminusCompiler(std::string filename) {
         ceh = new CompilerErrorHandler(filename);
@@ -92,6 +123,7 @@ private:
     }
 
     llvm::Type *textToType(std::string text) {
+        text = trim(text);
         if (text == "int") {
             return INT32_TYPE;
         } else if (text == "double") {
@@ -103,8 +135,10 @@ private:
             return Type::getInt8PtrTy(*TheContext);
         } else {
             if (text.find('*') != std::string::npos) {
-                Type *t;
                 return PointerType::get(textToType(text.substr(0, text.size() - 1)), 0);
+            }
+            if (this->sdm.getVariable(text) != nullptr) {
+                return this->sdm.getVariable(text)->typeOfStruct;
             }
             return INT32_TYPE;
         }
@@ -164,6 +198,7 @@ public:
     antlrcpp::Any visitValueOfPointerExpression(LuminusParser::ValueOfPointerExpressionContext *context) override {
         std::string inpName = context->getText();
         size_t ptrCount = count(inpName.begin(), inpName.end(), '*');
+        auto val = this->visit(context->id).as<Value *>();
         auto a = svm.getVariable(inpName.substr(inpName.find_last_of('*') + 1));
         if (a == nullptr) {
             // TODO: THROW EXCEPTION
@@ -205,6 +240,10 @@ public:
         this->visitChildren(context);
         return NULL;
     }
+
+    antlrcpp::Any visitStruct_declaration(LuminusParser::Struct_declarationContext *context) override;
+
+    antlrcpp::Any visitAccessInternal(LuminusParser::AccessInternalContext *context) override;
 
     antlrcpp::Any visitBool_Const(LuminusParser::Bool_ConstContext *context) override {
         if (context->getText() == "true") {
@@ -378,6 +417,8 @@ public:
     static std::string trim(std::string text);
 
     void autoCast(Value *a, Value *b);
+
+    static std::string typeToString(Type *t);
 };
 
 #endif //LUMINUS_LUMVISITOR_H
