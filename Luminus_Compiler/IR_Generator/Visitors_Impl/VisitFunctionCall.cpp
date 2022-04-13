@@ -11,14 +11,29 @@ antlrcpp::Any LuminusCompiler::visitFunctionCall(LuminusParser::FunctionCallCont
         for (int i = 0; i < context->args.size(); i++) {
             paramCallValues[i] = this->visit(context->args[i]).as<Value *>();
             paramCallValues[i]->getType()->dump();
+
+
             if (paramCallValues[i]->getType()->isPointerTy()
-                && !(i < f->arg_size() && paramCallValues[i]->getType() == f->getArg(i)->getType()))
+                && !(i < f->arg_size() && paramCallValues[i]->getType() == f->getArg(i)->getType())
+                && context->args[i]->getText().find('&') == std::string::npos
+                    )
                 //svm.getVariable(removeAllStars(context->args[i]->getText())) != nullptr
             {
-                paramCallValues[i] = Builder->CreateLoad(paramCallValues[i]->getType()->getContainedType(0),
-                                                         paramCallValues[i]);
-                paramCallValues[i]->getType()->dump();
+                if (paramCallValues[i]->getType()->getContainedType(0)->isArrayTy()) {
+                    paramCallValues[i] = Builder->CreateGEP(paramCallValues[i]->getType()->getContainedType(0),
+                                                            paramCallValues[i],
+                                                            {ConstantInt::get(INT32_TYPE, 0),
+                                                             ConstantInt::get(INT32_TYPE, 0)
+                                                            }
+                    );
+                    std::cout << "here" << std::endl;
+                } else {
+                    paramCallValues[i] = Builder->CreateLoad(paramCallValues[i]->getType()->getContainedType(0),
+                                                             paramCallValues[i]);
+                    paramCallValues[i]->getType()->dump();
+                }
             }
+
         }
         return static_cast<Value *> ( Builder->CreateCall(f, paramCallValues));
     }

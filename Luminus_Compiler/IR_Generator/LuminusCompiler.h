@@ -218,6 +218,7 @@ public:
         std::string inpName = context->getText();
         size_t dereferenceCount = count(inpName.begin(), inpName.end(), '&');
         auto a = svm.getVariable(inpName.substr(inpName.find_last_of('&') + 1));
+        std::cout << "DEREFERENCE: " << inpName << inpName.substr(inpName.find_last_of('&') + 1) << std::endl;
         if (a == nullptr) {
             // TODO: THROW EXCEPTION
             std::cout << "Visit Dereference Failure" << std::endl;
@@ -248,15 +249,27 @@ public:
             throw std::exception("Var DNE");
         }
 
-        std::cout << "Indexing: " << typeToString(varVal->getType()) << std::endl;
+
         Value *index = this->visit(context->index).as<Value *>();
         if (index->getType()->isPointerTy()) {
             index = Builder->CreateLoad(index->getType()->getContainedType(0), index);
         }
+
         if (index->getType() != INT32_TYPE) {
             throw std::exception("Invalid Index Type!");
         }
+        if (varVal->getType()->isPointerTy() && varVal->getType()->getContainedType(0)->isPointerTy()) {
+            varVal = Builder->CreateLoad(varVal->getType()->getContainedType(0), varVal);
+            return Builder->CreateGEP(varVal->getType()->getContainedType(0),
+                                      varVal,
+                                      {index}
+            );
+        }
+        std::cout << "Indexing: " << typeToString(varVal->getType()) << std::endl;
 
+
+        std::cout << typeToString(varVal->getType()->getContainedType(0)) << std::endl;
+        std::cout << typeToString(varVal->getType()) << std::endl;
         std::cout << typeToString(index->getType()) << std::endl;
         return Builder->CreateGEP(varVal->getType()->getContainedType(0),
                                   varVal,
