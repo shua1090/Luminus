@@ -12,6 +12,8 @@
 #include "llvm/Target/TargetMachine.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/TargetSelect.h"
+#include "llvm/IRReader/IRReader.h"
+#include "llvm/IR/Metadata.h"
 
 #include "llvm/Bitcode/BitcodeWriter.h"
 
@@ -19,28 +21,45 @@ using namespace antlr4;
 
 int main() {
     std::string filename = "D:/Luminus/test_grammars/main.lm";
-    std::ifstream stream;
-    stream.open(filename);
 
+    std::string prefix = "D:/Luminus/test_grammars/";
 
-    antlr4::ANTLRInputStream input(stream);
-    LuminusLexer lexer(&input);
-    CommonTokenStream tokens(&lexer);
-    LuminusParser parser(&tokens);
-    auto tree = parser.start();
-    LuminusCompiler visitor(filename);
-    try {
-        visitor.logger.v = CompilerLogger::QUIET;
-        auto scene = visitor.visitStart(tree);
-        if (visitor.logger.v == CompilerLogger::VERBOSE) {
-            visitor.TheModule->dump();
+    std::string inpName;
+    std::cin >> inpName;
+    while (inpName != "exit") {
+        std::ifstream stream;
+        std::cout << "Given File: " << prefix + inpName << std::endl;
+        stream.open(prefix + inpName);
+
+        antlr4::ANTLRInputStream input(stream);
+        LuminusLexer lexer(&input);
+        CommonTokenStream tokens(&lexer);
+        LuminusParser parser(&tokens);
+        auto tree = parser.start();
+        LuminusCompiler visitor(filename);
+        try {
+            visitor.logger.v = CompilerLogger::QUIET;
+            auto scene = visitor.visitStart(tree);
+            if (visitor.logger.v == CompilerLogger::VERBOSE) {
+                visitor.TheModule->dump();
+            }
+        } catch (std::exception &r) {
+            std::cout << r.what() << std::endl;
+            std::cout << "Some kind of exception occurred!" << std::endl;
+            visitor.ceh->printErrors();
+            return -1;
         }
-    } catch (std::exception &r) {
-        std::cout << r.what() << std::endl;
-        std::cout << "Some kind of exception occurred!" << std::endl;
-        visitor.ceh->printErrors();
+
+//        auto a = MDNode::get(*visitor.TheContext, MDString::get(*visitor.TheContext, "required"));
+//        std::vector < Metadata* > elts = {a, ConstantAsMetadata::get(ConstantInt::get(IntegerType::getInt32Ty(*visitor.TheContext), APInt(32, 1)))};
+//        visitor.TheModule->addModuleFlag(llvm::Module::Require, "nice", MDNode::get(*visitor.TheContext, elts));
+        visitor.dumpToFile(inpName.substr(0, inpName.find_last_of('.')) + ".ll");
+        std::cout << "Dumped to file" << std::endl;
+
+        inpName = "";
+        std::cin >> inpName;
     }
-    visitor.dumpToFile("disassembly.ll");
+
 
     InitializeAllTargetInfos();
     InitializeAllTargets();

@@ -8,7 +8,6 @@ func printFullArray(int * nar, int size) -> int {
     return 5;
 }
 
-
 func sortArray(int * passedArray, int size) -> int {
     int i = 1;
     int j;

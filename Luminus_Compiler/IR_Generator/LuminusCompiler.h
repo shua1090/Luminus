@@ -85,6 +85,7 @@ public:
     std::unique_ptr<Module> TheModule = std::make_unique<Module>("Compiled_Lang", *TheContext);
     std::unique_ptr<IRBuilder<>> Builder = std::make_unique<IRBuilder<>>(*TheContext);
 
+
     ScopedVariableManager svm;
     StructDeclarationManager sdm;
     CompilerErrorHandler *ceh;
@@ -92,6 +93,8 @@ public:
 
     LuminusCompiler(std::string filename) {
         ceh = new CompilerErrorHandler(filename);
+        TheModule->setModuleIdentifier(filename.substr(filename.find_last_of('/') + 1, filename.find_last_of('.')));
+        TheModule->setSourceFileName(filename.substr(filename.find_last_of('/') + 1, filename.find_last_of('.')));
     }
 
     ~LuminusCompiler() {

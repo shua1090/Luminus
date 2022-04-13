@@ -43,8 +43,8 @@ DIGIT: [0-9]+;
 start: (function|struct_declaration)+;
 
 argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ( '[' count+=expression ']' )? ;
-function: 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->' returnType=(TYPE|VOID|IDENTIFIER) '{' statement+ '}' #FunctionDeclaration;
-
+function: (mangle='extern')? (visibility='private')? 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->'
+ returnType=(TYPE|VOID|IDENTIFIER) '{' statement+ '}' #FunctionDeclaration;
 
 func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
     ;
