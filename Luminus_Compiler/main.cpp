@@ -22,6 +22,7 @@ int main() {
     std::ifstream stream;
     stream.open(filename);
 
+
     antlr4::ANTLRInputStream input(stream);
     LuminusLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
@@ -29,13 +30,17 @@ int main() {
     auto tree = parser.start();
     LuminusCompiler visitor(filename);
     try {
+        visitor.logger.v = CompilerLogger::QUIET;
         auto scene = visitor.visitStart(tree);
+        if (visitor.logger.v == CompilerLogger::VERBOSE) {
+            visitor.TheModule->dump();
+        }
     } catch (std::exception &r) {
         std::cout << r.what() << std::endl;
         std::cout << "Some kind of exception occurred!" << std::endl;
         visitor.ceh->printErrors();
     }
-    visitor.dump();
+    visitor.dumpToFile("disassembly.ll");
 
     InitializeAllTargetInfos();
     InitializeAllTargets();
@@ -82,8 +87,8 @@ int main() {
 //
 //    pass.run(*visitor.TheModule);
 //    dest.flush();
-    std::error_code ec;
-    raw_fd_ostream b("compiled_lang.bc", ec);
-    llvm::WriteBitcodeToFile(*visitor.TheModule, b, sys::fs::OF_None);
+//    std::error_code ec;
+//    raw_fd_ostream b("compiled_lang.bc", ec);
+//    llvm::WriteBitcodeToFile(*visitor.TheModule, b, sys::fs::OF_None);
     return 0;
 }

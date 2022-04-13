@@ -1,16 +1,20 @@
 #include "../LuminusCompiler.h"
 
 antlrcpp::Any LuminusCompiler::visitFunctionCall(LuminusParser::FunctionCallContext *context) {
+    logger.addLog("Visiting FunctionCall Expression (" + context->getText() + ") at " + __FILE__ + " on " +
+                  std::to_string(__LINE__));
     Function *f = TheModule->getFunction(context->funcid->getText());
     if (f == nullptr) {
         // TODO: FUNCTION DOESNT EXIST
+        logger.addLog("Function " + context->funcid->getText() + " DNE!");
         return nullptr;
     } else {
         int paramCount = f->getFunctionType()->getNumParams();
         std::vector<Value *> paramCallValues(context->args.size());
         for (int i = 0; i < context->args.size(); i++) {
             paramCallValues[i] = this->visit(context->args[i]).as<Value *>();
-            paramCallValues[i]->getType()->dump();
+            logger.addSpecificLog(
+                    "Parameter " + std::to_string(i) + " has type " + typeToString(paramCallValues[i]->getType()));
 
 
             if (paramCallValues[i]->getType()->isPointerTy()
@@ -20,21 +24,23 @@ antlrcpp::Any LuminusCompiler::visitFunctionCall(LuminusParser::FunctionCallCont
                 //svm.getVariable(removeAllStars(context->args[i]->getText())) != nullptr
             {
                 if (paramCallValues[i]->getType()->getContainedType(0)->isArrayTy()) {
+                    logger.addSpecificLog("Found array type for parameter " + std::to_string(i) + ", using GEP on it");
                     paramCallValues[i] = Builder->CreateGEP(paramCallValues[i]->getType()->getContainedType(0),
                                                             paramCallValues[i],
                                                             {ConstantInt::get(INT32_TYPE, 0),
                                                              ConstantInt::get(INT32_TYPE, 0)
                                                             }
                     );
-                    std::cout << "here" << std::endl;
                 } else {
+                    logger.addSpecificLog(
+                            "Found pointer type for parameter " + std::to_string(i) + ", loading its value");
                     paramCallValues[i] = Builder->CreateLoad(paramCallValues[i]->getType()->getContainedType(0),
                                                              paramCallValues[i]);
-                    paramCallValues[i]->getType()->dump();
                 }
             }
 
         }
+        logger.addLog("Leaving Function Call");
         return static_cast<Value *> ( Builder->CreateCall(f, paramCallValues));
     }
 }

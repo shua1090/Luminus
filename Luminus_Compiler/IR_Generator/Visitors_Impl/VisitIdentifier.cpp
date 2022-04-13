@@ -5,19 +5,13 @@
 #include "../LuminusCompiler.h"
 
 antlrcpp::Any LuminusCompiler::visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) {
+    logger.addLog("Visiting Identifier Expression (" + context->getText() + ") at " + __FILE__ + " on " +
+                  std::to_string(__LINE__));
     Value *var = this->svm.getVariable(context->id->getText());
-    if (var == nullptr) std::cout << "Error!" << std::endl;
-
-//    if (var->getType() == INT32_PTR_TYPE) {
-//        std::cout << "Load Int32" << std::endl;
-//        var = Builder->CreateLoad(INT32_TYPE, var);
-//        std::cout << "Is it still a pointer??? " << var->getType()->isPointerTy() << std::endl;
-//    } else if (var->getType() == FLOAT_PTR_TYPE) {
-//        std::cout << "Load Float" << std::endl;
-//        var = Builder->CreateLoad(FLOAT_TYPE, var);
-//    } else {
-//        std::cout << "Error visiting Variable" << std::endl;
-//    }
-
+    logger.addSpecificLog("Found Identifier with type " + typeToString(var->getType()));
+    if (var == nullptr) {
+        logger.addLog("Variable at Identifier Expression is null!");
+    }
+    logger.addLog("Leaving Identifier expression");
     return var;
 }

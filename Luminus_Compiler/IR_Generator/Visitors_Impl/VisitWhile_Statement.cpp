@@ -5,10 +5,12 @@
 #include "../LuminusCompiler.h"
 
 antlrcpp::Any LuminusCompiler::visitWhile_statement(LuminusParser::While_statementContext *context) {
+    logger.addLog(std::string("Visiting While Statement") + __FILE__ + " on " + std::to_string(__LINE__));
     auto loopBlock = BasicBlock::Create(*TheContext, "loop", curFunction);
     auto contBlock = BasicBlock::Create(*TheContext, "continue_while", curFunction);
 
     auto cond = this->visit(context->condition).as<Value *>();
+    logger.addSpecificLog("Condition for while loop evaluated to something w/ type " + typeToString(cond->getType()));
     Builder->CreateCondBr(cond, loopBlock, contBlock);
 
     Builder->SetInsertPoint(loopBlock);
@@ -16,5 +18,6 @@ antlrcpp::Any LuminusCompiler::visitWhile_statement(LuminusParser::While_stateme
     auto whileCond = this->visit(context->condition).as<Value *>();
     Builder->CreateCondBr(whileCond, loopBlock, contBlock);
     Builder->SetInsertPoint(contBlock);
+    logger.addSpecificLog("Left While Statement");
     return nullptr;
 }
