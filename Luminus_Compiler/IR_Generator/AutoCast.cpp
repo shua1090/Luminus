@@ -18,7 +18,7 @@ void LuminusCompiler::autoCast(Value *a, Value *b) {
         } else if (a->getType() == FLOAT_TYPE && b->getType() == INT32_TYPE) {
             a = Builder->CreateCast(Instruction::CastOps::SIToFP, b, FLOAT_TYPE);
         } else {
-            throw std::exception("Cannot auto cast!");
+            throw std::runtime_error("Cannot auto cast!");
         }
 
 

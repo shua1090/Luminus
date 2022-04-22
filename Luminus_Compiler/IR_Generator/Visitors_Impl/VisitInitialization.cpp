@@ -22,7 +22,7 @@ antlrcpp::Any LuminusCompiler::visitInitialization(LuminusParser::Initialization
                       "' != RHS ('" + context->value->getText() + "') Type of '" +
                       LuminusCompiler::typeToString(rhs->getType()) + "'"
         );
-        throw std::exception("Compilation Exception!");
+        throw std::runtime_error("Compilation Exception!");
         return nullptr;
     } else {
         auto ptr = Builder->CreateAlloca(lhs);

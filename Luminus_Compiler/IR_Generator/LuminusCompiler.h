@@ -40,7 +40,7 @@ public:
         for (int i = 0; i < names.size(); i++) {
             try {
                 return names[i][varName];
-            } catch (std::exception &a) {}
+            } catch (std::runtime_error &a) {}
         }
         return nullptr;
     }
@@ -63,7 +63,7 @@ public:
     Structure *getVariable(std::string varName) {
         try {
             return struct_decls[varName];
-        } catch (std::exception &a) {}
+        } catch (std::runtime_error &a) {}
         return nullptr;
     }
 
@@ -250,7 +250,7 @@ public:
         logger.addSpecificLog("Visiting ID returned a value with type " + typeToString(varVal->getType()));
         if (varVal == nullptr) {
             logger.addLog("Variable " + context->id->getText() + " DNE!");
-            throw std::exception("Var DNE");
+            throw std::runtime_error("Var DNE");
         }
 
         Value *index = this->visit(context->index).as<Value *>();
@@ -263,7 +263,7 @@ public:
 
         if (index->getType() != INT32_TYPE) {
             logger.addLog("Index is not an integer type!");
-            throw std::exception("Invalid Index Type!");
+            throw std::runtime_error("Invalid Index Type!");
         }
         if (varVal->getType()->isPointerTy() && varVal->getType()->getContainedType(0)->isPointerTy()) {
             varVal = Builder->CreateLoad(varVal->getType()->getContainedType(0), varVal);

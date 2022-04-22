@@ -34,7 +34,9 @@ message(${CMAKE_MODULE_PATH})
 
 #################### ANTLR ####################
 set(ANTLR4_TAG "7b32c9b169a2d9dd2375d4fc9c5e678f0ed0039c")
-
+if (UNIX)
+set(ANTLR_EXECUTABLE /usr/local/lib/antlr-4.9-complete.jar)
+endif()
 # required if linking to static library
 add_definitions(-DANTLR4CPP_STATIC)
 

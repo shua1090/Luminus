@@ -23,19 +23,19 @@ antlrcpp::Any LuminusCompiler::visitAccessInternal(LuminusParser::AccessInternal
             getContainedType(0)->isStructTy()
             ) {
         logger.addLog("The thing being accessed is not a valid struct!");
-        throw std::exception("Error! LHS is not a struct!");
+        throw std::runtime_error("Error! LHS is not a struct!");
     }
     std::string structname = left->getType()->getContainedType(0)->getStructName().str();
     if (sdm.getVariable(structname) == nullptr) {
         logger.addLog("The struct " + structname + " doesn't exist");
-        throw std::exception("Struct doesn't exist???");
+        throw std::runtime_error("Struct doesn't exist???");
     }
     auto tempVar = sdm.getVariable(structname);
     int index = findIndex(tempVar->argsAsStrings, right);
     logger.addSpecificLog("Index being accessed in the struct is " + std::to_string(index));
     if (index == -1) {
         logger.addLog("Index of element being accessed in struct DNE!");
-        throw std::exception(("That Member doesn't exist!" + right).c_str());
+        throw std::runtime_error(("That Member doesn't exist!" + right).c_str());
     }
 
     logger.addSpecificLog("Creating GEP for structure (type of struct: " + typeToString(left->getType()) + ")");

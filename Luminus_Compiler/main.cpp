@@ -43,7 +43,7 @@ int main() {
             if (visitor.logger.v == CompilerLogger::VERBOSE) {
                 visitor.TheModule->dump();
             }
-        } catch (std::exception &r) {
+        } catch (std::runtime_error &r) {
             std::cout << r.what() << std::endl;
             std::cout << "Some kind of exception occurred!" << std::endl;
             visitor.ceh->printErrors();

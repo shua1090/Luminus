@@ -22,7 +22,7 @@ antlrcpp::Any LuminusCompiler::visitModulus(LuminusParser::ModulusContext *conte
     }
     if (RHS->getType() != LHS->getType()) {
         logger.addLog("RHS Type != LHS Type! (Mod)");
-        throw std::exception("Type Mismatch Error!");
+        throw std::runtime_error("Type Mismatch Error!");
     } else {
         if (LHS->getType() == INT32_TYPE) {
             logger.addSpecificLog("Created Int modulus!");
@@ -32,7 +32,7 @@ antlrcpp::Any LuminusCompiler::visitModulus(LuminusParser::ModulusContext *conte
             return Builder->CreateFRem(LHS, RHS, "modulusf");
         } else {
             logger.addLog("Type Mismatch at Modulus!");
-            throw std::exception("Modulus Error Type Mismatch");
+            throw std::runtime_error("Modulus Error Type Mismatch");
         }
     }
 
