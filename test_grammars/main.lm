@@ -1,5 +1,60 @@
-function max(int a, int b, int c) returns int {
-    int x = 12;
-    int y= x[15];
-    return 12;
+func printFullArray(int * nar, int size) -> int {
+    int i = 0;
+    while ( i < size) {
+        printf("%d ", nar[i]);
+        i = i + 1;
+    }
+    printf("\n");
+    return 5;
+}
+
+func sortArray(int * passedArray, int size) -> int {
+    int i = 1;
+    int j;
+    int temp;
+
+    while (i < size){
+        temp = passedArray[i];
+        j = i -1;
+        while (j >= 0 and temp <= passedArray[j]){
+            passedArray[j+1] = passedArray[j];
+            j = j - 1;
+        }
+        passedArray[j+1] = temp;
+        i = i + 1;
+    }
+
+    return 0;
+}
+
+struct typeone{
+    int a;
+}
+struct typetwo{
+    typeone to;
+}
+
+
+func main() -> int {
+    typetwo tw;
+    tw.to.a = 5;
+    printf("Stored Struct Var %d", tw.to.a);
+
+    int array [10];
+    int size = 10;
+    int i = 0;
+
+    int far = 0;
+    while (i < size){
+        scanf("%d", &far);
+        printf("Scanned %d %d left to go\n", far, (size-i-1));
+        array[i] = far;
+        i = i + 1;
+    }
+
+    printFullArray(array, size);
+    sortArray(array, size);
+    printFullArray(array, size);
+
+    return 0;
 }
