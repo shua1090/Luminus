@@ -13,14 +13,12 @@ class  LuminusLexer : public antlr4::Lexer {
 public:
   enum {
       T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7,
-      T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14,
-      T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20,
-      T__20 = 21, T__21 = 22, MUL = 23, DIV = 24, MOD = 25, ADD = 26, SUB = 27,
-      LT = 28, GT = 29, LTE = 30, GTE = 31, EQ = 32, NOT_EQ = 33, LOG_AND = 34,
-      LOG_OR = 35, LOG_NOT = 36, TRUE_CONST = 37, FALSE_CONST = 38, VOID = 39,
-      TYPE = 40, INT = 41, BYTE = 42, LONG = 43, DOUBLE = 44, STRING = 45,
-      BOOL = 46, IDENTIFIER = 47, STRING_CONST = 48, INTEGER_CONST = 49, FLOATING_CONST = 50,
-      DIGIT = 51, WHITESPACE = 52
+      T__7 = 8, MUL = 9, DIV = 10, MOD = 11, ADD = 12, SUB = 13, LT = 14,
+      GT = 15, LTE = 16, GTE = 17, EQ = 18, NOT_EQ = 19, LOG_AND = 20, LOG_OR = 21,
+      LOG_NOT = 22, TRUE_CONST = 23, FALSE_CONST = 24, VOID = 25, STRING_CONST = 26,
+      INTEGER_LITERAL = 27, FLOAT_LITERAL = 28, DIGIT = 29, FUNCTION = 30,
+      ARROW = 31, WHILE = 32, FOR = 33, RETURN = 34, IF = 35, ELIF = 36, ELSE = 37,
+      NEW = 38, DELETE = 39, TYPE = 40, IDENTIFIER = 41, WHITESPACE = 42
   };
 
   explicit LuminusLexer(antlr4::CharStream *input);

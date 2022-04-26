@@ -22,76 +22,82 @@ FALSE_CONST: 'false';
 
 VOID: 'void';
 
-TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL) (' '* ('*')+)?;
-INT: 'int';
-BYTE: 'byte';
-LONG: 'long';
-DOUBLE: 'double';
-STRING: 'string';
-BOOL: 'bool';
-IDENTIFIER: [A-Za-z]+;
-
-
 STRING_CONST : '"' CHAR_NO_NL+ '"' ;
 fragment CHAR_NO_NL : 'a'..'z'|[0-9]|'A'..'Z'|'%'|' '|'\\'|'"';
 
-INTEGER_CONST: DIGIT;
-FLOATING_CONST: DIGIT '.' DIGIT | '.' DIGIT;
+INTEGER_LITERAL: DIGIT;
+FLOAT_LITERAL: DIGIT '.' DIGIT | '.' DIGIT;
 
 DIGIT: [0-9]+;
 
-start: (function|struct_declaration)+;
+FUNCTION: 'func';
+ARROW: '->';
+WHILE: 'while';
+FOR: 'for';
+RETURN: 'return';
+IF: 'if';
+ELIF: 'elif';
+ELSE: 'else';
 
-argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ( '[' count+=expression ']' )? ;
-function: (mangle='extern')? (visibility='private')? 'func' funcName=IDENTIFIER'(' (args+=argument (',' args+=argument)*)? ','? ')' '->'
- returnType=(TYPE|VOID|IDENTIFIER) '{' statement+ '}' #FunctionDeclaration;
+NEW: 'new';
+DELETE: 'delete';
 
-func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
-    ;
+TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL);
+fragment INT: 'int';
+fragment BYTE: 'byte';
+fragment LONG: 'long';
+fragment DOUBLE: 'double';
+fragment STRING: 'string';
+fragment BOOL: 'bool';
+IDENTIFIER: [A-Za-z]+;
 
-struct_declaration: 'struct' struct_name=IDENTIFIER '{' (struct_vals+=argument ';')+ '}';
- // (' '* ('*')+)?
-assignment: dec_type= (TYPE| IDENTIFIER)   id=IDENTIFIER ('[' count+=expression ']')? ';' #Declaration
-    | id=expression '=' value=expression ';' #Reinitialization
-    | dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER '=' value=expression ';' #Initialization
-    ;
+init_stmt: type=TYPE id=IDENTIFIER '=' rhs=expression ';' ;
+reinit_stmt: id=IDENTIFIER '=' rhs=expression ';';
+decl_stmt: type=TYPE id=IDENTIFIER ';';
 
+var_set_stmts: (init_stmt|reinit_stmt|decl_stmt);
 
 expression:
-    BOOL_CONST=(TRUE_CONST | FALSE_CONST) #Bool_Const
-    | STRING_CONST #StringConst
-    | INTEGER_CONST #IntegerExpression
-    | FLOATING_CONST #FloatExpression
 
-    | left=expression op=(MUL|DIV) right=expression #MultiplyOrDivide
-    | left=expression MOD right=expression #Modulus
-    | left=expression op=(ADD|SUB) right=expression #AddOrSubtract
+     BOOL_LITERAL=(TRUE_CONST|FALSE_CONST) #BooleanConstant
+    | INTEGER_LITERAL #IntegerConstant
+    | FLOAT_LITERAL #FloatConstant
+    | STRING_CONST #StringConstant
+
+/* Arithmetic Operators */
+
+    | '(' inner=expression ')' #ParanthesesExpression
+
+    | exp=expression ADD ADD #IncrementOperator
+    | exp=expression SUB SUB #DecrementOperator
+
+    | SUB exp=expression #UnaryNegateExpression
+
+    | left=expression op=MUL right=expression #MultiplyExpression
+    | left=expression op=DIV right=expression #DivideExpression
+    | left=expression op=MOD right=expression #ModulusExpression
+    | left=expression op=ADD right=expression #AdditionExpression
+    | left=expression op=SUB right=expression #SubtractionExpression
 
     | id=IDENTIFIER #IdentifierExpression
-    | exp=expression '.' accessed_element=IDENTIFIER #AccessInternal
-    | '&'id=IDENTIFIER #DereferenceExpression
-    | '*'* id=IDENTIFIER #ValueOfPointerExpression
-    | 'cast' '<' cast_type=TYPE '>' '(' inner=expression ')' #CastToType
-    | '(' inner=expression ')' #Parantheses
-    | '-' inner=expression #Unary_Negate
-    | id=expression'['index=expression']' #Indexing
-    | call=func_call #Func_Call_Expression
-    | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #CompExpression
+
+    | '(' cast_type=TYPE ')' exp=expression #ExplicitCastExpression
+
+    | left=expression op=(LT | GT | LTE | GTE | EQ | NOT_EQ ) right=expression #ComparisonExpression
     | left=expression log_op=(LOG_AND|LOG_OR) right=expression #LogicalExpression
     | LOG_NOT exp=expression #NotExpression
-    ;
+;
 
-while_statement: 'while' condition=expression ops=block;
+argument: dec_type=TYPE id=IDENTIFIER ;
+function_definition: 'func' func_name=IDENTIFIER '(' (args+=argument (',' args+=argument)*)? ')' '->' return_type=(TYPE|'void') vals=block;
 
-if_statement: 'if' value=expression execute_vals=block;
-else_statement: 'else' ops=block;
-elif_statement: 'elif' value=expression ops=block;
-conditional_statement: if_teil=if_statement (else_if_container+=elif_statement)* (else_teil=else_statement)?;
-
-return_statement: 'return' (value=expression)? ';' #ReturnStatement ;
-
-block: '{' statement+ '}' #BlockExpression;
-statement: assignment | return_statement | func_call ';' | block ';' | conditional_statement | while_statement;
+class_definition: 'class' class_name=IDENTIFIER '{' (function_definition|decl_stmt)+ '}' ;
 
 
-WHITESPACE: [ \r\n\t]+ -> skip;
+statement: (expression ';'|var_set_stmts) ;
+block: '{' statement* '}' #BlockExpression ;
+
+start: (function_definition|class_definition)+;
+
+
+WHITESPACE: [ \r\t\n]+ -> skip;

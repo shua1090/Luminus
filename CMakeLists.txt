@@ -7,32 +7,24 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY MDd)
 
 FILE(GLOB ANTLR_GENERATED "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.cpp" "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.hpp")
 
-set(IR_GENERATOR Luminus_Compiler/IR_Generator/LuminusCompiler.h
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitAdd_Sub.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitIdentifier.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitReturn.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitCast.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitMul_Div.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitDeclaration.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitReinitialization.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitInitialization.cpp
-        Luminus_Compiler/IR_Generator/Definitions.h
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunction.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitFunctionCall.cpp
-        Luminus_Compiler/IR_Generator/Visitors_Impl/VisitConditionals.cpp
-        Luminus_Compiler/IR_Generator/Compiler_Errors/CompileException.hpp
-        Luminus_Compiler/IR_Generator/Compiler_Errors/TypeErrors.hpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitWhile_Statement.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitMod.cpp Luminus_Compiler/IR_Generator/StringUtils.cpp Luminus_Compiler/IR_Generator/AutoCast.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitStructDecl.cpp Luminus_Compiler/IR_Generator/Visitors_Impl/VisitAccessInternal.cpp Luminus_Compiler/IR_Generator/Compiler_Errors/CompilerLogger.h)
-set(ENTRY_POINT Luminus_Compiler/main.cpp)
+
+set(LuminusCompiler
+        Luminus_Compiler/LuminusCompiler.h
+        Luminus_Compiler/main.cpp
+        Luminus_Compiler/VariableManager.h
+        Luminus_Compiler/FunctionManager.h
+        Luminus_Compiler/HLVisitors/visitFunctionDefinition.cpp
+        Luminus_Compiler/AssignmentVisitors/visitDeclaration.cpp
+        )
 
 include_directories("${CMAKE_SOURCE_DIR}/src/Luminus_Generated")
 
-add_executable(luminus ${ANTLR_GENERATED} ${ENTRY_POINT} ${BASIC_CHECKER} ${IR_GENERATOR})
+add_executable(luminus ${ANTLR_GENERATED} ${LuminusCompiler})
 
-
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-message(${CMAKE_MODULE_PATH})
 
 #################### ANTLR ####################
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
 set(ANTLR4_TAG "7b32c9b169a2d9dd2375d4fc9c5e678f0ed0039c")
 if (UNIX)
 set(ANTLR_EXECUTABLE /usr/local/lib/antlr-4.9-complete.jar)
