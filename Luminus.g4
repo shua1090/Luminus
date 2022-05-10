@@ -43,17 +43,17 @@ NEW: 'new';
 DELETE: 'delete';
 
 TYPE: (INT | BYTE | LONG | DOUBLE | STRING | BOOL);
-fragment INT: 'int';
-fragment BYTE: 'byte';
-fragment LONG: 'long';
-fragment DOUBLE: 'double';
-fragment STRING: 'string';
-fragment BOOL: 'bool';
+INT: 'int';
+BYTE: 'byte';
+LONG: 'long';
+DOUBLE: 'double';
+STRING: 'string';
+BOOL: 'bool';
 IDENTIFIER: [A-Za-z]+;
 
-init_stmt: type=TYPE id=IDENTIFIER '=' rhs=expression ';' ;
-reinit_stmt: id=IDENTIFIER '=' rhs=expression ';';
-decl_stmt: type=TYPE id=IDENTIFIER ';';
+init_stmt: type=(TYPE|IDENTIFIER) id=IDENTIFIER '=' rhs=expression ';' ;
+reinit_stmt: id=expression '=' rhs=expression ';';
+decl_stmt: type=(TYPE|IDENTIFIER) id=IDENTIFIER ';';
 
 var_set_stmts: (init_stmt|reinit_stmt|decl_stmt);
 
@@ -67,6 +67,10 @@ expression:
 /* Arithmetic Operators */
 
     | '(' inner=expression ')' #ParanthesesExpression
+
+    | front=expression '.' id=IDENTIFIER #MemberAccessExpression
+    | front=expression '.' method=func_call #MethodAccessExpression
+    | call=func_call #Func_Call_Expression
 
     | exp=expression ADD ADD #IncrementOperator
     | exp=expression SUB SUB #DecrementOperator
@@ -88,7 +92,15 @@ expression:
     | LOG_NOT exp=expression #NotExpression
 ;
 
-argument: dec_type=TYPE id=IDENTIFIER ;
+
+argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ;
+
+func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
+    ;
+
+FUNC_OOP_MODIFIERS: ('static' | 'class');
+FUNC_VISIBILITY_MODIFIERS: ('public' | 'private');
+
 function_definition: 'func' func_name=IDENTIFIER '(' (args+=argument (',' args+=argument)*)? ')' '->' return_type=(TYPE|'void') vals=block;
 
 class_definition: 'class' class_name=IDENTIFIER '{' (function_definition|decl_stmt)+ '}' ;

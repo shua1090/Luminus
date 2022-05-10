@@ -3,11 +3,38 @@
 //
 
 #include "../LuminusCompiler.h"
-
+#include "antlr4-common.h"
 antlrcpp::Any LuminusCompiler::visitDecl_stmt(LuminusParser::Decl_stmtContext *context) {
-    std::cout << "HereNice" << std::endl;
-    auto *vaste = Builder->CreateAlloca(Type::getInt32Ty(*TheContext), nullptr, context->id->getText());
-    vaste->addAnnotationMetadata(context->getText());
-    this->vm.addVariable(context->id->getText(), vaste);
-    return vaste;
+    if (this->currentClass != nullptr){
+        Type * type = getType(context->type->getText());
+        if (type->isStructTy()){
+            type = PointerType::get(type, 0);
+        }
+        this->classTypes.push_back(
+                type
+                );
+        this->currentClass->fields.push_back(context->id->getText());
+
+        return nullptr;
+    } else {
+        Type * type = getType(context->type->getText());
+        if (type == nullptr){
+            std::cout << "Error: " << context->id->getText() << " is not a valid type" << std::endl;
+            exit(1);
+        }
+
+        std::cout << "Type: " << this->typeToString(type) << std::endl;
+        std::cout << "Type: " << type->isSized() << std::endl;
+        auto *vaste = Builder->CreateAlloca(type);
+        std::string text="";
+        text += context->type->getText();
+        text += " ";
+        text += context->id->getText();
+        text += ";";
+        vaste->addAnnotationMetadata(
+                text
+        );
+        this->vm.addVariable(context->id->getText(), vaste);
+        return vaste;
+    }
 }

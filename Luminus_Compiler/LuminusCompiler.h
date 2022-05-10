@@ -16,6 +16,7 @@
 
 #include "FunctionManager.h"
 #include "VariableManager.h"
+#include "ClassManager.h"
 
 using namespace llvm;
 
@@ -26,6 +27,11 @@ class LuminusCompiler : public LuminusVisitor {
 
     FunctionManager fm;
     VariableManager vm;
+    ClassManager cm;
+
+    // For late parsing (after other things)
+    std::vector<LuminusParser::Function_definitionContext *> classFunctions;
+    InnerClass* currentClass = nullptr;
 
 public:
 
@@ -40,8 +46,20 @@ public:
             return Type::getInt1Ty(*TheContext);
         } else if (type == "void") {
             return Type::getVoidTy(*TheContext);
+        } else {
+            auto a = StructType::getTypeByName(*TheContext, type);
+            if (a == nullptr){
+                return nullptr;
+            } else return a;
         }
         return nullptr;
+    }
+
+    std::string LuminusCompiler::typeToString(Type *t) {
+        std::string type_str;
+        llvm::raw_string_ostream rso(type_str);
+        t->print(rso);
+        return rso.str();
     }
 
     void dump(std::string filename) {
@@ -52,14 +70,12 @@ public:
     }
 
     antlrcpp::Any visitStart(LuminusParser::StartContext *context) override {
-        std::cout << "Here" << std::endl;
         vm.addScope();
-        return this->visitChildren(context);
+        this->visitChildren(context);
+        return nullptr;
     }
 
-    antlrcpp::Any visitInit_stmt(LuminusParser::Init_stmtContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitInit_stmt(LuminusParser::Init_stmtContext *context) override;
 
     antlrcpp::Any visitReinit_stmt(LuminusParser::Reinit_stmtContext *context) override {
         return antlrcpp::Any();
@@ -104,7 +120,7 @@ public:
     }
 
     antlrcpp::Any visitIntegerConstant(LuminusParser::IntegerConstantContext *context) override {
-        return antlrcpp::Any();
+        return static_cast<Value *>( Builder->getInt32(std::stoi(context->getText())));
     }
 
     antlrcpp::Any visitIdentifierExpression(LuminusParser::IdentifierExpressionContext *context) override {
@@ -149,21 +165,71 @@ public:
 
     antlrcpp::Any visitFunction_definition(LuminusParser::Function_definitionContext *context) override;
 
+    bool classPreparse = false;
+    std::vector < Type*> classTypes;
+
     antlrcpp::Any visitClass_definition(LuminusParser::Class_definitionContext *context) override {
-        return antlrcpp::Any();
+        std::string className = context->class_name->getText();
+        this->currentClass = new InnerClass;
+        this->currentClass->className = className;
+
+        // Skip Functions in initial pass
+        this->currentClass->type = StructType::create(*TheContext, className);
+        std::cout << "Type is :" << this->currentClass->type->isOpaque() << std::endl;
+        this->classPreparse = true;
+        this->visitChildren(context);
+
+        this->currentClass->type->setBody(this->classTypes);
+
+        this->classPreparse = false;
+
+        for (int i = 0; i  <  this->classFunctions.size(); i++) {
+            this->visit(this->classFunctions[i]);
+        }
+        cm.addInnerClass(className, this->currentClass);
+
+        this->classFunctions.clear();
+        this->classTypes.clear();
+        // Stuff before class parse
+        // this->classFunctions
+        // this->classTypes
+
+        this->currentClass = nullptr;
+
+
+        return nullptr;
     }
+
+
 
     antlrcpp::Any visitStatement(LuminusParser::StatementContext *context) override {
         return this->visitChildren(context);
+    }
+
+    antlrcpp::Any visitMemberAccessExpression(LuminusParser::MemberAccessExpressionContext *context) override {
+        return antlrcpp::Any();
+    }
+
+    antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) override {
+        return antlrcpp::Any();
+    }
+
+    antlrcpp::Any visitMethodAccessExpression(LuminusParser::MethodAccessExpressionContext *context) override {
+        return antlrcpp::Any();
+    }
+
+    antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) override {
+        return antlrcpp::Any();
     }
 
     antlrcpp::Any visitBlockExpression(LuminusParser::BlockExpressionContext *context) override {
         this->vm.addScope();
         this->visitChildren(context);
         this->vm.removeScope();
-        std::cout << "Here1" << std::endl;
         return nullptr;
     }
+
+    antlrcpp::Any makeFunction(LuminusParser::Function_definitionContext *context);
 };
 
 #endif

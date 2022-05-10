@@ -19,7 +19,7 @@ public:
   /**
    * Visit parse trees produced by LuminusParser.
    */
-  virtual antlrcpp::Any visitInit_stmt(LuminusParser::Init_stmtContext *context) = 0;
+    virtual antlrcpp::Any visitInit_stmt(LuminusParser::Init_stmtContext *context) = 0;
 
     virtual antlrcpp::Any visitReinit_stmt(LuminusParser::Reinit_stmtContext *context) = 0;
 
@@ -28,6 +28,10 @@ public:
     virtual antlrcpp::Any visitVar_set_stmts(LuminusParser::Var_set_stmtsContext *context) = 0;
 
     virtual antlrcpp::Any visitAdditionExpression(LuminusParser::AdditionExpressionContext *context) = 0;
+
+    virtual antlrcpp::Any visitMemberAccessExpression(LuminusParser::MemberAccessExpressionContext *context) = 0;
+
+    virtual antlrcpp::Any visitFunc_Call_Expression(LuminusParser::Func_Call_ExpressionContext *context) = 0;
 
     virtual antlrcpp::Any visitModulusExpression(LuminusParser::ModulusExpressionContext *context) = 0;
 
@@ -57,6 +61,8 @@ public:
 
     virtual antlrcpp::Any visitIncrementOperator(LuminusParser::IncrementOperatorContext *context) = 0;
 
+    virtual antlrcpp::Any visitMethodAccessExpression(LuminusParser::MethodAccessExpressionContext *context) = 0;
+
     virtual antlrcpp::Any visitBooleanConstant(LuminusParser::BooleanConstantContext *context) = 0;
 
     virtual antlrcpp::Any visitDecrementOperator(LuminusParser::DecrementOperatorContext *context) = 0;
@@ -64,6 +70,8 @@ public:
     virtual antlrcpp::Any visitStringConstant(LuminusParser::StringConstantContext *context) = 0;
 
     virtual antlrcpp::Any visitArgument(LuminusParser::ArgumentContext *context) = 0;
+
+    virtual antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) = 0;
 
     virtual antlrcpp::Any visitFunction_definition(LuminusParser::Function_definitionContext *context) = 0;
 

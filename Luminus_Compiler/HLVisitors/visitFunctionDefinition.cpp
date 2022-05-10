@@ -1,7 +1,14 @@
 #include "../LuminusCompiler.h"
 
 antlrcpp::Any LuminusCompiler::visitFunction_definition(LuminusParser::Function_definitionContext *context) {
+    if (this->classPreparse){
+        this->classFunctions.push_back(context);
+        return nullptr;
+    }
+    return makeFunction(context);
+}
 
+antlrcpp::Any LuminusCompiler::makeFunction(LuminusParser::Function_definitionContext *context) {
     if (fm.getFunction(context->func_name->getText()) != nullptr) {
         std::cerr << "Error: Function " << context->func_name->getText() << " already defined" << std::endl;
         exit(1);
@@ -14,14 +21,22 @@ antlrcpp::Any LuminusCompiler::visitFunction_definition(LuminusParser::Function_
         exit(1);
     }
 
-    std::vector<llvm::Type *> argTypes;
+    std::vector<Type *> argTypes;
     std::vector<std::string> argNames;
 
+    if (this->currentClass != nullptr) {
+        argTypes.insert(argTypes.begin(), PointerType::get(this->currentClass->type, 0));
+        argNames.insert(argNames.begin(), "this");
+    }
+
     for (auto arg: context->args) {
-        auto argType = LuminusCompiler::getType(arg->dec_type->getText());
+        auto argType = getType(arg->dec_type->getText());
         if (argType == nullptr) {
             std::cerr << "Error: Argument type " << arg->dec_type->getText() << " not defined" << std::endl;
             exit(1);
+        }
+        if (argType->isStructTy()){
+            argType = PointerType::get(argType, 0);
         }
         argTypes.push_back(argType);
         argNames.push_back(arg->id->getText());
@@ -33,12 +48,24 @@ antlrcpp::Any LuminusCompiler::visitFunction_definition(LuminusParser::Function_
     Builder->SetInsertPoint(entry);
 
     auto arg_names_builtin = func->arg_begin();
-    for (unsigned i = 0; i < argNames.size(); i++) {
-        arg_names_builtin->setName(argNames[i]);
-        vm.addVariable(argNames[i], Builder->CreateAlloca(argTypes[i]));
+    int i = 0;
+    if (this->currentClass != nullptr) {
+        i = 1;
+    }
+    for (; i < argNames.size(); i++) {
+        if (argTypes[i]->isPointerTy() && argTypes[i]->getPointerElementType()->isStructTy()) {
+            arg_names_builtin->setName(argNames[i]);
+            vm.addVariable(argNames[i], func->getArg(i));
+        } else {
+            arg_names_builtin->setName(argNames[i]);
+            vm.addVariable(argNames[i], Builder->CreateAlloca(argTypes[i]));
+        }
         arg_names_builtin++;
     }
 
-    this->visit(context->vals);
+    visit(context->vals);
+    if (this->currentClass != nullptr) {
+        this->currentClass->functions.push_back(func);
+    }
     return nullptr;
 }

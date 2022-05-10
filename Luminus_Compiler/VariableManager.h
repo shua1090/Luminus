@@ -38,8 +38,8 @@ public:
         return nullptr;
     }
 
-    void addVariable(std::string varName, Value *typeOfVariable) {
-        this->names[names.size() - 1][varName] = typeOfVariable;
+    void addVariable(std::string varName, Value *variableValue) {
+        this->names[names.size() - 1][varName] = variableValue;
     }
 };
 

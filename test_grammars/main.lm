@@ -1,17 +1,13 @@
-func main() -> void {
-    int c = 12;
-}
-
-func nice(int a, int b) -> void {
-    int a;
-    int b;
-    int c;
-}
-
-class A {
-    int z;
-
-    func test() -> void {
-        int j = 12;
+class Tree{
+    Tree left;
+    Tree right;
+    int value;
+    func free(int value, Tree nice, Tree lice)->void{
+        value = 5;
+        int cool = 9;
     }
+}
+
+func nice()->void{
+    Tree t;
 }
