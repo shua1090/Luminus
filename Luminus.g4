@@ -57,6 +57,9 @@ decl_stmt: type=(TYPE|IDENTIFIER) id=IDENTIFIER ';';
 
 var_set_stmts: (init_stmt|reinit_stmt|decl_stmt);
 
+func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'
+    ;
+
 expression:
 
      BOOL_LITERAL=(TRUE_CONST|FALSE_CONST) #BooleanConstant
@@ -94,9 +97,6 @@ expression:
 
 
 argument: dec_type=(TYPE|IDENTIFIER) id=IDENTIFIER ;
-
-func_call: funcid=IDENTIFIER '(' (args+=expression (',' args+=expression)*)? ','? ')'  #FunctionCall
-    ;
 
 FUNC_OOP_MODIFIERS: ('static' | 'class');
 FUNC_VISIBILITY_MODIFIERS: ('public' | 'private');

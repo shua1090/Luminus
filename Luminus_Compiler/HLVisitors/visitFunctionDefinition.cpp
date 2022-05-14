@@ -66,6 +66,10 @@ antlrcpp::Any LuminusCompiler::makeFunction(LuminusParser::Function_definitionCo
     visit(context->vals);
     if (this->currentClass != nullptr) {
         this->currentClass->functions.push_back(func);
+    } else {
+        fm.addFunction(func);
     }
     return nullptr;
 }
+
+

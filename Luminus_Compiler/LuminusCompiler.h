@@ -48,12 +48,14 @@ public:
             return Type::getVoidTy(*TheContext);
         } else {
             auto a = StructType::getTypeByName(*TheContext, type);
-            if (a == nullptr){
+            if (a == nullptr) {
                 return nullptr;
             } else return a;
         }
         return nullptr;
     }
+
+    Value *createFunctionCall(Value *precursor, LuminusParser::Func_Call_ExpressionContext *ctx, Function *f);
 
     std::string LuminusCompiler::typeToString(Type *t) {
         std::string type_str;
@@ -218,7 +220,7 @@ public:
         return antlrcpp::Any();
     }
 
-    antlrcpp::Any visitFunctionCall(LuminusParser::FunctionCallContext *context) override {
+    antlrcpp::Any visitFunc_call(LuminusParser::Func_callContext *context) override {
         return antlrcpp::Any();
     }
 
@@ -231,5 +233,4 @@ public:
 
     antlrcpp::Any makeFunction(LuminusParser::Function_definitionContext *context);
 };
-
 #endif

@@ -22,10 +22,8 @@ antlrcpp::Any LuminusCompiler::visitDecl_stmt(LuminusParser::Decl_stmtContext *c
             std::cout << "Error: " << context->id->getText() << " is not a valid type" << std::endl;
             exit(1);
         }
-
-        std::cout << "Type: " << this->typeToString(type) << std::endl;
-        std::cout << "Type: " << type->isSized() << std::endl;
         auto *vaste = Builder->CreateAlloca(type);
+
         std::string text="";
         text += context->type->getText();
         text += " ";

@@ -5,6 +5,7 @@ class Tree{
     func free(int value, Tree nice, Tree lice)->void{
         value = 5;
         int cool = 9;
+        nice.left.free(5, nice, nice);
     }
 }
 
