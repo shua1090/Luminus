@@ -8,6 +8,13 @@ struct InnerClass{
     StructType *type;
     std::vector<std::string> fields;
     std::vector<Function*> functions;
+
+    Function * getFunction(std::string funcName){
+        for(Function *f : functions){
+            if(f->getName() == funcName) return f;
+        }
+        return nullptr;
+    }
 };
 
 class ClassManager {

@@ -2,10 +2,15 @@ class Tree{
     Tree left;
     Tree right;
     int value;
-    func free(int value, Tree nice, Tree lice)->void{
-        value = 5;
-        int cool = 9;
-        nice.left.free(5, nice, nice);
+
+    func add(Tree right) -> void {
+    }
+
+    func free()->void{
+        Tree nice;
+        Tree cool;
+        Tree best;
+        add(nice);
     }
 }
 

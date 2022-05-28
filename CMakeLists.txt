@@ -9,14 +9,14 @@ FILE(GLOB ANTLR_GENERATED "${CMAKE_SOURCE_DIR}/src/Luminus_Generated/*.cpp" "${C
 
 
 set(LuminusCompiler
-        Luminus_Compiler/LuminusCompiler.h
         Luminus_Compiler/main.cpp
+        Luminus_Compiler/LuminusCompiler.h
         Luminus_Compiler/VariableManager.h
         Luminus_Compiler/FunctionManager.h
         Luminus_Compiler/ClassManager.h
         Luminus_Compiler/HLVisitors/visitFunctionDefinition.cpp
         Luminus_Compiler/AssignmentVisitors/visitDeclaration.cpp
-        Luminus_Compiler/AssignmentVisitors/visitInitialization.cpp Luminus_Compiler/FunctionCallHelper.cpp)
+        Luminus_Compiler/AssignmentVisitors/visitInitialization.cpp Luminus_Compiler/FunctionCallHelper.cpp Luminus_Compiler/ArithmeticExpressionVisitors/visitAdditionSubtraction.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src/Luminus_Generated")
 

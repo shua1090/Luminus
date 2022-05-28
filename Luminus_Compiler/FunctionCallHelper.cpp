@@ -10,9 +10,11 @@ LuminusCompiler::createFunctionCall(Value *precursor, LuminusParser::Func_Call_E
     if (precursor != nullptr) {
         args.push_back(precursor);
     }
-    for (auto arg: ctx->call->args) {
-        Value *argN = visit(arg).as<Value *>();
-        args.push_back(argN);
+    if (ctx != nullptr) {
+        for (auto arg: ctx->call->args) {
+            Value *argN = visit(arg).as<Value *>();
+            args.push_back(argN);
+        }
     }
     return Builder->CreateCall(f, args);
     return nullptr;

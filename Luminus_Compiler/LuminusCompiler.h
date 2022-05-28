@@ -89,9 +89,7 @@ public:
         return this->visitChildren(context);
     }
 
-    antlrcpp::Any visitAdditionExpression(LuminusParser::AdditionExpressionContext *context) override {
-        return antlrcpp::Any();
-    }
+    antlrcpp::Any visitAdditionExpression(LuminusParser::AdditionExpressionContext *context) override;
 
     antlrcpp::Any visitModulusExpression(LuminusParser::ModulusExpressionContext *context) override {
         return antlrcpp::Any();
